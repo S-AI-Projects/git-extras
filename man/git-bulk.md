@@ -28,6 +28,10 @@ git bulk adds convenient support for operations that you want to execute on mult
 
   Ask the user for confirmation on every execution.
 
+  -q, --quiet
+
+  Suppress non-essential progress output during bulk operations.
+
   --no-follow-symlinks
 
   Do not traverse symbolic links under the workspace when searching for git repositories.

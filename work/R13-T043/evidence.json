@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "name": "success_scoped_branch_creation",
+      "command": "git bulk --no-follow-hidden --no-follow-symlinks --quiet -w demo branch bulk-tested",
+      "exit_code": 0,
+      "before": {
+        "repo_a": {
+          "head": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "main_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "topic_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "branches": [
+            "main",
+            "topic"
+          ],
+          "status": ""
+        },
+        "hidden_repo": {
+          "head": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "main_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "topic_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "branches": [
+            "main",
+            "topic"
+          ],
+          "status": ""
+        },
+        "ext_repo": {
+          "head": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "main_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "topic_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "branches": [
+            "main",
+            "topic"
+          ],
+          "status": ""
+        }
+      },
+      "after": {
+        "repo_a": {
+          "head": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "main_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "topic_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "branches": [
+            "bulk-tested",
+            "main",
+            "topic"
+          ],
+          "status": ""
+        },
+        "hidden_repo": {
+          "head": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "main_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "topic_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "branches": [
+            "main",
+            "topic"
+          ],
+          "status": ""
+        },
+        "ext_repo": {
+          "head": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "main_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "topic_ref": "c287ec19df243e0b3135037248d181fed1ed157c",
+          "branches": [
+            "main",
+            "topic"
+          ],
+          "status": ""
+        }
+      }
+    },
+    {
+      "name": "failure_unknown_workspace",
+      "command": "git bulk -w invalid-ws status",
+      "exit_code": 1,
+      "stderr": "usage: git bulk [--no-follow-symlinks] [--no-follow-hidden] [-q|--quiet] [-g] ([-a]|[-w <ws-name>]) <git command>\n       git bulk --addworkspace <ws-name> <ws-root-directory> (--from <URL or file>)\n       git bulk --removeworkspace <ws-name>\n       git bulk --addcurrent <ws-name>\n       git bulk --purge\n       git bulk --listall\nerror: unknown workspace name: invalid-ws"
+    }
+  ],
+  "versions": {
+    "git": "git version 2.55.0",
+    "python": "Python 3.15.0"
+  }
+}
