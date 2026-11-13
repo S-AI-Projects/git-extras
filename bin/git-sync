@@ -75,20 +75,19 @@ function main()
   fi
 
   if [ "${force}" != "YES" ]; then
+    local prompt_msg="Are you sure you want to clean all changes & sync with '${remote_branch}'? [y/N]: "
     if [ "${soft}" = "true" ]; then
-      echo -n "Are you sure you want to sync with '${remote_branch}'? [y/N]: "
-    else
-      echo -n "Are you sure you want to clean all changes & sync with '${remote_branch}'? [y/N]: "
+      prompt_msg="Are you sure you want to sync with '${remote_branch}'? [y/N]: "
     fi
+    printf '%s' "${prompt_msg}"
     local force
     read -r force
   fi
   case "${force}" in
     "Y" | "y" | "yes" | "Yes" | "YES" )
-      if [ "${soft}" = "true" ]; then
-        git fetch "${remote}" "${branch}" && git reset --hard "${remote_branch}"
-      else
-        git fetch "${remote}" "${branch}" && git reset --hard "${remote_branch}" && git clean -d -f -x
+      git fetch "${remote}" "${branch}" && git reset --hard "${remote_branch}"
+      if [ "${soft}" != "true" ]; then
+        git clean -d -f -x
       fi
       ;;
     * )

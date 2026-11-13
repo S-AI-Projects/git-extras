@@ -4,7 +4,7 @@
 .SH "NAME"
 \fBgit\-sync\fR \- Sync local branch with remote branch
 .SH "SYNOPSIS"
-\fBgit sync\fR [\-\-soft] [\-\-force] [ <remote> <branch> ]
+\fBgit sync\fR [\-h|\-\-help] [\-\-soft] [\-\-force] [ <remote> <branch> ]
 .SH "DESCRIPTION"
 Sync local branch with <remote>/<branch>\.
 .P
@@ -12,6 +12,10 @@ When <remote> and <branch> are not specified on the command line, upstream of lo
 .P
 Tracked changes will be reset, and untracked files and directories will be removed unless you add \-s(\-\-soft)\.
 .SH "OPTIONS"
+\-h, \-\-help
+.P
+Show help message\.
+.P
 \-\-soft or \-s
 .P
 Add this flag if you want to preserve untracked files and directories\.

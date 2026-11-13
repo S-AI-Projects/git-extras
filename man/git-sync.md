@@ -3,7 +3,7 @@ git-sync(1) -- Sync local branch with remote branch
 
 ## SYNOPSIS
 
-  `git sync` [--soft] [--force] [ &lt;remote&gt; &lt;branch&gt; ]
+  `git sync` [-h|--help] [--soft] [--force] [ &lt;remote&gt; &lt;branch&gt; ]
 
 ## DESCRIPTION
 
@@ -14,6 +14,10 @@ git-sync(1) -- Sync local branch with remote branch
   Tracked changes will be reset, and untracked files and directories will be removed unless you add -s(--soft).
 
 ## OPTIONS
+
+  -h, --help
+
+  Show help message.
 
   --soft or -s
 
