@@ -1,0 +1,206 @@
+{
+  "task_id": "R13-T020",
+  "tool": "git-unwip",
+  "total_cases_executed": 6,
+  "native_bats_tests_count": 6,
+  "native_bats_tests": [
+    "git-unwip successfully unwips a commit with exact message 'WIP'",
+    "git-unwip handles WIP commit with leading or trailing whitespace",
+    "git-unwip rejects commit that is not a WIP commit",
+    "git-unwip rejects commit that only contains WIP as a substring",
+    "git-unwip rejects positional arguments with diagnostic and exit 1",
+    "git-unwip -h and --help display usage and exit 0"
+  ],
+  "mutation_verification": {
+    "mutant_condition": "if [ 'WIP' = \"$LAST_COMMIT\" ]; then",
+    "original_condition": "if [ 'WIP' != \"$LAST_COMMIT\" ]; then",
+    "mutant_exit_code": 1,
+    "real_exit_code": 0,
+    "mutant_rejected": true
+  },
+  "cases": [
+    {
+      "name": "wip_commit_undo_success",
+      "command": "git unwip",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "89f7a591129cc84ee09f08e5b7c2455fa4abbd43",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "WIP",
+        "files": [
+          "file_a.txt",
+          "file_b.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "topic",
+        "head_sha": "40fe53a756670d8e9fc225538be9d4f914bec12a",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "Commit B",
+        "files": [
+          "file_a.txt",
+          "file_b.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "wip_whitespace_undo_success",
+      "command": "git unwip",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "29c2cca7fe1f192aef799680389f5f9a1b4e013b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "WIP",
+        "files": [
+          "file_a.txt",
+          "file_b.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "topic",
+        "head_sha": "40fe53a756670d8e9fc225538be9d4f914bec12a",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "Commit B",
+        "files": [
+          "file_a.txt",
+          "file_b.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "non_wip_commit_rejection",
+      "command": "git unwip",
+      "arguments": [],
+      "exit_status": 1,
+      "expected_exit_status": 1,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "08f934f5ee3e4a961a16f1915bdca5a612ab9257",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "Commit C",
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "08f934f5ee3e4a961a16f1915bdca5a612ab9257",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "Commit C",
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "wip_substring_commit_rejection",
+      "command": "git unwip",
+      "arguments": [],
+      "exit_status": 1,
+      "expected_exit_status": 1,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "4ab96a2c65c7755a6cd877c4fee1250ce2a3585b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "WIP: partial feature",
+        "files": [
+          "file_a.txt",
+          "file_b.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "topic",
+        "head_sha": "4ab96a2c65c7755a6cd877c4fee1250ce2a3585b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "WIP: partial feature",
+        "files": [
+          "file_a.txt",
+          "file_b.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "unexpected_positional_argument_rejection",
+      "command": "git unwip unexpected_positional_arg",
+      "arguments": [
+        "unexpected_positional_arg"
+      ],
+      "exit_status": 1,
+      "expected_exit_status": 1,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "08f934f5ee3e4a961a16f1915bdca5a612ab9257",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "Commit C",
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "08f934f5ee3e4a961a16f1915bdca5a612ab9257",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "commit_subject": "Commit C",
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "help_option_success",
+      "command": "git unwip -h",
+      "arguments": [
+        "-h"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "status": "PASSED"
+    }
+  ],
+  "global_config_unimpaired": true
+}

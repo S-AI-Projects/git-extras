@@ -3,7 +3,7 @@ git-unwip(1) -- Undo a Work In Progress commit
 
 ## SYNOPSIS
 
-`git unwip`
+`git unwip` [-h|--help]
 
 ## DESCRIPTION
 
@@ -11,7 +11,9 @@ git-unwip(1) -- Undo a Work In Progress commit
 
 ## OPTIONS
 
-  None
+  -h, --help
+
+  Show usage information.
 
 ## EXAMPLES
 
