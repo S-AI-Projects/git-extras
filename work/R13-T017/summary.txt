@@ -1,0 +1,16 @@
+R13-T017: git-psykorebase Verification Summary
+================================================
+Tool: git-psykorebase
+Native Bats Tests Executed: 8 (All Passed)
+Focused Isolated Test Cases: 7 (All Passed)
+Observed Option Tokens: --no-ff, --continue, -h/--help
+State Transitions Tested:
+  - Documented usage example with setup, command, output, and state verification
+  - Fast-forward default rebase
+  - Conflict pause and --continue resolution
+  - Missing arguments failure (exit 10)
+  - Too many arguments failure (exit 20)
+  - Invalid --continue branch failure (exit 30)
+  - Help usage option (-h)
+Global Git Config: Unchanged
+Status: SUCCESS

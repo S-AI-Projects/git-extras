@@ -77,7 +77,8 @@
 </p>
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>git psykorebase</code> &lt;target_branch&gt; [&lt;feature_branch&gt;] [--no-ff]<br>
+<p><code>git psykorebase</code> [-h|--help]<br>
+<code>git psykorebase</code> &lt;target_branch&gt; [&lt;feature_branch&gt;] [--no-ff]<br>
 <code>git psykorebase</code> --continue</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
@@ -87,15 +88,45 @@
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
+<p><code>-h, --help</code> Show usage information.</p>
+
 <p><code>--no-ff</code> Force a commit message even if there are no conflicts.</p>
 
-<p><code>--continue</code> Continue the rebase after conflicts have been resolved.</p>
+<p><code>-c, --continue</code> Continue the rebase after conflicts have been resolved.</p>
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
 
-<p>Rebase current branch on top of master:</p>
+<p>Complete rebase of a feature branch on top of main with merge commit:</p>
 
-<pre><code>$ git psykorebase master --no-ff
+<p>Setup:</p>
+
+<pre><code>$ git checkout -b feature main
+$ echo "feature change" &gt; feature.txt
+$ git add feature.txt &amp;&amp; git commit -m "Add feature"
+$ git checkout main
+$ echo "main change" &gt; main.txt
+$ git add main.txt &amp;&amp; git commit -m "Update main"
+$ git checkout feature
+</code></pre>
+
+<p>Command:</p>
+
+<pre><code>$ git psykorebase main --no-ff
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Rebasing feature on top of main
+</code></pre>
+
+<p>State verification:</p>
+
+<pre><code>$ git rev-parse --abbrev-ref HEAD
+feature
+$ git log -1 --pretty=%s
+Psycho-rebased branch feature on top of main
+$ test -f feature.txt &amp;&amp; test -f main.txt &amp;&amp; echo "State verified"
+State verified
 </code></pre>
 
 <p>Handle conflicts:</p>

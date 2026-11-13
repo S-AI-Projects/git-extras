@@ -4,20 +4,64 @@
 .SH "NAME"
 \fBgit\-psykorebase\fR \- Rebase a branch with a merge commit
 .SH "SYNOPSIS"
+\fBgit psykorebase\fR [\-h|\-\-help]
+.br
 \fBgit psykorebase\fR <target_branch> [<feature_branch>] [\-\-no\-ff]
 .br
 \fBgit psykorebase\fR \-\-continue
 .SH "DESCRIPTION"
 Rebase the \fBfeature_branch\fR on top of the \fBtarget_branch\fR, the \fBfeature_branch\fR defaults to the current one\.
 .SH "OPTIONS"
-\fB\-\-no\-ff\fR Force a commit message even if there are no conflicts\.
+\fB\-h\fR, \fB\-\-help\fR
+.IP
+Show usage information\.
 .P
-\fB\-\-continue\fR Continue the rebase after conflicts have been resolved\.
+\fB\-\-no\-ff\fR
+.IP
+Force a commit message even if there are no conflicts\.
+.P
+\fB\-c\fR, \fB\-\-continue\fR
+.IP
+Continue the rebase after conflicts have been resolved\.
 .SH "EXAMPLES"
-Rebase current branch on top of master:
+Complete rebase of a feature branch on top of main with merge commit:
+.P
+Setup:
 .IP "" 4
 .nf
-$ git psykorebase master \-\-no\-ff
+$ git checkout \-b feature main
+$ echo "feature change" > feature\.txt
+$ git add feature\.txt && git commit \-m "Add feature"
+$ git checkout main
+$ echo "main change" > main\.txt
+$ git add main\.txt && git commit \-m "Update main"
+$ git checkout feature
+.fi
+.IP "" 0
+.P
+Command:
+.IP "" 4
+.nf
+$ git psykorebase main \-\-no\-ff
+.fi
+.IP "" 0
+.P
+Output:
+.IP "" 4
+.nf
+Rebasing feature on top of main
+.fi
+.IP "" 0
+.P
+State verification:
+.IP "" 4
+.nf
+$ git rev\-parse \-\-abbrev\-ref HEAD
+feature
+$ git log \-1 \-\-pretty=%s
+Psycho\-rebased branch feature on top of main
+$ test \-f feature\.txt && test \-f main\.txt && echo "State verified"
+State verified
 .fi
 .IP "" 0
 .P

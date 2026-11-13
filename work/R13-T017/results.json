@@ -1,0 +1,273 @@
+{
+  "task_id": "R13-T017",
+  "tool": "git-psykorebase",
+  "total_cases_executed": 7,
+  "native_bats_tests_count": 8,
+  "native_bats_tests": [
+    "executes documented usage example with setup, command, output and state verification",
+    "rebases secondary branch on primary branch with fast-forward by default",
+    "explicit target and feature branch arguments: git psykorebase <target> <feature>",
+    "handles merge conflicts and resumes with --continue",
+    "--continue fails when not in a psykorebase branch",
+    "missing target branch argument fails with exit 10",
+    "too many arguments fails with exit 20",
+    "-h and --help display usage and exit 0"
+  ],
+  "cases": [
+    {
+      "name": "documented_usage_example_success",
+      "command": "git psykorebase main --no-ff",
+      "arguments": [
+        "main",
+        "--no-ff"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "feature",
+        "head_sha": "a0bbb6412fcecd3af36db84b21dd6eb426a71bfd",
+        "branches": [
+          "feature",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "feature.txt",
+          "main.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "feature",
+        "head_sha": "beee9ab3723872394f1180d06cff768c404b2c74",
+        "branches": [
+          "feature",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "feature.txt",
+          "main.txt"
+        ]
+      },
+      "commit_subject": "Psycho-rebased branch feature on top of main",
+      "parents_count": 2,
+      "status": "PASSED"
+    },
+    {
+      "name": "default_fast_forward_rebase_success",
+      "command": "git psykorebase main",
+      "arguments": [
+        "main"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "0887c7c3deceffd82e6cccda5eaefcf70aa9c78c",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "topic.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "topic",
+        "head_sha": "2901a0bf6745b2e3017e201ced2f85d97d30e072",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt",
+          "topic.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "conflict_and_continue_resolution",
+      "command": "git psykorebase main --no-ff && git psykorebase --continue",
+      "arguments": [
+        "--continue"
+      ],
+      "conflict_exit_status": 1,
+      "continue_exit_status": 0,
+      "expected_conflict_exit": 1,
+      "expected_continue_exit": 0,
+      "intermediate_state": {
+        "current_branch": "feature-rebased-on-top-of-main",
+        "head_sha": "f8f3f0c3938933f3ec9b33a70cc9a34dab03bb36",
+        "branches": [
+          "feature",
+          "feature-rebased-on-top-of-main",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "conflict.txt",
+          "main.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "feature",
+        "head_sha": "65d571a1a94c18eb3ebf074f65f0dde5de15d38f",
+        "branches": [
+          "feature",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "conflict.txt",
+          "main.txt"
+        ]
+      },
+      "commit_subject": "Psycho-rebased branch feature on top of main",
+      "status": "PASSED"
+    },
+    {
+      "name": "missing_arguments_failure",
+      "command": "git psykorebase",
+      "arguments": [],
+      "exit_status": 10,
+      "expected_exit_status": 10,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "too_many_arguments_failure",
+      "command": "git psykorebase main feature extra_arg",
+      "arguments": [
+        "main",
+        "feature",
+        "extra_arg"
+      ],
+      "exit_status": 20,
+      "expected_exit_status": 20,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "invalid_continue_branch_failure",
+      "command": "git psykorebase --continue",
+      "arguments": [
+        "--continue"
+      ],
+      "exit_status": 30,
+      "expected_exit_status": 30,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "help_option_success",
+      "command": "git psykorebase -h",
+      "arguments": [
+        "-h"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "43f64a235bcdf96a53c80d04e2c84724b0fb9f8b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "base.txt",
+          "main.txt"
+        ]
+      },
+      "status": "PASSED"
+    }
+  ],
+  "global_config_unimpaired": true
+}

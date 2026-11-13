@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-PROGRAM=$0
+PROGRAM="git psykorebase"
 PRIMARY_BRANCH=""
 SECONDARY_BRANCH=""
 FF="--ff"
@@ -9,12 +9,13 @@ current_branch() {
     git rev-parse --abbrev-ref HEAD
 }
 
-function usage()
+usage()
 {
     echo "USAGE: ${PROGRAM} PRIMARY_BRANCH [SECONDARY_BRANCH] [--no-ff]"
     echo "USAGE: ${PROGRAM} --continue"
     echo ""
     echo "OPTIONS:"
+    echo "  -h|--help:			Show usage information."
     echo "  --no-ff:			Force rebase commit."
     echo "  -c|--continue:		Continue after the user updates conflicts."
 }
@@ -24,6 +25,10 @@ do
   key="$1"
 
   case $key in
+      -h|--help)
+      usage
+      exit 0
+      ;;
       --no-ff)
       FF="--no-ff"
       ;;
@@ -52,7 +57,7 @@ if [[ "$CONTINUE" == "yes" ]]; then
     TARGET_BRANCH=$(current_branch)
     SECONDARY_BRANCH=${TARGET_BRANCH%"-rebased-on-top-of-"*}
     PRIMARY_BRANCH=${TARGET_BRANCH#*"-rebased-on-top-of-"}
-    if [[ "${SECONDARY_BRANCH}-rebased-on-top-of-${PRIMARY_BRANCH}" != $TARGET_BRANCH ]]; then
+    if [[ "${SECONDARY_BRANCH}-rebased-on-top-of-${PRIMARY_BRANCH}" != "$TARGET_BRANCH" ]]; then
         echo "Couldn't continue rebasing on ${TARGET_BRANCH}"
         exit 30  # Impossible to detect PRIMARY_BRANCH AND SECONDARY_BRANCH
     fi
