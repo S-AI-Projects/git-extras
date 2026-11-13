@@ -7,7 +7,7 @@
 \fBgit\-undo\fR \- Remove latest commits
 .
 .SH "SYNOPSIS"
-\fBgit undo\fR [\-s, \-\-soft, \-h, \-\-hard] [<commitcount>]
+\fBgit undo\fR [\-s, \-\-soft, \-h, \-\-hard, \-\-help] [\-c, \-\-count <commitcount>] [<commitcount>]
 .
 .SH "DESCRIPTION"
 Removes the latest commits\.
@@ -25,10 +25,16 @@ Rolls back the commit(s) but leaves the changes in the staging area\.
 This option wipes your commit(s), so that your changes cannot be recovered\. Use with care\. To avoid being confused with \fB\-\-help\fR, there will be a confirmation when \fB\-h\fR is specified\.
 .
 .P
-<commitcount>
+\-\-count or \-c or <commitcount>
 .
 .P
 Number of commits to remove\. Defaults to \fI1\fR, thus remove the latest commit\.
+.
+.P
+\-\-help
+.
+.P
+Show help message\.
 .
 .SH "EXAMPLES"
 Removes the latest commit\.
@@ -64,6 +70,19 @@ Remove the latest 3 commits:
 .nf
 
 $ git undo 3
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Remove the latest 3 commits using \-\-count:
+.
+.IP "" 4
+.
+.nf
+
+$ git undo \-\-count 3
 .
 .fi
 .

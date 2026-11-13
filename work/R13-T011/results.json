@@ -1,0 +1,644 @@
+{
+  "tool_versions": {
+    "python": "3.15.2",
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0"
+  },
+  "native_tests_count": 16,
+  "native_tests": [
+    [
+      "undo removes latest commit with default options",
+      "PASSED"
+    ],
+    [
+      "undo multiple commits with positional count",
+      "PASSED"
+    ],
+    [
+      "undo with --soft leaves changes unstaged",
+      "PASSED"
+    ],
+    [
+      "undo with -s leaves changes unstaged",
+      "PASSED"
+    ],
+    [
+      "undo with --hard removes changes completely",
+      "PASSED"
+    ],
+    [
+      "undo with --count option",
+      "PASSED"
+    ],
+    [
+      "undo with -c option",
+      "PASSED"
+    ],
+    [
+      "undo with --count=n option",
+      "PASSED"
+    ],
+    [
+      "undo with --help shows usage",
+      "PASSED"
+    ],
+    [
+      "undo with help argument shows usage",
+      "PASSED"
+    ],
+    [
+      "undo fails in repository without commits",
+      "PASSED"
+    ],
+    [
+      "undo fails outside of a git repository",
+      "PASSED"
+    ],
+    [
+      "undo fails when count exceeds commit count",
+      "PASSED"
+    ],
+    [
+      "hard undo fails when trying to undo all commits",
+      "PASSED"
+    ],
+    [
+      "undo rejects zero count",
+      "PASSED"
+    ],
+    [
+      "undo rejects invalid parameter",
+      "PASSED"
+    ]
+  ],
+  "shell_checks_count": 14,
+  "shell_checks": [
+    {
+      "name": "ordinary_success_default_undo",
+      "actual_arguments": [
+        "git",
+        "undo"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "3dd6731f397c280bc81fa236309b500cfd6ab91b",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "19f9313389ad4154ccfe1dd38adffc00b1228e64",
+        "head_message": "commit B",
+        "commit_count": 2,
+        "branch": "main",
+        "status_porcelain": [
+          "A  fileC.txt"
+        ],
+        "staged_files": [
+          "fileC.txt"
+        ]
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_positional_count_2",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "2"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "3dd6731f397c280bc81fa236309b500cfd6ab91b",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "edd5010093e22fe7ea3a0ffe02b76bd99e6294dc",
+        "head_message": "commit A",
+        "commit_count": 1,
+        "branch": "main",
+        "status_porcelain": [
+          "A  fileB.txt",
+          "A  fileC.txt"
+        ],
+        "staged_files": [
+          "fileB.txt",
+          "fileC.txt"
+        ]
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_soft_flag",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "--soft"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "3dd6731f397c280bc81fa236309b500cfd6ab91b",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "19f9313389ad4154ccfe1dd38adffc00b1228e64",
+        "head_message": "commit B",
+        "commit_count": 2,
+        "branch": "main",
+        "status_porcelain": [
+          "?? fileC.txt"
+        ],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_soft_short_flag",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "-s"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "3dd6731f397c280bc81fa236309b500cfd6ab91b",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "19f9313389ad4154ccfe1dd38adffc00b1228e64",
+        "head_message": "commit B",
+        "commit_count": 2,
+        "branch": "main",
+        "status_porcelain": [
+          "?? fileC.txt"
+        ],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_hard_flag",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "--hard"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "HEAD is now at 19f9313 commit B\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "3dd6731f397c280bc81fa236309b500cfd6ab91b",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "19f9313389ad4154ccfe1dd38adffc00b1228e64",
+        "head_message": "commit B",
+        "commit_count": 2,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_count_flag",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "--count",
+        "2"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "9add18712e536582ebbe74e6663228419ff55d55",
+        "head_message": "commit A",
+        "commit_count": 1,
+        "branch": "main",
+        "status_porcelain": [
+          "A  fileB.txt",
+          "A  fileC.txt"
+        ],
+        "staged_files": [
+          "fileB.txt",
+          "fileC.txt"
+        ]
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_count_short_flag",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "-c",
+        "2"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "9add18712e536582ebbe74e6663228419ff55d55",
+        "head_message": "commit A",
+        "commit_count": 1,
+        "branch": "main",
+        "status_porcelain": [
+          "A  fileB.txt",
+          "A  fileC.txt"
+        ],
+        "staged_files": [
+          "fileB.txt",
+          "fileC.txt"
+        ]
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "ordinary_success_help_flag",
+      "actual_arguments": [
+        "git-undo",
+        "--help"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "Usage: git undo [OPTIONS] [<commitcount>]\n\nOptions:\n  -s, --soft        Roll back commit(s) but leave changes in staging area.\n  -h, --hard        Wipe commit(s) and changes completely.\n  -c, --count <n>   Number of commits to remove.\n  --help            Show this help message.\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_failure_empty_repo_no_commits",
+      "actual_arguments": [
+        "git",
+        "undo"
+      ],
+      "expected_exit_status": [
+        1,
+        128
+      ],
+      "actual_exit_status": 1,
+      "stdout": "",
+      "stderr": "Not git commit found!\n",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": false,
+        "head_sha": null,
+        "head_message": null,
+        "commit_count": 0,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": false,
+        "head_sha": null,
+        "head_message": null,
+        "commit_count": 0,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_failure_outside_git_repo",
+      "actual_arguments": [
+        "git",
+        "undo"
+      ],
+      "expected_exit_status": [
+        1,
+        128
+      ],
+      "actual_exit_status": 1,
+      "stdout": "",
+      "stderr": "Not a git repo!\n",
+      "before_state": {
+        "is_git_repo": false
+      },
+      "after_state": {
+        "is_git_repo": false
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_failure_count_exceeds_available",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "5"
+      ],
+      "expected_exit_status": 1,
+      "actual_exit_status": 1,
+      "stdout": "Only 3 commits, cannot undo 5\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_failure_hard_undo_all_commits",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "--hard",
+        "3"
+      ],
+      "expected_exit_status": 1,
+      "actual_exit_status": 1,
+      "stdout": "Cannot hard undo all commits\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "66e268a7fabc3e1d2cc6d9a7b2ef6daf631d93a8",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "edge_state_zero_count_rejected",
+      "actual_arguments": [
+        "git",
+        "undo",
+        "0"
+      ],
+      "expected_exit_status": 1,
+      "actual_exit_status": 1,
+      "stdout": "Invalid undo count: 0\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "bbdaca82249b2418b1ea18b0dabf0e5391a4247a",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "bbdaca82249b2418b1ea18b0dabf0e5391a4247a",
+        "head_message": "commit C",
+        "commit_count": 3,
+        "branch": "main",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "edge_state_topic_branch_undo",
+      "actual_arguments": [
+        "git",
+        "undo"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "5d586b14976c6cd3d2855f3e2ef0962737e95fa5",
+        "head_message": "commit T",
+        "commit_count": 3,
+        "branch": "topic",
+        "status_porcelain": [],
+        "staged_files": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "has_commits": true,
+        "head_sha": "a4e7b84abfbd79c5e6eaad84db7101dce3af0082",
+        "head_message": "commit B",
+        "commit_count": 2,
+        "branch": "topic",
+        "status_porcelain": [
+          "A  fileT.txt"
+        ],
+        "staged_files": [
+          "fileT.txt"
+        ]
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    }
+  ]
+}
