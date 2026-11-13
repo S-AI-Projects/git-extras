@@ -3,12 +3,18 @@ git-delete-merged-branches(1) -- Delete merged branches
 
 ## SYNOPSIS
 
-`git delete-merged-branches`
+`git delete-merged-branches` [-h|--help]
 
 ## DESCRIPTION
 
   Deletes all branches merged in to current HEAD. Does not delete the default branch, even if run from a branch that is
   a descendant of it.
+
+## OPTIONS
+
+  -h, --help
+
+  Show usage information.
 
 ## EXAMPLES
 

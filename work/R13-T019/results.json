@@ -1,0 +1,223 @@
+{
+  "task_id": "R13-T019",
+  "tool": "git-delete-merged-branches",
+  "total_cases_executed": 6,
+  "native_bats_tests_count": 9,
+  "native_bats_tests": [
+    "show-merged-branches lists merged branches but not default branch",
+    "show-unmerged-branches lists unmerged branches",
+    "delete-merged-branches deletes merged branches and preserves default and unmerged branches",
+    "delete-merged-branches when checked out on feature branch protects default branch",
+    "delete-merged-branches handles branch names with special characters",
+    "delete-merged-branches protects master when master is the default branch",
+    "show-merged-branches, show-unmerged-branches, and delete-merged-branches succeed when no branches match",
+    "delete-merged-branches -h and --help show usage and exit 0",
+    "delete-merged-branches rejects unknown option and exits with failure"
+  ],
+  "cases": [
+    {
+      "name": "merged_branch_deletion_success",
+      "command": "git delete-merged-branches",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "6dc6bb643dcc9fafef451081a3be94a058a3da6b",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_b.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "6dc6bb643dcc9fafef451081a3be94a058a3da6b",
+        "branches": [
+          "main"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_b.txt",
+          "file_c.txt"
+        ]
+      },
+      "deleted_branches": [
+        "topic"
+      ],
+      "preserved_branches": [
+        "main"
+      ],
+      "status": "PASSED"
+    },
+    {
+      "name": "preserve_unmerged_branch_success",
+      "command": "git delete-merged-branches",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "8cb71be116e4c33346d20c738c69224263dee97c",
+        "branches": [
+          "feature-merged",
+          "feature-unmerged",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt",
+          "merged.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "8cb71be116e4c33346d20c738c69224263dee97c",
+        "branches": [
+          "feature-unmerged",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt",
+          "merged.txt"
+        ]
+      },
+      "deleted_branches": [
+        "feature-merged"
+      ],
+      "preserved_branches": [
+        "main",
+        "feature-unmerged"
+      ],
+      "status": "PASSED"
+    },
+    {
+      "name": "protect_default_from_feature_branch",
+      "command": "git delete-merged-branches",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "feature-active",
+        "head_sha": "6fc3a68489818adaac026b07f88ff5394d29216c",
+        "branches": [
+          "feature-active",
+          "main",
+          "sub-merged",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "feature-active",
+        "head_sha": "6fc3a68489818adaac026b07f88ff5394d29216c",
+        "branches": [
+          "feature-active",
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "deleted_branches": [
+        "sub-merged"
+      ],
+      "preserved_branches": [
+        "main",
+        "feature-active"
+      ],
+      "status": "PASSED"
+    },
+    {
+      "name": "no_matching_branches_idempotent",
+      "command": "git delete-merged-branches",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "6cb9e781ed117170f9fa9426ef45f672f72f1f3a",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "6cb9e781ed117170f9fa9426ef45f672f72f1f3a",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "unknown_option_failure_propagation",
+      "command": "git delete-merged-branches --invalid-option",
+      "arguments": [
+        "--invalid-option"
+      ],
+      "exit_status": 1,
+      "expected_exit_status": 1,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "6cb9e781ed117170f9fa9426ef45f672f72f1f3a",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "6cb9e781ed117170f9fa9426ef45f672f72f1f3a",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "help_option_success",
+      "command": "git delete-merged-branches -h",
+      "arguments": [
+        "-h"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "status": "PASSED"
+    }
+  ],
+  "global_config_unimpaired": true,
+  "temporary_state_cleaned": true,
+  "independent_of_unrelated_services": true
+}
