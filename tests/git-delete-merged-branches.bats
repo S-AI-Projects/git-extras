@@ -101,3 +101,19 @@ setup() {
 	assert_success
 }
 
+@test "delete-merged-branches -h and --help show usage and exit 0" {
+	run git delete-merged-branches -h
+	assert_success
+	assert_line -p "Usage: git delete-merged-branches"
+
+	run git-delete-merged-branches --help
+	assert_success
+	assert_line -p "Usage: git delete-merged-branches"
+}
+
+@test "delete-merged-branches rejects unknown option and exits with failure" {
+	run git delete-merged-branches --invalid-option
+	assert_failure 1
+	assert_line -p "git-delete-merged-branches: unknown option '--invalid-option'"
+}
+

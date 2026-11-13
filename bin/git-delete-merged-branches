@@ -1,8 +1,26 @@
 #!/usr/bin/env bash
 
+usage() {
+    echo "Usage: git delete-merged-branches [-h|--help]"
+}
+
+case "$1" in
+    -h|--help)
+        usage
+        exit 0
+        ;;
+    "")
+        ;;
+    *)
+        echo "git-delete-merged-branches: unknown option '$1'" >&2
+        usage >&2
+        exit 1
+        ;;
+esac
+
 default_branch=$(git_extra_default_branch)
 branches=$(git branch --no-color --merged | grep -vE "^(\*|\+)" | sed 's/^[ ]*//' | grep -Fvx -e "$default_branch" -e "main" -e "master" -e "trunk" -e "svn" || true)
 if [ -n "$branches" ]
 then
-    echo "$branches" | xargs git branch -d
+    echo "$branches" | xargs git branch -d || exit $?
 fi

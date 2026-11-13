@@ -1,0 +1,9 @@
+show-merged-branches lists merged branches but not default branch
+show-unmerged-branches lists unmerged branches
+delete-merged-branches deletes merged branches and preserves default and unmerged branches
+delete-merged-branches when checked out on feature branch protects default branch
+delete-merged-branches handles branch names with special characters
+delete-merged-branches protects master when master is the default branch
+show-merged-branches, show-unmerged-branches, and delete-merged-branches succeed when no branches match
+delete-merged-branches -h and --help show usage and exit 0
+delete-merged-branches rejects unknown option and exits with failure
