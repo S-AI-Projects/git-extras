@@ -1,0 +1,52 @@
+=== git-unlock Verification Summary (R13-T014) ===
+
+Tool Versions:
+  python: 3.15.2
+  git: git version 2.55.0
+  bash: GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)
+  bats: Bats 1.14.0
+
+Observed Option Tokens: --no-skip-worktree
+
+Native Bats Tests (7):
+  ok 1 git-unlock: unlock file with path containing spaces
+  ok 2 git-unlock: unlock file with wildcard in filename without affecting unrelated files
+  ok 3 git-unlock: unlock multiple files preserving quoted argument boundaries
+  ok 4 git-unlock: optional argument --help shows usage
+  ok 5 git-unlock: optional argument -h shows usage
+  ok 6 git-unlock: invalid argument combination - missing filename
+  ok 7 git-unlock: edge-state - non-existent file fails and leaves state intact
+
+Focused Shell Checks (8):
+  [PASS] path_containing_spaces_exact_argument_boundary
+    Command: git unlock "file with spaces.txt"
+    Exit Status: 0 (expected 0)
+
+  [PASS] subfolder_path_containing_spaces
+    Command: git unlock "dir with spaces/sub file with space.txt"
+    Exit Status: 0 (expected 0)
+
+  [PASS] argument_containing_wildcard_no_shell_expansion_affecting_unrelated
+    Command: git unlock "file*with*star.txt"
+    Exit Status: 0 (expected 0)
+
+  [PASS] multiple_arguments_preserving_quoted_boundaries
+    Command: git unlock "file with spaces 1.txt" "file with spaces 2.txt"
+    Exit Status: 0 (expected 0)
+
+  [PASS] optional_argument_help_flag
+    Command: git unlock --help
+    Exit Status: 0 (expected 0)
+
+  [PASS] optional_argument_short_help_flag
+    Command: git unlock -h
+    Exit Status: 0 (expected 0)
+
+  [PASS] documented_invalid_combination_missing_filename
+    Command: git unlock 
+    Exit Status: 1 (expected 1)
+
+  [PASS] edge_state_non_existent_file
+    Command: git unlock non_existent_file.txt
+    Exit Status: 128 (expected 128)
+

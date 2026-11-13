@@ -1,0 +1,7 @@
+ok 1 git-unlock: unlock file with path containing spaces
+ok 2 git-unlock: unlock file with wildcard in filename without affecting unrelated files
+ok 3 git-unlock: unlock multiple files preserving quoted argument boundaries
+ok 4 git-unlock: optional argument --help shows usage
+ok 5 git-unlock: optional argument -h shows usage
+ok 6 git-unlock: invalid argument combination - missing filename
+ok 7 git-unlock: edge-state - non-existent file fails and leaves state intact

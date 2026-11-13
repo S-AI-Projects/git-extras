@@ -4,13 +4,17 @@
 .SH "NAME"
 \fBgit\-unlock\fR \- Unlock a file excluded from version control
 .SH "SYNOPSIS"
-\fBgit unlock\fR <filename>
+\fBgit unlock\fR [\-h|\-\-help] <filename>\.\.\.
 .SH "DESCRIPTION"
 Unlock local files from version control\.
 .SH "OPTIONS"
-<filename>
+\-h, \-\-help
 .P
-The name of the filename\.
+Show help message\.
+.P
+<filename>\.\.\.
+.P
+The name of the file(s) to unlock\.
 .SH "EXAMPLES"
 .nf
 $ git unlock config/database\.yml
