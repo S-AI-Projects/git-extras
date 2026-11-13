@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-test $# -eq 0 && echo "branch argument required." 1>&2 && exit 1
+case $1 in
+  -h|--help)
+    echo "Usage: git create-branch [-h|--help] [-r|--remote [remote_name]] [--from <start_point>] <branchname>"
+    exit 0
+    ;;
+esac
+
+test $# -eq 0 && echo "branch argument required." >&2 && exit 1
 
 # preference takes lowest priority; look for remote from prefs first
-REMOTE_PREF=$(git config git-extras.create-branch.remote)
+REMOTE_PREF=$(git config git-extras.create-branch.remote || true)
 if [ -n "$REMOTE_PREF" ]; then
 	REMOTE=$REMOTE_PREF
 fi
@@ -12,7 +19,7 @@ while test $# != 0
 do
 	case $1 in
 		-r|--remote)
-			if [[ -n $2 ]]
+			if [[ -n $2 && $2 != -* ]]
 			then
 				REMOTE=$2
 				shift
@@ -39,11 +46,25 @@ then
 	REMOTE=origin
 fi
 
-test -z "$BRANCH" && echo "branch argument required." 1>&2 && exit 1
+test -z "$BRANCH" && echo "branch argument required." >&2 && exit 1
 
 if [[ -n $REMOTE ]]
 then
-	stderr=$(git_extra_mktemp)
+	if ! command -v git_extra_mktemp &>/dev/null; then
+		if command -v mktemp &>/dev/null; then
+			git_extra_mktemp() {
+				mktemp -t "$(basename "$0")".XXXXXXX
+			}
+		else
+			echo "error: mktemp is required but not installed." >&2
+			exit 1
+		fi
+	fi
+	stderr=$(git_extra_mktemp 2>/dev/null || true)
+	if [ -z "$stderr" ] || [ ! -f "$stderr" ]; then
+		echo "error: unable to create temporary file, mktemp required." >&2
+		exit 1
+	fi
 	git ls-remote --exit-code "$REMOTE" 1>/dev/null 2>"$stderr"
 	REMOTE_EXIT=$?
 	REMOTE_ERROR=$(<"$stderr")

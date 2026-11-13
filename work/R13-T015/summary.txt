@@ -1,0 +1,76 @@
+=== git-create-branch Verification Summary (R13-T015) ===
+
+Tool Versions:
+  python: 3.15.2
+  git: git version 2.55.0
+  bash: GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)
+  bats: Bats 1.14.0
+
+Observed Option Tokens: --remote, --from
+
+Native Bats Tests (9):
+  ok 1 git-create-branch: create local branch from HEAD
+  ok 2 git-create-branch: create local branch using --from start_point
+  ok 3 git-create-branch: create branch with -r remote tracking using local bare remote
+  ok 4 git-create-branch: create branch with remote preference in local config
+  ok 5 git-create-branch: missing-dependency branch with unreachable/missing remote
+  ok 6 git-create-branch: optional argument --help shows usage
+  ok 7 git-create-branch: optional argument -h shows usage
+  ok 8 git-create-branch: invalid argument combination - missing branch argument
+  ok 9 git-create-branch: missing-dependency branch when mktemp is unavailable
+
+Focused Shell Checks (9):
+  [PASS] create_local_branch_from_head
+    Command: git create-branch feat-local
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  feat-local
+
+  [PASS] create_local_branch_with_from_option
+    Command: git create-branch --from topic feat-from-topic
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  feat-from-topic
+
+  [PASS] create_remote_tracking_branch_with_remote_option
+    Command: git create-branch -r feat-remote
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  feat-remote
+
+  [PASS] deterministic_local_config_remote_preference
+    Command: git create-branch feat-pref
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  feat-pref
+
+  [PASS] missing_dependency_branch_unreachable_remote
+    Command: git create-branch -r nonexistent-remote bad-branch
+    Exit Status: 128 (expected 128)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] missing_dependency_branch_stubbed_mktemp_failure
+    Command: git create-branch -r origin fail-mktemp-branch
+    Exit Status: 1 (expected 1)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] optional_argument_help_flag
+    Command: git create-branch --help
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] optional_argument_short_help_flag
+    Command: git create-branch -h
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] documented_invalid_combination_missing_branch
+    Command: git create-branch 
+    Exit Status: 1 (expected 1)
+    Before Branch: main
+    After Branch:  main
+

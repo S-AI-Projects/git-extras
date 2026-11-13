@@ -1,0 +1,390 @@
+{
+  "tool_versions": {
+    "python": "3.15.2",
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0"
+  },
+  "observed_option_tokens": [
+    "--remote",
+    "--from"
+  ],
+  "native_bats": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "tests": [
+      "ok 1 git-create-branch: create local branch from HEAD",
+      "ok 2 git-create-branch: create local branch using --from start_point",
+      "ok 3 git-create-branch: create branch with -r remote tracking using local bare remote",
+      "ok 4 git-create-branch: create branch with remote preference in local config",
+      "ok 5 git-create-branch: missing-dependency branch with unreachable/missing remote",
+      "ok 6 git-create-branch: optional argument --help shows usage",
+      "ok 7 git-create-branch: optional argument -h shows usage",
+      "ok 8 git-create-branch: invalid argument combination - missing branch argument",
+      "ok 9 git-create-branch: missing-dependency branch when mktemp is unavailable"
+    ]
+  },
+  "focused_checks": [
+    {
+      "name": "create_local_branch_from_head",
+      "command": "git create-branch feat-local",
+      "actual_arguments": [
+        "feat-local"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "Switched to a new branch 'feat-local'\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "feat-local",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/feat-local": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "create_local_branch_with_from_option",
+      "command": "git create-branch --from topic feat-from-topic",
+      "actual_arguments": [
+        "--from",
+        "topic",
+        "feat-from-topic"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "Switched to a new branch 'feat-from-topic'\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "feat-from-topic",
+        "head_sha": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47",
+        "local_refs": {
+          "refs/heads/feat-from-topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47",
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "create_remote_tracking_branch_with_remote_option",
+      "command": "git create-branch -r feat-remote",
+      "actual_arguments": [
+        "-r",
+        "feat-remote"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "branch 'feat-remote' set up to track 'origin/feat-remote'.\n",
+      "stderr": "To /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_cb_create_remote_tracking_branch_with_remote_option_w82htxxr/origin.git\n * [new branch]      HEAD -> feat-remote\nSwitched to a new branch 'feat-remote'\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6"
+        },
+        "branch_configs": {
+          "branch.main.remote": "origin",
+          "branch.main.merge": "refs/heads/main"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "feat-remote",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/feat-remote": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/feat-remote": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/remotes/origin/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6"
+        },
+        "branch_configs": {
+          "branch.main.remote": "origin",
+          "branch.main.merge": "refs/heads/main",
+          "branch.feat-remote.remote": "origin",
+          "branch.feat-remote.merge": "refs/heads/feat-remote"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "deterministic_local_config_remote_preference",
+      "command": "git create-branch feat-pref",
+      "actual_arguments": [
+        "feat-pref"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "branch 'feat-pref' set up to track 'custom-remote/feat-pref'.\n",
+      "stderr": "To /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_cb_deterministic_local_config_remote_preference_vziez294/custom-remote.git\n * [new branch]      HEAD -> feat-pref\nSwitched to a new branch 'feat-pref'\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {
+          "refs/remotes/custom-remote/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6"
+        },
+        "branch_configs": {
+          "branch.main.remote": "custom-remote",
+          "branch.main.merge": "refs/heads/main"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "feat-pref",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/feat-pref": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {
+          "refs/remotes/custom-remote/feat-pref": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/remotes/custom-remote/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6"
+        },
+        "branch_configs": {
+          "branch.main.remote": "custom-remote",
+          "branch.main.merge": "refs/heads/main",
+          "branch.feat-pref.remote": "custom-remote",
+          "branch.feat-pref.merge": "refs/heads/feat-pref"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "missing_dependency_branch_unreachable_remote",
+      "command": "git create-branch -r nonexistent-remote bad-branch",
+      "actual_arguments": [
+        "-r",
+        "nonexistent-remote",
+        "bad-branch"
+      ],
+      "expected_exit": 128,
+      "actual_exit": 128,
+      "stdout": "\n    Error connecting to remote 'nonexistent-remote': fatal: 'nonexistent-remote' does not appear to be a git repository\nfatal: Could not read from remote repository.\n\nPlease make sure you have the correct access rights\nand the repository exists.\n\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "missing_dependency_branch_stubbed_mktemp_failure",
+      "command": "git create-branch -r origin fail-mktemp-branch",
+      "actual_arguments": [
+        "-r",
+        "origin",
+        "fail-mktemp-branch"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "error: unable to create temporary file, mktemp required.\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6"
+        },
+        "branch_configs": {
+          "branch.main.remote": "origin",
+          "branch.main.merge": "refs/heads/main"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+        "local_refs": {
+          "refs/heads/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6",
+          "refs/heads/topic": "cae9d0dcf0410dd02c1611e2bd3f3470d7442b47"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "5e29ac14d5fc2dbf3e74686de362e4cc88dcb5a6"
+        },
+        "branch_configs": {
+          "branch.main.remote": "origin",
+          "branch.main.merge": "refs/heads/main"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_help_flag",
+      "command": "git create-branch --help",
+      "actual_arguments": [
+        "--help"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage: git create-branch [-h|--help] [-r|--remote [remote_name]] [--from <start_point>] <branchname>\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+        "local_refs": {
+          "refs/heads/main": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+          "refs/heads/topic": "61204380c057fb3647cddd09edbee6b1dc808d8c"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+        "local_refs": {
+          "refs/heads/main": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+          "refs/heads/topic": "61204380c057fb3647cddd09edbee6b1dc808d8c"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_short_help_flag",
+      "command": "git create-branch -h",
+      "actual_arguments": [
+        "-h"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage: git create-branch [-h|--help] [-r|--remote [remote_name]] [--from <start_point>] <branchname>\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+        "local_refs": {
+          "refs/heads/main": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+          "refs/heads/topic": "61204380c057fb3647cddd09edbee6b1dc808d8c"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+        "local_refs": {
+          "refs/heads/main": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+          "refs/heads/topic": "61204380c057fb3647cddd09edbee6b1dc808d8c"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_invalid_combination_missing_branch",
+      "command": "git create-branch ",
+      "actual_arguments": [],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "branch argument required.\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+        "local_refs": {
+          "refs/heads/main": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+          "refs/heads/topic": "61204380c057fb3647cddd09edbee6b1dc808d8c"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+        "local_refs": {
+          "refs/heads/main": "cf8b728fb73db3e58859f11d10bcd8ff4699ca4b",
+          "refs/heads/topic": "61204380c057fb3647cddd09edbee6b1dc808d8c"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    }
+  ]
+}

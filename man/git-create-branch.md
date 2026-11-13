@@ -3,13 +3,17 @@ git-create-branch(1) -- Create branches
 
 ## SYNOPSIS
 
-`git create-branch` [-r|--remote [remote_name]] &lt;branchname&gt;
+`git create-branch` [-h|--help] [-r|--remote [remote_name]] [--from <start_point>] &lt;branchname&gt;
 
 ## DESCRIPTION
 
 Creates local branch named &lt;branchname&gt; and optionally sets up a remote tracking branch.
 
 ## OPTIONS
+
+-h, --help
+
+Show help message.
 
 &lt;-r|--remote [remote_name]&gt;
 
