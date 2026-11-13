@@ -1,0 +1,10 @@
+ok 1 git-sync: sync with upstream using --force (hard reset and clean untracked)
+ok 2 git-sync: sync with --soft preserves untracked files
+ok 3 git-sync: sync with explicit remote and branch arguments
+ok 4 git-sync: interactive confirmation prompt accepted
+ok 5 git-sync: interactive confirmation prompt declined cancels sync
+ok 6 git-sync: optional argument --help shows usage
+ok 7 git-sync: optional argument -h shows usage
+ok 8 git-sync: error when local branch has no upstream information
+ok 9 git-sync: error when too few arguments supplied
+ok 10 git-sync: error when too many arguments supplied

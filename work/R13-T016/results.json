@@ -1,0 +1,433 @@
+{
+  "tool_versions": {
+    "python": "3.15.2",
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0"
+  },
+  "observed_option_tokens": [
+    "--help",
+    "--soft",
+    "--force",
+    "--abbrev-ref"
+  ],
+  "simplification_explanation": "In bin/git-sync, the confirmation/execution branch in main() was simplified. Previously, the execution branch duplicated 'git fetch \"${remote}\" \"${branch}\" && git reset --hard \"${remote_branch}\"' across both the soft=true and soft=false branches. The implementation now executes the core fetch-and-reset operation as a single unified step, followed by untracked cleanup ('git clean -d -f -x') executed conditionally only when soft!=true. This clearly separates the synchronization responsibility from the working tree hygiene responsibility while strictly preserving all observable behavior.",
+  "native_bats": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "tests": [
+      "ok 1 git-sync: sync with upstream using --force (hard reset and clean untracked)",
+      "ok 2 git-sync: sync with --soft preserves untracked files",
+      "ok 3 git-sync: sync with explicit remote and branch arguments",
+      "ok 4 git-sync: interactive confirmation prompt accepted",
+      "ok 5 git-sync: interactive confirmation prompt declined cancels sync",
+      "ok 6 git-sync: optional argument --help shows usage",
+      "ok 7 git-sync: optional argument -h shows usage",
+      "ok 8 git-sync: error when local branch has no upstream information",
+      "ok 9 git-sync: error when too few arguments supplied",
+      "ok 10 git-sync: error when too many arguments supplied"
+    ]
+  },
+  "focused_checks": [
+    {
+      "name": "characterization_sync_upstream_force_cleans_untracked",
+      "command": "git sync --force",
+      "actual_arguments": [
+        "--force"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "HEAD is now at 7764f16 Commit B\nRemoving untracked.txt\n",
+      "stderr": "From /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_sync_characterization_sync_upstream_force_cleans_untracked_6u_biv5c/origin\n * branch            main       -> FETCH_HEAD\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "d66c22fde71179c80cc924fb30379e8984876d33",
+        "local_refs": {
+          "refs/heads/main": "d66c22fde71179c80cc924fb30379e8984876d33",
+          "refs/heads/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/remotes/origin/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "status_porcelain": "?? untracked.txt"
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+        "local_refs": {
+          "refs/heads/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/heads/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/remotes/origin/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "characterization_sync_soft_preserves_untracked",
+      "command": "git sync --soft --force",
+      "actual_arguments": [
+        "--soft",
+        "--force"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "HEAD is now at 7764f16 Commit B\n",
+      "stderr": "From /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_sync_characterization_sync_soft_preserves_untracked_lbhupxzk/origin\n * branch            main       -> FETCH_HEAD\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "d66c22fde71179c80cc924fb30379e8984876d33",
+        "local_refs": {
+          "refs/heads/main": "d66c22fde71179c80cc924fb30379e8984876d33",
+          "refs/heads/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/remotes/origin/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "status_porcelain": "?? preserve_untracked.txt"
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+        "local_refs": {
+          "refs/heads/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/heads/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/remotes/origin/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "status_porcelain": "?? preserve_untracked.txt"
+      }
+    },
+    {
+      "name": "characterization_sync_explicit_remote_and_branch",
+      "command": "git sync -f origin main",
+      "actual_arguments": [
+        "-f",
+        "origin",
+        "main"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "HEAD is now at 7764f16 Commit B\n",
+      "stderr": "From /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_sync_characterization_sync_explicit_remote_and_branch_ttvn83sz/origin\n * branch            main       -> FETCH_HEAD\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+        "local_refs": {
+          "refs/heads/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/heads/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/remotes/origin/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+        "local_refs": {
+          "refs/heads/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/heads/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "7764f16b54ed648bc8dc690df990b7428bec0cfd",
+          "refs/remotes/origin/topic": "d0abff981e36f36aebfa9348819f670b0471f582"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "characterization_interactive_prompt_accepted",
+      "command": "git sync origin main",
+      "actual_arguments": [
+        "origin",
+        "main"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Are you sure you want to clean all changes & sync with 'origin/main'? [y/N]: HEAD is now at eeeb108 Commit B\n",
+      "stderr": "From /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_sync_characterization_interactive_prompt_accepted_w1aw08m1/origin\n * branch            main       -> FETCH_HEAD\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "e1323ee6917790aef92024495cca317317229d99",
+        "local_refs": {
+          "refs/heads/main": "e1323ee6917790aef92024495cca317317229d99",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+        "local_refs": {
+          "refs/heads/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "characterization_interactive_prompt_declined_cancels",
+      "command": "git sync origin main",
+      "actual_arguments": [
+        "origin",
+        "main"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Are you sure you want to clean all changes & sync with 'origin/main'? [y/N]: Canceled.\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "e1323ee6917790aef92024495cca317317229d99",
+        "local_refs": {
+          "refs/heads/main": "e1323ee6917790aef92024495cca317317229d99",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "e1323ee6917790aef92024495cca317317229d99",
+        "local_refs": {
+          "refs/heads/main": "e1323ee6917790aef92024495cca317317229d99",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_help_flag",
+      "command": "git sync --help",
+      "actual_arguments": [
+        "--help"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage:\n  git sync [<remote> <branch>]\n  git sync -h | --help\n  git sync -s | --soft\n  git sync -f | --force\n\nSync local branch with <remote>/<branch>.\nWhen <remote> and <branch> are not specified on the command line, upstream of local branch will be used by default.\nAll changes and untracked files and directories will be removed unless you add -s(--soft).\n\nExamples:\n  Sync with upstream of local branch:\n    git sync\n\n  Sync with origin/master:\n    git sync origin master\n\n  Sync without cleaning untracked files:\n    git sync -s\n\n  Sync without interaction:\n    git sync -f\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+        "local_refs": {
+          "refs/heads/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+        "local_refs": {
+          "refs/heads/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_short_help_flag",
+      "command": "git sync -h",
+      "actual_arguments": [
+        "-h"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage:\n  git sync [<remote> <branch>]\n  git sync -h | --help\n  git sync -s | --soft\n  git sync -f | --force\n\nSync local branch with <remote>/<branch>.\nWhen <remote> and <branch> are not specified on the command line, upstream of local branch will be used by default.\nAll changes and untracked files and directories will be removed unless you add -s(--soft).\n\nExamples:\n  Sync with upstream of local branch:\n    git sync\n\n  Sync with origin/master:\n    git sync origin master\n\n  Sync without cleaning untracked files:\n    git sync -s\n\n  Sync without interaction:\n    git sync -f\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+        "local_refs": {
+          "refs/heads/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+        "local_refs": {
+          "refs/heads/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/heads/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "eeeb108520ef5e0a7d61fda3cb2e0548e8cfb30e",
+          "refs/remotes/origin/topic": "584cc6711b83845179d3a5f55c7a6173f5a14ddb"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_failure_no_upstream_information",
+      "command": "git sync -f",
+      "actual_arguments": [
+        "-f"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "There is no upstream information of local branch.\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "orphan-branch",
+        "head_sha": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+        "local_refs": {
+          "refs/heads/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/orphan-branch": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/remotes/origin/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "orphan-branch",
+        "head_sha": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+        "local_refs": {
+          "refs/heads/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/orphan-branch": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/remotes/origin/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_failure_too_few_arguments",
+      "command": "git sync origin",
+      "actual_arguments": [
+        "origin"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "Error: too few arguments.\n\nUsage:\n  git sync [<remote> <branch>]\n  git sync -h | --help\n  git sync -s | --soft\n  git sync -f | --force\n\nSync local branch with <remote>/<branch>.\nWhen <remote> and <branch> are not specified on the command line, upstream of local branch will be used by default.\nAll changes and untracked files and directories will be removed unless you add -s(--soft).\n\nExamples:\n  Sync with upstream of local branch:\n    git sync\n\n  Sync with origin/master:\n    git sync origin master\n\n  Sync without cleaning untracked files:\n    git sync -s\n\n  Sync without interaction:\n    git sync -f\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+        "local_refs": {
+          "refs/heads/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/remotes/origin/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+        "local_refs": {
+          "refs/heads/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/remotes/origin/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_failure_too_many_arguments",
+      "command": "git sync origin main extra-argument",
+      "actual_arguments": [
+        "origin",
+        "main",
+        "extra-argument"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "Error: too many arguments.\n\nUsage:\n  git sync [<remote> <branch>]\n  git sync -h | --help\n  git sync -s | --soft\n  git sync -f | --force\n\nSync local branch with <remote>/<branch>.\nWhen <remote> and <branch> are not specified on the command line, upstream of local branch will be used by default.\nAll changes and untracked files and directories will be removed unless you add -s(--soft).\n\nExamples:\n  Sync with upstream of local branch:\n    git sync\n\n  Sync with origin/master:\n    git sync origin master\n\n  Sync without cleaning untracked files:\n    git sync -s\n\n  Sync without interaction:\n    git sync -f\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+        "local_refs": {
+          "refs/heads/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/remotes/origin/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+        "local_refs": {
+          "refs/heads/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/heads/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "e4e71c7a5c68634fd8e9db58035cc96436e8b92b",
+          "refs/remotes/origin/topic": "f3f2e0ce4f29c1f21c73400edc1f0ec1bed9e423"
+        },
+        "status_porcelain": ""
+      }
+    }
+  ]
+}
