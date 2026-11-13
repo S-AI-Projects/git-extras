@@ -1,25 +1,48 @@
 #!/usr/bin/env bash
 
-GREEN="$(tput setaf 2)"
-NORMAL="$(tput sgr0)"
-if [ "$1" = "--color" ] || [ "$2" = "--color" ] || \
-     [ "$1" = "-c" ] || [ "$2" = "-c" ] ; then
-  COLOR_TITLE="$GREEN"
-else
-  COLOR_TITLE="$NORMAL"
-fi
+usage() {
+  echo "Usage: git info [-c|--color] [--no-config]"
+  echo "       git info -h|--help"
+}
 
-HIDE_CONFIG=
-if [ "$1" != "--no-config" ] && [ "$2" != "--no-config" ]; then
-  HIDE_CONFIG=1
-fi
+GREEN="$(tput setaf 2 2>/dev/null || true)"
+NORMAL="$(tput sgr0 2>/dev/null || true)"
+COLOR_TITLE="$NORMAL"
+HIDE_CONFIG=1
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -c|--color)
+      COLOR_TITLE="$GREEN"
+      ;;
+    --no-config)
+      HIDE_CONFIG=
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "git-info: unknown option '$1'" >&2
+      echo "Troubleshooting: run 'git info -h' or refer to 'git info --help' for valid options." >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
 
 get_config() {
   cmd_get_config="$(git config --get-all git-extras.info.config-grep)"
   if [ -z "$cmd_get_config" ]; then
     git config --list
   else
-    eval "$cmd_get_config"
+    if ! output=$(eval "$cmd_get_config"); then
+      echo "git-info: failed to execute git-extras.info.config-grep: '$cmd_get_config'" >&2
+      echo "Troubleshooting: verify the command in 'git config git-extras.info.config-grep' or use '--no-config'." >&2
+      return 1
+    fi
+    echo "$output"
   fi
 }
 
@@ -28,7 +51,12 @@ most_recent_commit() {
   if [ -z "$cmd_get_log" ]; then
     git log --max-count=1 --pretty=short
   else
-    eval "$cmd_get_log"
+    if ! output=$(eval "$cmd_get_log"); then
+      echo "git-info: failed to execute git-extras.info.log: '$cmd_get_log'" >&2
+      echo "Troubleshooting: verify the command in 'git config git-extras.info.log'." >&2
+      return 1
+    fi
+    echo "$output"
   fi
 }
 
@@ -71,9 +99,15 @@ if [ -n "$SUBMODULES_LOG" ]; then
 fi
 
 echon "${COLOR_TITLE}## Most Recent Commit:${NORMAL}"
-echon "$(most_recent_commit)"
+if ! commit_output="$(most_recent_commit)"; then
+  exit 1
+fi
+echon "$commit_output"
 
 if [ -n "$HIDE_CONFIG" ]; then
   echon "${COLOR_TITLE}## Configuration (.git/config):${NORMAL}"
-  echon "$(get_config)"
+  if ! config_output="$(get_config)"; then
+    exit 1
+  fi
+  echon "$config_output"
 fi

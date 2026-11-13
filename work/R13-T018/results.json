@@ -1,0 +1,195 @@
+{
+  "task_id": "R13-T018",
+  "tool": "git-info",
+  "total_cases_executed": 7,
+  "native_bats_tests_count": 7,
+  "native_bats_tests": [
+    "git-info outputs repository information",
+    "git-info --no-config suppresses configuration section",
+    "git-info --color and -c work cleanly",
+    "git-info reaches failure branch with failing config-grep fixture and recovers with --no-config",
+    "git-info reaches failure branch with failing log fixture and recovers when config is fixed",
+    "git-info unknown option fails with diagnostic and recovers with valid invocation",
+    "git-info -h and --help show usage and exit 0"
+  ],
+  "cases": [
+    {
+      "name": "standard_success",
+      "command": "git info",
+      "arguments": [],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "70833d043fb33dd37549b5f04e5dc7ee011bc463",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "70833d043fb33dd37549b5f04e5dc7ee011bc463",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "no_config_option_success",
+      "command": "git info --no-config",
+      "arguments": [
+        "--no-config"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "70833d043fb33dd37549b5f04e5dc7ee011bc463",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "70833d043fb33dd37549b5f04e5dc7ee011bc463",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "color_option_success",
+      "command": "git info --color",
+      "arguments": [
+        "--color"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "70833d043fb33dd37549b5f04e5dc7ee011bc463",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "70833d043fb33dd37549b5f04e5dc7ee011bc463",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "fixture_config_grep_failure_and_corrected_recovery",
+      "failing_command": "git info",
+      "failing_arguments": [],
+      "failing_exit_status": 1,
+      "expected_failing_exit": 1,
+      "diagnostic_present": true,
+      "troubleshooting_present": true,
+      "corrected_command": "git info --no-config",
+      "corrected_arguments": [
+        "--no-config"
+      ],
+      "corrected_exit_status": 0,
+      "expected_corrected_exit": 0,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "81b950c5ead6f2a155528a47bda340162245f18f",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "81b950c5ead6f2a155528a47bda340162245f18f",
+        "branches": [
+          "main",
+          "topic"
+        ],
+        "files": [
+          "file_a.txt",
+          "file_c.txt"
+        ]
+      },
+      "status": "PASSED"
+    },
+    {
+      "name": "fixture_log_cmd_failure_and_corrected_recovery",
+      "failing_command": "git info",
+      "failing_arguments": [],
+      "failing_exit_status": 1,
+      "expected_failing_exit": 1,
+      "corrected_command": "git config --unset git-extras.info.log && git info",
+      "corrected_exit_status": 0,
+      "expected_corrected_exit": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "unknown_option_failure_and_corrected_recovery",
+      "failing_command": "git info --invalid-option-token",
+      "failing_arguments": [
+        "--invalid-option-token"
+      ],
+      "failing_exit_status": 1,
+      "expected_failing_exit": 1,
+      "corrected_command": "git info --color",
+      "corrected_arguments": [
+        "--color"
+      ],
+      "corrected_exit_status": 0,
+      "expected_corrected_exit": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "help_option_success",
+      "command": "git info -h",
+      "arguments": [
+        "-h"
+      ],
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "status": "PASSED"
+    }
+  ],
+  "global_config_unimpaired": true
+}

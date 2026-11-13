@@ -7,7 +7,7 @@
 \fBgit\-info\fR \- Returns information on current repository
 .
 .SH "SYNOPSIS"
-\fBgit info\fR [\-c|\-\-color] [\-\-no\-config]
+\fBgit info\fR [\-h|\-\-help] [\-c|\-\-color] [\-\-no\-config]
 .
 .SH "DESCRIPTION"
 Shows the following information about a repository:
@@ -33,6 +33,12 @@ Configuration Info
 .IP "" 0
 .
 .SH "OPTIONS"
+\-h, \-\-help
+.
+.P
+Show usage information\.
+.
+.P
 \-c, \-\-color
 .
 .P
@@ -58,7 +64,7 @@ $ git config \-\-global \-\-add git\-extras\.info\.log "<log\-command>"
 .IP "" 0
 .
 .P
-the default \fIlog\-command\fR is "git log \-\-max\-count=1 \-\-pretty=short"
+the default <log\-command> is "git log \-\-max\-count=1 \-\-pretty=short"
 .
 .IP "" 4
 .
@@ -71,7 +77,7 @@ $ git config \-\-global \-\-add git\-extras\.info\.config\-grep "<config\-grep\-
 .IP "" 0
 .
 .P
-the default \fIconfig\-grep\-command\fR is "git config \-\-list"
+the default <config\-grep\-command> is "git config \-\-list"
 .
 .P
 For example,
@@ -83,7 +89,7 @@ to set global configuration to show last commit subject, without sha1
 .
 .nf
 
- $ git config \-\-global \-\-add git\-extras\.info\.log "git log \-\-max\-count=1 \-\-format=\e"Author: %an%nDate:   %ad (%ar)%n%n    %s\e" \-\-date=format:\e"%Y\-%m\-%d %a %H:%M\e""
+$ git config \-\-global \-\-add git\-extras\.info\.log "git log \-\-max\-count=1 \-\-format=\\"Author: %an%nDate:   %ad (%ar)%n%n    %s\\" \-\-date=format:\\"%Y\-%m\-%d %a %H:%M\\""
 .
 .fi
 .
@@ -96,7 +102,36 @@ to set global configuration to show user\'s name and email
 .
 .nf
 
- $ git config \-\-global \-\-add git\-extras\.info\.config\-grep "git config \-\-list | grep \-\-color=never \-E \e"^user\.name|^user\.email\e""
+$ git config \-\-global \-\-add git\-extras\.info\.config\-grep "git config \-\-list | grep \-\-color=never \-E \\"^user\.name|^user\.email\\""
+.
+.fi
+.
+.IP "" 0
+.
+.SH "TROUBLESHOOTING"
+If a custom \fBgit\-extras\.info\.config\-grep\fR command fails, \fBgit\-info\fR reports a diagnostic error and exits with code 1:
+.
+.IP "" 4
+.
+.nf
+
+$ git config git\-extras\.info\.config\-grep "grep\-nonexistent"
+$ git info
+git\-info: failed to execute git\-extras\.info\.config\-grep: \'grep\-nonexistent\'
+Troubleshooting: verify the command in \'git config git-extras.info.config-grep\' or use \'--no-config\'.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+The corrected invocation can bypass the failing configuration command using \fB\-\-no\-config\fR:
+.
+.IP "" 4
+.
+.nf
+
+$ git info \-\-no\-config
 .
 .fi
 .
@@ -113,8 +148,8 @@ $ git info
 
 ## Remote URLs:
 
-origin      git@github\.com:sampleAuthor/git\-extras\.git (fetch)
-origin      git@github\.com:sampleAuthor/git\-extras\.git (push)
+origin		git@github\.com:sampleAuthor/git\-extras\.git (fetch)
+origin		git@github\.com:sampleAuthor/git\-extras\.git (push)
 
 ## Remote Branches:
 
