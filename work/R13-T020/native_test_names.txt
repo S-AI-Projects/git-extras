@@ -1,0 +1,6 @@
+git-unwip successfully unwips a commit with exact message 'WIP'
+git-unwip handles WIP commit with leading or trailing whitespace
+git-unwip rejects commit that is not a WIP commit
+git-unwip rejects commit that only contains WIP as a substring
+git-unwip rejects positional arguments with diagnostic and exit 1
+git-unwip -h and --help display usage and exit 0

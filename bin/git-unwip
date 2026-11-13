@@ -3,10 +3,28 @@
 # Based on scripts from git-utils:
 # * https://github.com/ddollar/git-utils/blob/master/git-unwip
 
-# Check if the last commit is a 'WIP' commit
-LAST_COMMIT=`git log -1 --pretty=%B | tr -d '[:space:]'`
+usage() {
+  echo "Usage: git unwip [-h|--help]"
+}
 
-if [ 'WIP' != $LAST_COMMIT ]; then
+if [ $# -gt 0 ]; then
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "git-unwip: unexpected argument '$1'" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+fi
+
+# Check if the last commit is a 'WIP' commit
+LAST_COMMIT=$(git log -1 --pretty=%B 2>/dev/null | tr -d '[:space:]')
+
+if [ 'WIP' != "$LAST_COMMIT" ]; then
   echo 'Last commit is not a WIP commit, so it will not be unWIP-ed.'
   exit 1
 fi
