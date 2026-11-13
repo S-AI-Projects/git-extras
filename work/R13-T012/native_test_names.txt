@@ -1,0 +1,8 @@
+PASSED: git-fresh-branch: minimum accepted arguments creates fresh branch
+PASSED: git-fresh-branch: optional argument --help shows usage
+PASSED: git-fresh-branch: optional argument -h shows usage
+PASSED: git-fresh-branch: invalid argument combination - missing branch name
+PASSED: git-fresh-branch: invalid argument combination - unknown option
+PASSED: git-fresh-branch: invalid argument combination - too many arguments
+PASSED: git-fresh-branch: aborted when untracked changes prompt is declined
+PASSED: git-fresh-branch: succeeds when untracked changes prompt is confirmed

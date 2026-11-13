@@ -1,0 +1,330 @@
+{
+  "tool_versions": {
+    "python": "3.15.2",
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0"
+  },
+  "native_tests_count": 8,
+  "native_tests": [
+    [
+      "git-fresh-branch: minimum accepted arguments creates fresh branch",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: optional argument --help shows usage",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: optional argument -h shows usage",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: invalid argument combination - missing branch name",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: invalid argument combination - unknown option",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: invalid argument combination - too many arguments",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: aborted when untracked changes prompt is declined",
+      "PASSED"
+    ],
+    [
+      "git-fresh-branch: succeeds when untracked changes prompt is confirmed",
+      "PASSED"
+    ]
+  ],
+  "shell_checks_count": 8,
+  "shell_checks": [
+    {
+      "name": "minimum_accepted_arguments_create_fresh_branch",
+      "actual_arguments": [
+        "git",
+        "fresh-branch",
+        "feature-docs"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "Removing fileA.txt\nRemoving fileB.txt\nRemoving fileC.txt\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "feature-docs",
+        "has_commits": false,
+        "head_sha": null,
+        "commit_count": 0,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "optional_argument_help_flag",
+      "actual_arguments": [
+        "git-fresh-branch",
+        "--help"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "Usage: git fresh-branch <branchname>\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "optional_argument_short_help_flag",
+      "actual_arguments": [
+        "git-fresh-branch",
+        "-h"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "Usage: git fresh-branch <branchname>\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_invalid_combination_missing_branch",
+      "actual_arguments": [
+        "git",
+        "fresh-branch"
+      ],
+      "expected_exit_status": 1,
+      "actual_exit_status": 1,
+      "stdout": "",
+      "stderr": "branch required.\n",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_invalid_combination_unknown_option",
+      "actual_arguments": [
+        "git",
+        "fresh-branch",
+        "--invalid-option"
+      ],
+      "expected_exit_status": 1,
+      "actual_exit_status": 1,
+      "stdout": "",
+      "stderr": "error: unknown option --invalid-option\n",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "documented_invalid_combination_too_many_arguments",
+      "actual_arguments": [
+        "git",
+        "fresh-branch",
+        "branch-one",
+        "branch-two"
+      ],
+      "expected_exit_status": 1,
+      "actual_exit_status": 1,
+      "stdout": "",
+      "stderr": "error: too many arguments\n",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "cbbcaf91e60692cfd3f5c64d57dffb5b7c33e304",
+        "commit_count": 3,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "edge_state_untracked_prompt_declined",
+      "actual_arguments": [
+        "git",
+        "fresh-branch",
+        "orphan-test"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "e0be6dc5285ac84c079dc2550f2037f83514c36d",
+        "commit_count": 3,
+        "status_porcelain": [
+          "?? untracked.txt"
+        ]
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "e0be6dc5285ac84c079dc2550f2037f83514c36d",
+        "commit_count": 3,
+        "status_porcelain": [
+          "?? untracked.txt"
+        ]
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    },
+    {
+      "name": "edge_state_untracked_prompt_confirmed",
+      "actual_arguments": [
+        "git",
+        "fresh-branch",
+        "orphan-test"
+      ],
+      "expected_exit_status": 0,
+      "actual_exit_status": 0,
+      "stdout": "Removing fileA.txt\nRemoving fileB.txt\nRemoving fileC.txt\nRemoving untracked.txt\n",
+      "stderr": "",
+      "before_state": {
+        "is_git_repo": true,
+        "branch": "main",
+        "has_commits": true,
+        "head_sha": "e0be6dc5285ac84c079dc2550f2037f83514c36d",
+        "commit_count": 3,
+        "status_porcelain": [
+          "?? untracked.txt"
+        ]
+      },
+      "after_state": {
+        "is_git_repo": true,
+        "branch": "orphan-test",
+        "has_commits": false,
+        "head_sha": null,
+        "commit_count": 0,
+        "status_porcelain": []
+      },
+      "assertions": {
+        "exit_status_passed": true,
+        "output_passed": true,
+        "state_passed": true
+      },
+      "passed": true,
+      "error_detail": ""
+    }
+  ]
+}

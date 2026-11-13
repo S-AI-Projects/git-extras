@@ -1,0 +1,67 @@
+=== git-fresh-branch Verification Summary (R13-T012) ===
+
+Tool Versions:
+  python: 3.15.2
+  git: git version 2.55.0
+  bash: GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)
+  bats: Bats 1.14.0
+
+Native Bats Tests (8):
+  [PASSED] git-fresh-branch: minimum accepted arguments creates fresh branch
+  [PASSED] git-fresh-branch: optional argument --help shows usage
+  [PASSED] git-fresh-branch: optional argument -h shows usage
+  [PASSED] git-fresh-branch: invalid argument combination - missing branch name
+  [PASSED] git-fresh-branch: invalid argument combination - unknown option
+  [PASSED] git-fresh-branch: invalid argument combination - too many arguments
+  [PASSED] git-fresh-branch: aborted when untracked changes prompt is declined
+  [PASSED] git-fresh-branch: succeeds when untracked changes prompt is confirmed
+
+Focused Shell Checks (8):
+  [PASS] minimum_accepted_arguments_create_fresh_branch
+    Command: git fresh-branch feature-docs
+    Exit Status: 0 (expected 0)
+    Before: Branch=main (commits=3)
+    After:  Branch=feature-docs (commits=0)
+
+  [PASS] optional_argument_help_flag
+    Command: git-fresh-branch --help
+    Exit Status: 0 (expected 0)
+    Before: Branch=main (commits=3)
+    After:  Branch=main (commits=3)
+
+  [PASS] optional_argument_short_help_flag
+    Command: git-fresh-branch -h
+    Exit Status: 0 (expected 0)
+    Before: Branch=main (commits=3)
+    After:  Branch=main (commits=3)
+
+  [PASS] documented_invalid_combination_missing_branch
+    Command: git fresh-branch
+    Exit Status: 1 (expected 1)
+    Before: Branch=main (commits=3)
+    After:  Branch=main (commits=3)
+
+  [PASS] documented_invalid_combination_unknown_option
+    Command: git fresh-branch --invalid-option
+    Exit Status: 1 (expected 1)
+    Before: Branch=main (commits=3)
+    After:  Branch=main (commits=3)
+
+  [PASS] documented_invalid_combination_too_many_arguments
+    Command: git fresh-branch branch-one branch-two
+    Exit Status: 1 (expected 1)
+    Before: Branch=main (commits=3)
+    After:  Branch=main (commits=3)
+
+  [PASS] edge_state_untracked_prompt_declined
+    Command: git fresh-branch orphan-test
+    Exit Status: 0 (expected 0)
+    Before: Branch=main (commits=3)
+    After:  Branch=main (commits=3)
+
+  [PASS] edge_state_untracked_prompt_confirmed
+    Command: git fresh-branch orphan-test
+    Exit Status: 0 (expected 0)
+    Before: Branch=main (commits=3)
+    After:  Branch=orphan-test (commits=0)
+

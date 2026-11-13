@@ -3,13 +3,17 @@ git-fresh-branch(1) -- Create fresh branches
 
 ## SYNOPSIS
 
-`git fresh-branch` &lt;branchname&gt;
+`git fresh-branch` [-h|--help] &lt;branchname&gt;
 
 ## DESCRIPTION
 
   Creates empty local branch named &lt;branchname&gt;.
 
 ## OPTIONS
+
+  -h, --help
+
+  Show help message.
 
   &lt;branchname&gt;
 
