@@ -1,0 +1,396 @@
+{
+  "tool_versions": {
+    "python": "3.15.2",
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0"
+  },
+  "native_bats": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "tests": [
+      "ok 1 git-rename-branch: rename current branch without remote (1 argument)",
+      "ok 2 git-rename-branch: rename another branch without checkout (2 arguments)",
+      "ok 3 git-rename-branch: rename branch with remote upstream tracking",
+      "ok 4 git-rename-branch: optional argument --help shows usage",
+      "ok 5 git-rename-branch: optional argument -h shows usage",
+      "ok 6 git-rename-branch: invalid argument combination - missing branch name",
+      "ok 7 git-rename-branch: invalid argument combination - unknown option",
+      "ok 8 git-rename-branch: invalid argument combination - too many arguments",
+      "ok 9 git-rename-branch: edge-state - renaming non-existent branch fails",
+      "ok 10 git-rename-branch: edge-state - renaming to existing branch name fails"
+    ]
+  },
+  "focused_checks": [
+    {
+      "name": "minimum_accepted_arguments_rename_current_branch",
+      "command": "git rename-branch topic-renamed",
+      "actual_arguments": [
+        "topic-renamed"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "a34ff298b229327b506064d9ef185a47fc6f8941",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "topic-renamed",
+        "head_sha": "a34ff298b229327b506064d9ef185a47fc6f8941",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic-renamed": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "rename_other_branch_two_arguments",
+      "command": "git rename-branch topic topic-v2",
+      "actual_arguments": [
+        "topic",
+        "topic-v2"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "9221a683627925860a0be52ae2235abbabf4aecb",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "9221a683627925860a0be52ae2235abbabf4aecb",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic-v2": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "rename_branch_with_upstream_remote",
+      "command": "git rename-branch feature-v2",
+      "actual_arguments": [
+        "feature-v2"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "branch 'feature-v2' set up to track 'origin/feature-v2'.\n",
+      "stderr": "To /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_rename_rename_branch_with_upstream_remote_hatxtbue/bare_remote.git\n - [deleted]         topic\nTo /var/folders/gx/g7v_6khj5h7cg9p1c5q442200000gn/T/check_rename_rename_branch_with_upstream_remote_hatxtbue/bare_remote.git\n * [new branch]      feature-v2 -> feature-v2\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "a34ff298b229327b506064d9ef185a47fc6f8941",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/remotes/origin/topic": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "branch_configs": {
+          "branch.main.remote": "origin",
+          "branch.main.merge": "refs/heads/main",
+          "branch.topic.remote": "origin",
+          "branch.topic.merge": "refs/heads/topic"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "feature-v2",
+        "head_sha": "a34ff298b229327b506064d9ef185a47fc6f8941",
+        "local_refs": {
+          "refs/heads/feature-v2": "a34ff298b229327b506064d9ef185a47fc6f8941",
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb"
+        },
+        "remote_refs": {
+          "refs/remotes/origin/feature-v2": "a34ff298b229327b506064d9ef185a47fc6f8941",
+          "refs/remotes/origin/main": "9221a683627925860a0be52ae2235abbabf4aecb"
+        },
+        "branch_configs": {
+          "branch.main.remote": "origin",
+          "branch.main.merge": "refs/heads/main",
+          "branch.feature-v2.remote": "origin",
+          "branch.feature-v2.merge": "refs/heads/feature-v2"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_help_flag",
+      "command": "git rename-branch --help",
+      "actual_arguments": [
+        "--help"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage: git rename-branch [<old-branch>] <new-branch>\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "9221a683627925860a0be52ae2235abbabf4aecb",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "9221a683627925860a0be52ae2235abbabf4aecb",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "a34ff298b229327b506064d9ef185a47fc6f8941"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_short_help_flag",
+      "command": "git rename-branch -h",
+      "actual_arguments": [
+        "-h"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage: git rename-branch [<old-branch>] <new-branch>\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "9221a683627925860a0be52ae2235abbabf4aecb",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "0528855e2f3ccccf324b6bd93a75d56399fa048f"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "9221a683627925860a0be52ae2235abbabf4aecb",
+        "local_refs": {
+          "refs/heads/main": "9221a683627925860a0be52ae2235abbabf4aecb",
+          "refs/heads/topic": "0528855e2f3ccccf324b6bd93a75d56399fa048f"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_invalid_combination_missing_branch",
+      "command": "git rename-branch ",
+      "actual_arguments": [],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "new branch name required.\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_invalid_combination_unknown_option",
+      "command": "git rename-branch --invalid-flag",
+      "actual_arguments": [
+        "--invalid-flag"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "error: unknown option --invalid-flag\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_invalid_combination_too_many_arguments",
+      "command": "git rename-branch branch1 branch2 branch3",
+      "actual_arguments": [
+        "branch1",
+        "branch2",
+        "branch3"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "error: too many arguments\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "edge_state_non_existent_branch",
+      "command": "git rename-branch non-existent-branch new-branch",
+      "actual_arguments": [
+        "non-existent-branch",
+        "new-branch"
+      ],
+      "expected_exit": 128,
+      "actual_exit": 128,
+      "stdout": "",
+      "stderr": "fatal: no branch named 'non-existent-branch'\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "main",
+        "head_sha": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "edge_state_target_branch_already_exists",
+      "command": "git rename-branch topic main",
+      "actual_arguments": [
+        "topic",
+        "main"
+      ],
+      "expected_exit": 128,
+      "actual_exit": 128,
+      "stdout": "",
+      "stderr": "fatal: a branch named 'main' already exists\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "current_branch": "topic",
+        "head_sha": "7cdd919902013587546734717ab3893bacdafc21",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "current_branch": "topic",
+        "head_sha": "7cdd919902013587546734717ab3893bacdafc21",
+        "local_refs": {
+          "refs/heads/main": "73d200770f707a844cc5d6c62963e1a1d9c41661",
+          "refs/heads/topic": "7cdd919902013587546734717ab3893bacdafc21"
+        },
+        "remote_refs": {},
+        "branch_configs": {},
+        "status_porcelain": ""
+      }
+    }
+  ]
+}

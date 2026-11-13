@@ -1,0 +1,81 @@
+=== git-rename-branch Verification Summary (R13-T013) ===
+
+Tool Versions:
+  python: 3.15.2
+  git: git version 2.55.0
+  bash: GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)
+  bats: Bats 1.14.0
+
+Native Bats Tests (10):
+  ok 1 git-rename-branch: rename current branch without remote (1 argument)
+  ok 2 git-rename-branch: rename another branch without checkout (2 arguments)
+  ok 3 git-rename-branch: rename branch with remote upstream tracking
+  ok 4 git-rename-branch: optional argument --help shows usage
+  ok 5 git-rename-branch: optional argument -h shows usage
+  ok 6 git-rename-branch: invalid argument combination - missing branch name
+  ok 7 git-rename-branch: invalid argument combination - unknown option
+  ok 8 git-rename-branch: invalid argument combination - too many arguments
+  ok 9 git-rename-branch: edge-state - renaming non-existent branch fails
+  ok 10 git-rename-branch: edge-state - renaming to existing branch name fails
+
+Focused Shell Checks (10):
+  [PASS] minimum_accepted_arguments_rename_current_branch
+    Command: git rename-branch topic-renamed
+    Exit Status: 0 (expected 0)
+    Before Branch: topic
+    After Branch:  topic-renamed
+
+  [PASS] rename_other_branch_two_arguments
+    Command: git rename-branch topic topic-v2
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] rename_branch_with_upstream_remote
+    Command: git rename-branch feature-v2
+    Exit Status: 0 (expected 0)
+    Before Branch: topic
+    After Branch:  feature-v2
+
+  [PASS] optional_argument_help_flag
+    Command: git rename-branch --help
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] optional_argument_short_help_flag
+    Command: git rename-branch -h
+    Exit Status: 0 (expected 0)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] documented_invalid_combination_missing_branch
+    Command: git rename-branch 
+    Exit Status: 1 (expected 1)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] documented_invalid_combination_unknown_option
+    Command: git rename-branch --invalid-flag
+    Exit Status: 1 (expected 1)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] documented_invalid_combination_too_many_arguments
+    Command: git rename-branch branch1 branch2 branch3
+    Exit Status: 1 (expected 1)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] edge_state_non_existent_branch
+    Command: git rename-branch non-existent-branch new-branch
+    Exit Status: 128 (expected 128)
+    Before Branch: main
+    After Branch:  main
+
+  [PASS] edge_state_target_branch_already_exists
+    Command: git rename-branch topic main
+    Exit Status: 128 (expected 128)
+    Before Branch: topic
+    After Branch:  topic
+
