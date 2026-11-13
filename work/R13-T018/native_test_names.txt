@@ -1,0 +1,7 @@
+git-info outputs repository information
+git-info --no-config suppresses configuration section
+git-info --color and -c work cleanly
+git-info reaches failure branch with failing config-grep fixture and recovers with --no-config
+git-info reaches failure branch with failing log fixture and recovers when config is fixed
+git-info unknown option fails with diagnostic and recovers with valid invocation
+git-info -h and --help show usage and exit 0

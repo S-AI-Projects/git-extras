@@ -3,7 +3,7 @@ git-info(1) -- Returns information on current repository
 
 ## SYNOPSIS
 
-`git info` [-c|--color] [--no-config]
+`git info` [-h|--help] [-c|--color] [--no-config]
 
 ## DESCRIPTION
 
@@ -17,6 +17,10 @@ Shows the following information about a repository:
  6. Configuration Info
 
 ## OPTIONS
+
+  -h, --help
+
+  Show usage information.
 
   -c, --color
 
@@ -47,6 +51,20 @@ Shows the following information about a repository:
    to set global configuration to show user's name and email
 
      $ git config --global --add git-extras.info.config-grep "git config --list | grep --color=never -E \"^user.name|^user.email\""
+
+## TROUBLESHOOTING
+
+  If a custom `git-extras.info.config-grep` command fails, `git-info` reports
+  a diagnostic error and exits with code 1:
+
+    $ git config git-extras.info.config-grep "grep-nonexistent"
+    $ git info
+    git-info: failed to execute git-extras.info.config-grep: 'grep-nonexistent'
+    Troubleshooting: verify the command in 'git config git-extras.info.config-grep' or use '--no-config'.
+
+  The corrected invocation can bypass the failing configuration command using `--no-config`:
+
+    $ git info --no-config
 
 ## EXAMPLES
 
