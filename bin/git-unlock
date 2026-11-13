@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
-filename="$1"
-test -z "$filename" && echo "filename required." 1>&2 && exit 1
-git update-index --no-skip-worktree "$filename"
+case "$1" in
+  -h|--help)
+    echo "Usage: git unlock <filename>..."
+    exit 0
+    ;;
+esac
+
+test -z "$1" && echo "filename required." >&2 && exit 1
+
+git update-index --no-skip-worktree -- "$@"

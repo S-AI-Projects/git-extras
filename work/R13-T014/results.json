@@ -1,0 +1,418 @@
+{
+  "tool_versions": {
+    "python": "3.15.2",
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0"
+  },
+  "observed_option_tokens": [
+    "--no-skip-worktree"
+  ],
+  "native_bats": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "tests": [
+      "ok 1 git-unlock: unlock file with path containing spaces",
+      "ok 2 git-unlock: unlock file with wildcard in filename without affecting unrelated files",
+      "ok 3 git-unlock: unlock multiple files preserving quoted argument boundaries",
+      "ok 4 git-unlock: optional argument --help shows usage",
+      "ok 5 git-unlock: optional argument -h shows usage",
+      "ok 6 git-unlock: invalid argument combination - missing filename",
+      "ok 7 git-unlock: edge-state - non-existent file fails and leaves state intact"
+    ]
+  },
+  "focused_checks": [
+    {
+      "name": "path_containing_spaces_exact_argument_boundary",
+      "command": "git unlock \"file with spaces.txt\"",
+      "actual_arguments": [
+        "file with spaces.txt"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "H",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "subfolder_path_containing_spaces",
+      "command": "git unlock \"dir with spaces/sub file with space.txt\"",
+      "actual_arguments": [
+        "dir with spaces/sub file with space.txt"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "H",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "argument_containing_wildcard_no_shell_expansion_affecting_unrelated",
+      "command": "git unlock \"file*with*star.txt\"",
+      "actual_arguments": [
+        "file*with*star.txt"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "H",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "multiple_arguments_preserving_quoted_boundaries",
+      "command": "git unlock \"file with spaces 1.txt\" \"file with spaces 2.txt\"",
+      "actual_arguments": [
+        "file with spaces 1.txt",
+        "file with spaces 2.txt"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "H",
+          "file with spaces 2.txt": "H",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_help_flag",
+      "command": "git unlock --help",
+      "actual_arguments": [
+        "--help"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage: git unlock <filename>...\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+        "local_refs": {
+          "refs/heads/main": "33d63d8d0c2780ae891f416bec9938df7b4caad2",
+          "refs/heads/topic": "3e9102bb34df96765e412632e3413a917229e248"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "optional_argument_short_help_flag",
+      "command": "git unlock -h",
+      "actual_arguments": [
+        "-h"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Usage: git unlock <filename>...\n",
+      "stderr": "",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "e6989585176fe8289a117443549cdf0764704d8a",
+        "local_refs": {
+          "refs/heads/main": "e6989585176fe8289a117443549cdf0764704d8a",
+          "refs/heads/topic": "092f1315f5a93f75675149c38730363821b21f32"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "e6989585176fe8289a117443549cdf0764704d8a",
+        "local_refs": {
+          "refs/heads/main": "e6989585176fe8289a117443549cdf0764704d8a",
+          "refs/heads/topic": "092f1315f5a93f75675149c38730363821b21f32"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "documented_invalid_combination_missing_filename",
+      "command": "git unlock ",
+      "actual_arguments": [],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "filename required.\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "e6989585176fe8289a117443549cdf0764704d8a",
+        "local_refs": {
+          "refs/heads/main": "e6989585176fe8289a117443549cdf0764704d8a",
+          "refs/heads/topic": "092f1315f5a93f75675149c38730363821b21f32"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "e6989585176fe8289a117443549cdf0764704d8a",
+        "local_refs": {
+          "refs/heads/main": "e6989585176fe8289a117443549cdf0764704d8a",
+          "refs/heads/topic": "092f1315f5a93f75675149c38730363821b21f32"
+        },
+        "status_porcelain": ""
+      }
+    },
+    {
+      "name": "edge_state_non_existent_file",
+      "command": "git unlock non_existent_file.txt",
+      "actual_arguments": [
+        "non_existent_file.txt"
+      ],
+      "expected_exit": 128,
+      "actual_exit": 128,
+      "stdout": "",
+      "stderr": "fatal: Unable to mark file non_existent_file.txt\n",
+      "passed": true,
+      "error": null,
+      "before_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "e6989585176fe8289a117443549cdf0764704d8a",
+        "local_refs": {
+          "refs/heads/main": "e6989585176fe8289a117443549cdf0764704d8a",
+          "refs/heads/topic": "092f1315f5a93f75675149c38730363821b21f32"
+        },
+        "status_porcelain": ""
+      },
+      "after_state": {
+        "file_statuses": {
+          "dir with spaces/sub file with space.txt": "S",
+          "file with spaces 1.txt": "S",
+          "file with spaces 2.txt": "S",
+          "file with spaces.txt": "S",
+          "file*with*star.txt": "S",
+          "fileA.txt": "H",
+          "fileXwithYstar.txt": "S"
+        },
+        "current_branch": "main",
+        "head_sha": "e6989585176fe8289a117443549cdf0764704d8a",
+        "local_refs": {
+          "refs/heads/main": "e6989585176fe8289a117443549cdf0764704d8a",
+          "refs/heads/topic": "092f1315f5a93f75675149c38730363821b21f32"
+        },
+        "status_porcelain": ""
+      }
+    }
+  ]
+}
