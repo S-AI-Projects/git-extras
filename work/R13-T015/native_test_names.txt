@@ -1,0 +1,9 @@
+ok 1 git-create-branch: create local branch from HEAD
+ok 2 git-create-branch: create local branch using --from start_point
+ok 3 git-create-branch: create branch with -r remote tracking using local bare remote
+ok 4 git-create-branch: create branch with remote preference in local config
+ok 5 git-create-branch: missing-dependency branch with unreachable/missing remote
+ok 6 git-create-branch: optional argument --help shows usage
+ok 7 git-create-branch: optional argument -h shows usage
+ok 8 git-create-branch: invalid argument combination - missing branch argument
+ok 9 git-create-branch: missing-dependency branch when mktemp is unavailable
