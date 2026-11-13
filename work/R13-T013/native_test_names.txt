@@ -1,0 +1,10 @@
+ok 1 git-rename-branch: rename current branch without remote (1 argument)
+ok 2 git-rename-branch: rename another branch without checkout (2 arguments)
+ok 3 git-rename-branch: rename branch with remote upstream tracking
+ok 4 git-rename-branch: optional argument --help shows usage
+ok 5 git-rename-branch: optional argument -h shows usage
+ok 6 git-rename-branch: invalid argument combination - missing branch name
+ok 7 git-rename-branch: invalid argument combination - unknown option
+ok 8 git-rename-branch: invalid argument combination - too many arguments
+ok 9 git-rename-branch: edge-state - renaming non-existent branch fails
+ok 10 git-rename-branch: edge-state - renaming to existing branch name fails
