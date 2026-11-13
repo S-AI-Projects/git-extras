@@ -1,0 +1,8 @@
+executes documented usage example with setup, command, output and state verification
+rebases secondary branch on primary branch with fast-forward by default
+explicit target and feature branch arguments: git psykorebase <target> <feature>
+handles merge conflicts and resumes with --continue
+--continue fails when not in a psykorebase branch
+missing target branch argument fails with exit 10
+too many arguments fails with exit 20
+-h and --help display usage and exit 0
