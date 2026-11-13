@@ -17,7 +17,8 @@ git-pr(1) -- Checks out a pull request locally
 
   &lt;remote&gt;
 
-  The name of the remote to fetch from. Defaults to `origin`.
+  The name or path of the remote to fetch from (quote paths containing spaces or
+  special characters). Defaults to `origin`.
 
   &lt;url&gt;
 
