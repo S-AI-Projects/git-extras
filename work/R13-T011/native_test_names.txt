@@ -1,0 +1,16 @@
+PASSED: undo removes latest commit with default options
+PASSED: undo multiple commits with positional count
+PASSED: undo with --soft leaves changes unstaged
+PASSED: undo with -s leaves changes unstaged
+PASSED: undo with --hard removes changes completely
+PASSED: undo with --count option
+PASSED: undo with -c option
+PASSED: undo with --count=n option
+PASSED: undo with --help shows usage
+PASSED: undo with help argument shows usage
+PASSED: undo fails in repository without commits
+PASSED: undo fails outside of a git repository
+PASSED: undo fails when count exceeds commit count
+PASSED: hard undo fails when trying to undo all commits
+PASSED: undo rejects zero count
+PASSED: undo rejects invalid parameter

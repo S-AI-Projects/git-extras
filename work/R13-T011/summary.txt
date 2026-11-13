@@ -1,0 +1,109 @@
+=== git-undo Verification Summary (R13-T011) ===
+
+Tool Versions:
+  python: 3.15.2
+  git: git version 2.55.0
+  bash: GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)
+  bats: Bats 1.14.0
+
+Native Bats Tests (16):
+  [PASSED] undo removes latest commit with default options
+  [PASSED] undo multiple commits with positional count
+  [PASSED] undo with --soft leaves changes unstaged
+  [PASSED] undo with -s leaves changes unstaged
+  [PASSED] undo with --hard removes changes completely
+  [PASSED] undo with --count option
+  [PASSED] undo with -c option
+  [PASSED] undo with --count=n option
+  [PASSED] undo with --help shows usage
+  [PASSED] undo with help argument shows usage
+  [PASSED] undo fails in repository without commits
+  [PASSED] undo fails outside of a git repository
+  [PASSED] undo fails when count exceeds commit count
+  [PASSED] hard undo fails when trying to undo all commits
+  [PASSED] undo rejects zero count
+  [PASSED] undo rejects invalid parameter
+
+Focused Shell Checks (14):
+  [PASS] ordinary_success_default_undo
+    Command: git undo
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit B (cnt=2)
+
+  [PASS] ordinary_success_positional_count_2
+    Command: git undo 2
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit A (cnt=1)
+
+  [PASS] ordinary_success_soft_flag
+    Command: git undo --soft
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit B (cnt=2)
+
+  [PASS] ordinary_success_soft_short_flag
+    Command: git undo -s
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit B (cnt=2)
+
+  [PASS] ordinary_success_hard_flag
+    Command: git undo --hard
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit B (cnt=2)
+
+  [PASS] ordinary_success_count_flag
+    Command: git undo --count 2
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit A (cnt=1)
+
+  [PASS] ordinary_success_count_short_flag
+    Command: git undo -c 2
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit A (cnt=1)
+
+  [PASS] ordinary_success_help_flag
+    Command: git-undo --help
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit C (cnt=3)
+
+  [PASS] documented_failure_empty_repo_no_commits
+    Command: git undo
+    Exit Status: 1 (expected [1, 128])
+    Before: HEAD=None (cnt=0)
+    After:  HEAD=None (cnt=0)
+
+  [PASS] documented_failure_outside_git_repo
+    Command: git undo
+    Exit Status: 1 (expected [1, 128])
+
+  [PASS] documented_failure_count_exceeds_available
+    Command: git undo 5
+    Exit Status: 1 (expected 1)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit C (cnt=3)
+
+  [PASS] documented_failure_hard_undo_all_commits
+    Command: git undo --hard 3
+    Exit Status: 1 (expected 1)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit C (cnt=3)
+
+  [PASS] edge_state_zero_count_rejected
+    Command: git undo 0
+    Exit Status: 1 (expected 1)
+    Before: HEAD=commit C (cnt=3)
+    After:  HEAD=commit C (cnt=3)
+
+  [PASS] edge_state_topic_branch_undo
+    Command: git undo
+    Exit Status: 0 (expected 0)
+    Before: HEAD=commit T (cnt=3)
+    After:  HEAD=commit B (cnt=2)
+
