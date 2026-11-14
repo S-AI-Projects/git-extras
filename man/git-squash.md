@@ -3,7 +3,7 @@ git-squash(1) -- squash N last changes up to a ref'ed commit
 
 ## SYNOPSIS
 
-`git squash` [&lt;--squash-msg&gt;] &lt;source-branch|commit ref&gt; [&lt;commit-message&gt;]
+`git squash` [--squash-msg] &lt;source-branch|commit-ref&gt; [&lt;commit-message&gt;]
 
 ## DESCRIPTION
 
@@ -11,22 +11,25 @@ git-squash(1) -- squash N last changes up to a ref'ed commit
 
 ## OPTIONS
 
-  &lt;source-branch&gt;
+  `--squash-msg`
 
-  Branch to squash on the current branch.
+  Create a commit using the concatenated messages from the commits being
+  squashed. This option must precede the source and cannot be combined with
+  `&lt;commit-message&gt;`.
 
-  &lt;commit reference&gt;
-  A commit reference (has to be from the current branch) can also be used as the
-  first argument. A range of commits <sha>..HEAD will be squashed.
+  &lt;source-branch|commit-ref&gt;
 
-  &lt;--squash-msg&gt;
-
-  Commit the squash result with the concatenated squashed committed messages.
-  This option can not be used together with &lt;commit-message&gt;.
+  Required. A branch is squash-merged into the current branch. A commit
+  reference on the current branch can instead be given to squash the commits
+  after that reference up to `HEAD`.
 
   &lt;commit-message&gt;
 
   If commit-message is given, commit the squashed result, otherwise the squash remains just added to the index and is not committed.
+
+  If the source is omitted, the command exits with an error. Unknown options
+  and extra positional arguments are rejected. Without `&lt;commit-message&gt;` or
+  `--squash-msg`, the squash is staged and `HEAD` is unchanged.
 
 ## EXAMPLES
 
