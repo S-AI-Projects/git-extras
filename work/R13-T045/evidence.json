@@ -1,0 +1,52 @@
+{
+  "task_id": "R13-T045",
+  "item": "git-gh-pages",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)",
+    "bats": "Bats 1.14.0",
+    "make": "GNU Make 3.81",
+    "python3": "Python 3.15.0"
+  },
+  "bats_output": [
+    "ok 1 git-gh-pages creates gh-pages branch and pushes to isolated bare remote",
+    "ok 2 git-gh-pages fails cleanly when required arguments or remote target are missing"
+  ],
+  "cases": [
+    {
+      "case": "success_isolated_bare_remote",
+      "arguments": [
+        "git-gh-pages",
+        "testuser",
+        "testrepo"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "before_state": {
+        "local_branches": [
+          "main",
+          "topic"
+        ],
+        "remote_has_gh_pages": false
+      },
+      "after_state": {
+        "local_branches": [
+          "gh-pages",
+          "main",
+          "topic"
+        ],
+        "index_html": "My Page",
+        "remote_has_gh_pages": true
+      }
+    },
+    {
+      "case": "failure_missing_arguments",
+      "arguments": [
+        "git-gh-pages"
+      ],
+      "expected_exit_code": "non-zero",
+      "actual_exit_code": 1,
+      "stderr": "Error: GitHub username and repository name are required."
+    }
+  ]
+}
