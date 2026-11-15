@@ -2,19 +2,38 @@
 
 echo 'setting up gh-pages'
 echo '-------------------'
- 
-echo 'Tell me your github account username: '
-read -r username
- 
-echo 'Now, tell me your repository name: '
-read -r repository
- 
+
+if [ $# -ge 2 ]; then
+  username="$1"
+  repository="$2"
+else
+  echo 'Tell me your github account username: '
+  read -r username
+
+  echo 'Now, tell me your repository name: '
+  read -r repository
+fi
+
+if [ -z "$username" ] || [ -z "$repository" ]; then
+  echo "Error: GitHub username and repository name are required." >&2
+  exit 1
+fi
+
+remote_base="${GIT_GH_PAGES_REMOTE_BASE:-https://github.com}"
+remote_url="${remote_base%/}/$username/$repository.git"
+
 git stash \
 && git checkout -b 'gh-pages' \
 && echo 'My Page' > index.html \
 && git add . \
 && git commit -a -m 'Initial commit' \
-&& git remote add origin https://github.com/"$username"/"$repository".git \
+&& {
+  if git remote get-url origin >/dev/null 2>&1; then
+    git remote set-url origin "$remote_url"
+  else
+    git remote add origin "$remote_url"
+  fi
+} \
 && git push -u origin gh-pages \
 && echo 'Complete' \
 && echo '-------------------' \

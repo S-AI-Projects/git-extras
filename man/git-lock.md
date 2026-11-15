@@ -7,13 +7,13 @@ git-lock(1) -- Lock a file excluded from version control
 
 ## DESCRIPTION
 
-  Lock local files from version control.
+  Mark a tracked local file with `--skip-worktree` in the Git index so local modifications to it are ignored by version control until unlocked. Requires a non-empty `<filename>` argument referring to a tracked file.
 
 ## OPTIONS
 
   &lt;filename&gt;
 
-  The name of the filename.
+  The name of the tracked file to lock.
 
 ## EXAMPLES
 

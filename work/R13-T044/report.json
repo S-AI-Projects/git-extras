@@ -1,0 +1,97 @@
+{
+  "task": "R13-T044",
+  "item": "git-pr",
+  "total_cases": 4,
+  "all_passed": true,
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0"
+  },
+  "cases": [
+    {
+      "name": "quoted_path_with_spaces_and_merge",
+      "inputs": [
+        "git-pr",
+        "--merge",
+        "101",
+        "/var/folders/vb/jrpwpyj161x7dyk_br51ltmc0000gn/T/r13_t044_check_vqyah_t6/bare remote with spaces.git"
+      ],
+      "expected": {
+        "returncode": 0,
+        "after_branch": "pr/101",
+        "stored_remote": "/var/folders/vb/jrpwpyj161x7dyk_br51ltmc0000gn/T/r13_t044_check_vqyah_t6/bare remote with spaces.git",
+        "stored_merge": "refs/pull/101/merge"
+      },
+      "actual": {
+        "returncode": 0,
+        "before_branch": "main",
+        "after_branch": "pr/101",
+        "stored_remote": "/var/folders/vb/jrpwpyj161x7dyk_br51ltmc0000gn/T/r13_t044_check_vqyah_t6/bare remote with spaces.git",
+        "stored_merge": "refs/pull/101/merge",
+        "stdout": "",
+        "stderr": "From /var/folders/vb/jrpwpyj161x7dyk_br51ltmc0000gn/T/r13_t044_check_vqyah_t6/bare remote with spaces\n * [new ref]         refs/pull/101/merge -> pr/101\nSwitched to branch 'pr/101'"
+      },
+      "passed": true
+    },
+    {
+      "name": "wildcard_argument_boundary_and_clean_glob_safety",
+      "inputs": [
+        [
+          "git-pr",
+          "bad*pattern*101"
+        ],
+        [
+          "git-pr",
+          "clean"
+        ]
+      ],
+      "expected": {
+        "wildcard_returncode_nonzero": true,
+        "wildcard_stdout_contains": "bad*pattern*101 doesn't match the pr id pattern.",
+        "clean_returncode": 0,
+        "unrelated_glob_file_intact": true
+      },
+      "actual": {
+        "wildcard_returncode": 1,
+        "wildcard_stdout": "bad*pattern*101 doesn't match the pr id pattern.",
+        "clean_returncode": 0,
+        "unrelated_glob_file_intact": true
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_pr_argument_edge_failure",
+      "inputs": [
+        "git-pr"
+      ],
+      "expected": {
+        "returncode_nonzero": true,
+        "stderr": "pr number required."
+      },
+      "actual": {
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "pr number required."
+      },
+      "passed": true
+    },
+    {
+      "name": "native_bats_git_pr",
+      "inputs": [
+        "bats",
+        "tests/git-pr.bats"
+      ],
+      "expected": {
+        "returncode": 0
+      },
+      "actual": {
+        "returncode": 0,
+        "stdout": "1..1\nok 1 preserves quoted remote path containing spaces and does not expand wildcards",
+        "stderr": ""
+      },
+      "passed": true
+    }
+  ]
+}

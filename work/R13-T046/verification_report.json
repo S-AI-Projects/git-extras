@@ -1,0 +1,72 @@
+{
+  "task_id": "R13-T046",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0"
+  },
+  "total_checks": 4,
+  "passed": true,
+  "failures": [],
+  "results": [
+    {
+      "name": "native_bats_git_lock",
+      "command": [
+        "bats",
+        "--tap",
+        "/Users/muskan/git-extras/tests/git-lock.bats"
+      ],
+      "returncode": 0,
+      "stdout": "1..3\nok 1 git-lock marks a tracked file with skip-worktree\nok 2 git-lock fails when filename is missing\nok 3 git-lock fails on an untracked file",
+      "stderr": "",
+      "executed_cases": 3
+    },
+    {
+      "name": "cli_lock_tracked_file_success",
+      "arguments": [
+        "app.cfg"
+      ],
+      "expected": {
+        "returncode": 0,
+        "before_ls": "H app.cfg",
+        "after_ls": "S app.cfg",
+        "status": ""
+      },
+      "actual": {
+        "returncode": 0,
+        "before_ls": "H app.cfg",
+        "after_ls": "S app.cfg",
+        "status": ""
+      },
+      "passed": true
+    },
+    {
+      "name": "cli_lock_missing_filename_failure",
+      "arguments": [],
+      "expected": {
+        "returncode": 1,
+        "stderr": "filename required."
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "filename required."
+      },
+      "passed": true
+    },
+    {
+      "name": "cli_lock_untracked_file_failure",
+      "arguments": [
+        "untracked.cfg"
+      ],
+      "expected": {
+        "returncode_nonzero": true
+      },
+      "actual": {
+        "returncode": 128,
+        "stderr": "fatal: Unable to mark file untracked.cfg"
+      },
+      "passed": true
+    }
+  ]
+}
