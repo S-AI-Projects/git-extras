@@ -1,0 +1,66 @@
+{
+  "task": "R13-T023",
+  "target": "man/git-info.md",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 3,
+  "total_assertions": 15,
+  "cases": [
+    {
+      "name": "standard_git_info_state_invariants",
+      "type": "state_transition_success",
+      "command": "git info",
+      "actual_args": [],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "state_before": {
+        "head": "3d090630631a09c0e5b4d26d77b7416dcea744f6",
+        "refs": "3d090630631a09c0e5b4d26d77b7416dcea744f6 refs/heads/feature-x\n3d090630631a09c0e5b4d26d77b7416dcea744f6 refs/heads/main",
+        "status": "",
+        "config": "core.repositoryformatversion=0\ncore.filemode=true\ncore.bare=false\ncore.logallrefupdates=true\ncore.ignorecase=true\ncore.precomposeunicode=true\nuser.name=Test User\nuser.email=test@example.com"
+      },
+      "state_after": {
+        "head": "3d090630631a09c0e5b4d26d77b7416dcea744f6",
+        "refs": "3d090630631a09c0e5b4d26d77b7416dcea744f6 refs/heads/feature-x\n3d090630631a09c0e5b4d26d77b7416dcea744f6 refs/heads/main",
+        "status": "",
+        "config": "core.repositoryformatversion=0\ncore.filemode=true\ncore.bare=false\ncore.logallrefupdates=true\ncore.ignorecase=true\ncore.precomposeunicode=true\nuser.name=Test User\nuser.email=test@example.com"
+      },
+      "unrelated_state_preserved": true,
+      "passed": true
+    },
+    {
+      "name": "git_info_no_config_suppression",
+      "type": "state_transition_success",
+      "command": "git info --no-config",
+      "actual_args": [
+        "--no-config"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "config_suppressed": true,
+      "unrelated_state_preserved": true,
+      "passed": true
+    },
+    {
+      "name": "git_info_non_git_repository_failure",
+      "type": "failure_edge_state",
+      "command": "git info",
+      "cwd": "not_a_repo",
+      "actual_args": [],
+      "expected_exit_code": "non-zero",
+      "actual_exit_code": 128,
+      "unrelated_state_preserved": true,
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-info.bats",
+    "exit_code": 0,
+    "stdout": "1..5\nok 1 git-info shows repo details and configuration by default\nok 2 git-info --no-config suppresses configuration section\nok 3 git-info --color and -c flags work\nok 4 git-info preserves repo state and unrelated files\nok 5 git-info fails outside a git repository"
+  },
+  "all_passed": true
+}

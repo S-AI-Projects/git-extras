@@ -2,17 +2,19 @@
 
 GREEN="$(tput setaf 2)"
 NORMAL="$(tput sgr0)"
-if [ "$1" = "--color" ] || [ "$2" = "--color" ] || \
-     [ "$1" = "-c" ] || [ "$2" = "-c" ] ; then
-  COLOR_TITLE="$GREEN"
-else
-  COLOR_TITLE="$NORMAL"
-fi
+COLOR_TITLE="$NORMAL"
+SHOW_CONFIG=true
 
-HIDE_CONFIG=
-if [ "$1" != "--no-config" ] && [ "$2" != "--no-config" ]; then
-  HIDE_CONFIG=1
-fi
+for arg in "$@"; do
+  case "$arg" in
+    -c|--color)
+      COLOR_TITLE="$GREEN"
+      ;;
+    --no-config)
+      SHOW_CONFIG=false
+      ;;
+  esac
+done
 
 get_config() {
   cmd_get_config="$(git config --get-all git-extras.info.config-grep)"
@@ -73,7 +75,7 @@ fi
 echon "${COLOR_TITLE}## Most Recent Commit:${NORMAL}"
 echon "$(most_recent_commit)"
 
-if [ -n "$HIDE_CONFIG" ]; then
+if [ "$SHOW_CONFIG" = true ]; then
   echon "${COLOR_TITLE}## Configuration (.git/config):${NORMAL}"
   echon "$(get_config)"
 fi
