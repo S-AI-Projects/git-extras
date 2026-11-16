@@ -56,6 +56,7 @@
     <a href="#NAME">NAME</a>
     <a href="#SYNOPSIS">SYNOPSIS</a>
     <a href="#DESCRIPTION">DESCRIPTION</a>
+    <a href="#OPTIONS">OPTIONS</a>
     <a href="#EXAMPLES">EXAMPLES</a>
     <a href="#AUTHOR">AUTHOR</a>
     <a href="#REPORTING-BUGS">REPORTING BUGS</a>
@@ -76,15 +77,22 @@
 </p>
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>git show-merged-branches</code></p>
+<p><code>git show-merged-branches</code> [&lt;commit&gt;]</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
-<p>Show branches merged in to current HEAD, excluding the default branch.</p>
+<p>Show branches merged in to current HEAD (or specified commit), excluding the default branch.</p>
+
+<h2 id="OPTIONS">OPTIONS</h2>
+
+<p>&lt;commit&gt;</p>
+
+<p>Optional commit or branch to check merged branches into. Defaults to HEAD.</p>
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
 
 <pre><code>$ git show-merged-branches
+$ git show-merged-branches main
 </code></pre>
 
 <h2 id="AUTHOR">AUTHOR</h2>
@@ -101,7 +109,7 @@
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>March 2026</li>
+    <li class='tc'>November 2026</li>
     <li class='tr'>git-show-merged-branches(1)</li>
   </ol>
 
