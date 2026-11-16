@@ -1,42 +1,40 @@
-.\" generated with Ronn/v0.7.3
-.\" http://github.com/rtomayko/ronn/tree/0.7.3
-.
-.TH "GIT\-COAUTHOR" "1" "August 2019" "" "Git Extras"
-.
+.\" generated with Ronn-NG/v0.10.1
+.\" http://github.com/apjanke/ronn-ng/tree/0.10.1
+.TH "GIT\-COAUTHOR" "1" "November 2026" "" "Git Extras"
 .SH "NAME"
 \fBgit\-coauthor\fR \- Add a co\-author to the last commit
-.
 .SH "SYNOPSIS"
 \fBgit coauthor\fR <co\-author> <co\-author\-email>
-.
 .SH "DESCRIPTION"
 Add a co\-author to the last commit
-.
 .SH "OPTIONS"
 <co\-author>
-.
 .P
 The username of the co\-author you want to add\.
-.
 .P
 <co\-author\-email>
-.
 .P
 The email address of the author you want to add\.
-.
 .SH "EXAMPLES"
-.
+Add a co\-author to the last commit:
+.IP "" 4
 .nf
+# 1\. Setup a commit
+$ git commit \-m "Implement authentication"
 
-$ git coauthor user user@email\.com
-.
+# 2\. Add co\-author
+$ git coauthor "Jane Doe" jane@example\.com
+
+# 3\. Verify the amended commit message
+$ git log \-n 1 \-\-format="%B"
+Implement authentication
+
+Co\-authored\-by: Jane Doe <jane@example\.com>
 .fi
-.
+.IP "" 0
 .SH "AUTHOR"
 Written by Jacob Herrington \fIjacobherringtondeveloper@gmail\.com\fR
-.
 .SH "REPORTING BUGS"
 <\fIhttps://github\.com/tj/git\-extras/issues\fR>
-.
 .SH "SEE ALSO"
 <\fIhttps://github\.com/tj/git\-extras\fR>

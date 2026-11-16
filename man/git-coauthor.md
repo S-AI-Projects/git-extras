@@ -21,7 +21,19 @@ git-coauthor(1) -- Add a co-author to the last commit
 
 ## EXAMPLES
 
-    $ git coauthor user user@email.com
+  Add a co-author to the last commit:
+
+    # 1. Setup a commit
+    $ git commit -m "Implement authentication"
+
+    # 2. Add co-author
+    $ git coauthor "Jane Doe" jane@example.com
+
+    # 3. Verify the amended commit message
+    $ git log -n 1 --format="%B"
+    Implement authentication
+
+    Co-authored-by: Jane Doe <jane@example.com>
 
 ## AUTHOR
 

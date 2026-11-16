@@ -1,0 +1,67 @@
+{
+  "task": "R13-T027",
+  "target": "bin/git-coauthor",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 10,
+  "cases": [
+    {
+      "name": "missing_coauthor_name_failure",
+      "type": "documented_failure",
+      "command": "git coauthor",
+      "actual_args": [],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing_coauthor_email_failure",
+      "type": "documented_failure",
+      "command": "git coauthor 'Jane Doe'",
+      "actual_args": [
+        "Jane Doe"
+      ],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "documented_usage_example_success",
+      "type": "documented_example_success",
+      "command": "git coauthor 'Jane Doe' jane@example.com",
+      "actual_args": [
+        "Jane Doe",
+        "jane@example.com"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "message_before": "Implement authentication",
+      "message_after": "Implement authentication\n\nCo-authored-by: Jane Doe <jane@example.com>",
+      "passed": true
+    },
+    {
+      "name": "append_multiple_coauthors_success",
+      "type": "documented_example_success",
+      "command": "git coauthor 'Bob Smith' bob@example.com",
+      "actual_args": [
+        "Bob Smith",
+        "bob@example.com"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "message_after": "Implement authentication\n\nCo-authored-by: Jane Doe <jane@example.com>\nCo-authored-by: Bob Smith <bob@example.com>",
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-coauthor.bats",
+    "exit_code": 0,
+    "stdout": "1..4\nok 1 git-coauthor without arguments fails and displays error\nok 2 git-coauthor with missing email fails and displays error\nok 3 git-coauthor executes documented usage example and adds co-author\nok 4 git-coauthor appends additional co-author to commit with existing co-author"
+  },
+  "all_passed": true
+}
