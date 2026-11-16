@@ -46,7 +46,7 @@ git-changelog(1) -- Generate a changelog report
 
   --start-commit
 
-  Like the --start-tag but specify the oldest commit instead of tag. Note that the specified commit will be contained in the changelog.
+  Like the --start-tag but specify the oldest commit instead of tag. Note that the specified commit will be contained in the changelog. Cannot be used together with --start-tag.
 
   -n, --no-merges
 
