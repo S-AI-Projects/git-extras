@@ -1,0 +1,37 @@
+{
+  "task_id": "R13-T028",
+  "timestamp": 1794827594.352561,
+  "tests": [
+    {
+      "name": "invalid_invocation_fails_with_diagnostic",
+      "passed": true,
+      "exit_code": 1,
+      "stderr": "Specify days less than one is invalid: -d requires a positive integer (e.g. -d 1 or -d 7)"
+    },
+    {
+      "name": "corrected_invocation_succeeds",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "12d9f64 - Sample commit for standup (24 hours ago) <Test Author>"
+    },
+    {
+      "name": "standup_all_authors_succeeds",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "name": "standup_help_succeeds",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "name": "bats_suite",
+      "passed": true,
+      "exit_code": 0,
+      "output": "1..4\nok 1 git-standup with invalid -d 0 fails with diagnostic message\nok 2 git-standup with corrected -d 2 invocation succeeds\nok 3 git-standup with -a all succeeds\nok 4 git-standup with -h displays usage screen"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "status": "passed"
+}
