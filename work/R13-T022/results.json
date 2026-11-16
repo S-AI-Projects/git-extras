@@ -1,0 +1,75 @@
+{
+  "task": "R13-T022",
+  "target": "bin/git-changelog",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 12,
+  "cases": [
+    {
+      "name": "minimum_accepted_argument_list",
+      "type": "minimum_arguments_success",
+      "command": "git changelog --list --stdout",
+      "actual_args": [
+        "--list",
+        "--stdout"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "output_contains": "Commit C",
+      "passed": true
+    },
+    {
+      "name": "optional_arguments_all_prune_old_list",
+      "type": "optional_arguments_success",
+      "command": "git changelog --all --prune-old --list CHANGELOG.md",
+      "actual_args": [
+        "--all",
+        "--prune-old",
+        "--list",
+        "CHANGELOG.md"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "invalid_combination_start_tag_and_start_commit",
+      "type": "documented_invalid_combination",
+      "command": "git changelog --start-tag v1.0.0 --start-commit <sha>",
+      "actual_args": [
+        "--start-tag",
+        "v1.0.0",
+        "--start-commit",
+        "c08983fc7049d5a557171975c859e7c68ae91b30"
+      ],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "expected_error": "--start-tag could not use with --start-commit!",
+      "passed": true
+    },
+    {
+      "name": "invalid_start_tag_does_not_exist",
+      "type": "documented_invalid_combination",
+      "command": "git changelog --start-tag nonexistent-tag",
+      "actual_args": [
+        "--start-tag",
+        "nonexistent-tag"
+      ],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "expected_error": "Specified start-tag does not exist!",
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-changelog.bats",
+    "exit_code": 0,
+    "stdout": "1..6\nok 1 excludes commits matching a pathspec\nok 2 minimum accepted argument list succeeds with default stdout output\nok 3 optional arguments --all and --prune-old succeed\nok 4 fails when mutually exclusive --start-tag and --start-commit are combined\nok 5 fails when start-tag does not exist\nok 6 fails when --exclude is passed without a pathspec"
+  },
+  "all_passed": true
+}
