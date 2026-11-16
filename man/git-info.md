@@ -24,7 +24,7 @@ Shows the following information about a repository:
 
   --no-config
 
-  Don't show list all variables set in config file, along with their values.
+  Do not show variables set in config file, along with their values.
 
 ## GIT CONFIGS
 
