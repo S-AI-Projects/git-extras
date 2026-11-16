@@ -1,0 +1,95 @@
+{
+  "task": "R13-T021",
+  "target": "bin/git-delete-branch",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 15,
+  "cases": [
+    {
+      "name": "missing_branch_argument_failure",
+      "type": "failure_edge_state",
+      "command": "git delete-branch",
+      "actual_args": [],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "expected_output_contains": "branch required.",
+      "actual_stderr": "branch required.",
+      "actual_stdout": "",
+      "state_before": {
+        "branches": "* main"
+      },
+      "state_after": {
+        "branches": "* main"
+      },
+      "passed": true
+    },
+    {
+      "name": "empty_string_branch_argument_failure",
+      "type": "failure_edge_state",
+      "command": "git delete-branch ''",
+      "actual_args": [
+        ""
+      ],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "expected_output_contains": "branch required.",
+      "actual_stderr": "branch required.",
+      "actual_stdout": "",
+      "state_before": {
+        "branches": "* main"
+      },
+      "state_after": {
+        "branches": "* main"
+      },
+      "passed": true
+    },
+    {
+      "name": "delete_single_local_branch_success",
+      "type": "ordinary_success",
+      "command": "git delete-branch feature-local",
+      "actual_args": [
+        "feature-local"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "state_before": {
+        "branches": "feature-local\n* main"
+      },
+      "state_after": {
+        "branches": "* main"
+      },
+      "passed": true
+    },
+    {
+      "name": "delete_remote_and_local_branch_success",
+      "type": "ordinary_success",
+      "command": "git delete-branch feature-remote",
+      "actual_args": [
+        "feature-remote"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "state_before": {
+        "local_branches": "feature-remote\n* main",
+        "remote_branches": "origin/feature-remote\n  origin/main"
+      },
+      "state_after": {
+        "local_branches": "* main",
+        "remote_branches": "origin/main",
+        "remote_heads": ""
+      },
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-delete-branch.bats",
+    "exit_code": 0,
+    "stdout": "1..5\nok 1 git-delete-branch without arguments fails and displays error\nok 2 git-delete-branch with empty argument fails and displays error\nok 3 git-delete-branch deletes a local branch\nok 4 git-delete-branch deletes multiple local branches\nok 5 git-delete-branch deletes local branch and remote tracking branch"
+  },
+  "all_passed": true
+}
