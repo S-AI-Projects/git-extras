@@ -1,0 +1,105 @@
+{
+  "task_id": "R13-T029",
+  "timestamp": 1794849212.347391,
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.9.6"
+  },
+  "test_cases": [
+    {
+      "name": "help_screen_invocation",
+      "args": [
+        "-h"
+      ],
+      "input": null,
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "expected_stdout_contains": "Usage: git fork",
+      "passed": true,
+      "output": "Usage: git fork [-h|--help] [<github-repo-url>]"
+    },
+    {
+      "name": "missing_repo_url_failure",
+      "args": [],
+      "input": null,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_output_contains": "github repo needs to be specified as an argument",
+      "passed": true,
+      "output": "github repo needs to be specified as an argument"
+    },
+    {
+      "name": "missing_username_failure",
+      "args": [
+        "owner/repo"
+      ],
+      "input": "\\n",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_output_contains": "git username required",
+      "passed": true,
+      "output": "Enter your github username\ngit username required"
+    },
+    {
+      "name": "missing_token_failure",
+      "args": [
+        "owner/repo"
+      ],
+      "input": "myuser\\n",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_output_contains": "GITHUB_TOKEN, or git config git-extras.github-personal-access-token required",
+      "passed": true,
+      "output": "Enter your github username\nGITHUB_TOKEN, or git config git-extras.github-personal-access-token required"
+    },
+    {
+      "name": "api_fork_failure",
+      "args": [
+        "owner/repo"
+      ],
+      "input": "myuser\\n",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_output_contains": "fork failed",
+      "passed": true,
+      "output": "Enter your github username\nfork failed"
+    },
+    {
+      "name": "in_repo_fork_success",
+      "args": [],
+      "input": "myuser\\nn\\n",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "before_remotes": "origin\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/upstream_org/myproject.git (fetch)\norigin\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/upstream_org/myproject.git (push)",
+      "after_remotes": "origin\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/myuser/myproject.git (fetch)\norigin\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/myuser/myproject.git (push)\nupstream\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/upstream_org/myproject.git (fetch)\nupstream\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/upstream_org/myproject.git (push)",
+      "passed": true
+    },
+    {
+      "name": "clone_by_url_fork_success",
+      "args": [
+        "upstream_org/myproject"
+      ],
+      "input": "myuser\\nn\\n",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "cloned_repo_exists": true,
+      "cloned_remotes": "origin\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/myuser/myproject.git (fetch)\norigin\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/myuser/myproject.git (push)\nupstream\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/upstream_org/myproject.git (fetch)\nupstream\t/var/folders/5j/sbdqc48n04j_tkfzhntgmx080000gn/T/git_fork_check_ax0u5i81/remotes/upstream_org/myproject.git (push)",
+      "passed": true
+    },
+    {
+      "name": "native_bats_suite",
+      "args": [
+        "/Users/kaveri/git-extras/tests/git-fork.bats"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "output": "1..7\nok 1 git-fork -h displays usage screen\nok 2 git-fork without args outside repo fails with repo required error\nok 3 git-fork with empty username aborts\nok 4 git-fork without token aborts\nok 5 git-fork with failing API call aborts with fork failed\nok 6 git-fork in existing repo renames origin to upstream and adds fork origin\nok 7 git-fork with repo url clones fork and sets up upstream"
+    }
+  ],
+  "passed": 8,
+  "failed": 0,
+  "status": "passed"
+}

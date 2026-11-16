@@ -3,7 +3,7 @@ git-fork(1) -- Fork a repo on github
 
 ## SYNOPSIS
 
-`git fork` [&lt;github-repo-url&gt;]
+`git fork` [-h|--help] [&lt;github-repo-url&gt;]
 
 ## DESCRIPTION
 
@@ -30,6 +30,18 @@ git-fork(1) -- Fork a repo on github
   Use `GITHUB_TOKEN` environment variable, or `git config --global --add git-extras.github-personal-access-token <your-personal-access-token>`
   
   If using multiple accounts, override the global value in the specific repo using `git config git-extras.github-personal-access-token <other-acc-personal-access-token>`
+
+  The GitHub API base URL defaults to `https://api.github.com`, but can be overridden with the `GITHUB_API_URL` environment variable for testing or enterprise GitHub installations. The remote URL prefix defaults to `git@github.com:` or `https://github.com/`, but can be overridden with `GIT_REMOTE_PREFIX`.
+
+## OPTIONS
+
+  -h, --help
+
+  Show help message and exit.
+
+  &lt;github-repo-url&gt;
+
+  The GitHub repository URL (HTTPS or SSH) or `owner/repo` shorthand to fork.
 
 ## EXAMPLE
 
