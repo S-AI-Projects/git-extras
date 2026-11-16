@@ -27,7 +27,7 @@ Enable the inclusion of symbolic links in recursive directory search.
 
 -d days-ago
 
-The start of commit history. Defaults to 1, means "1 days ago".
+The start of commit history. Defaults to 1, meaning "1 days ago". Must be a positive integer (greater than or equal to 1).
 
 -w <weekstart-weekend>
 

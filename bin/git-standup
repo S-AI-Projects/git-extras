@@ -85,7 +85,7 @@ while getopts "hgfF:Bd:a:w:m:D:n:L" opt; do
             test -n "$RANGE_SPECIFIED" && warn "-d option is conflict with -w"
             RANGE_SPECIFIED=yes
             if [ "$OPTARG" -lt 1 ]; then
-                >&2 echo "Specify days less than one is invalid"
+                >&2 echo "Specify days less than one is invalid: -d requires a positive integer (e.g. -d 1 or -d 7)"
                 exit 1
             fi
             SINCE="$OPTARG days ago"
