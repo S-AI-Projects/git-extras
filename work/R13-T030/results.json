@@ -1,0 +1,94 @@
+{
+  "task_id": "R13-T030",
+  "timestamp": 1794850357.045692,
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.9.6"
+  },
+  "test_cases": [
+    {
+      "name": "help_flag",
+      "args": [
+        "-h"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "output": "Usage: git merge-into [src] dest [--ff-only]"
+    },
+    {
+      "name": "missing_arguments_failure",
+      "args": [],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "output": "Usage: git merge-into [src] dest [--ff-only]"
+    },
+    {
+      "name": "fast_forward_merge_with_ff_only",
+      "args": [
+        "main",
+        "--ff-only"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "before_branch": "topic",
+      "after_branch": "topic",
+      "before_main_head": "4353884 Commit B",
+      "after_main_head": "8c2b8bd Commit C",
+      "passed": true
+    },
+    {
+      "name": "one_condition_mutant_rejected",
+      "passed": true,
+      "details": {
+        "mutant_description": "Mutated condition: `if [ \"${!#}\" = '--ff-only' ]; then` -> `if false; then`",
+        "valid_input": [
+          "main",
+          "--ff-only"
+        ],
+        "original_exit_code": 0,
+        "mutant_exit_code": 129,
+        "mutant_rejected": true,
+        "explanation": "Valid fast-forward input succeeds on unmutated command but is rejected/broken on mutant, killing the mutant."
+      }
+    },
+    {
+      "name": "diverged_ff_only_rejection",
+      "args": [
+        "main",
+        "--ff-only"
+      ],
+      "expected_exit_nonzero": true,
+      "actual_exit": 1,
+      "main_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "native_bats_suite",
+      "args": [
+        "/Users/kaveri/git-extras/tests/git-merge-into.bats"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "output": "1..7\nok 1 git-merge-into -h displays usage screen\nok 2 git-merge-into without arguments fails with usage\nok 3 git-merge-into merges current branch into destination and returns to current\nok 4 git-merge-into merges explicit src branch into dest branch\nok 5 git-merge-into with --ff-only fast-forwards destination branch\nok 6 git-merge-into with --ff-only fails on non-fast-forward divergence\nok 7 git-merge-into automatically stashes and pops uncommitted modifications"
+    }
+  ],
+  "mutation_check": {
+    "mutant_description": "Mutated condition: `if [ \"${!#}\" = '--ff-only' ]; then` -> `if false; then`",
+    "valid_input": [
+      "main",
+      "--ff-only"
+    ],
+    "original_exit_code": 0,
+    "mutant_exit_code": 129,
+    "mutant_rejected": true,
+    "explanation": "Valid fast-forward input succeeds on unmutated command but is rejected/broken on mutant, killing the mutant."
+  },
+  "passed": 6,
+  "failed": 0,
+  "status": "passed"
+}
