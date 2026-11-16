@@ -3,11 +3,17 @@ git-delete-submodule(1) -- Delete submodules
 
 ## SYNOPSIS
 
-`git delete-submodule` &lt;path&gt;
+`git delete-submodule` [--force] &lt;path&gt;
 
 ## DESCRIPTION
 
+  Deletes a git submodule located at &lt;path&gt;, cleaning up `.gitmodules`, git configuration, and working tree files.
+
 ## OPTIONS
+
+  --force
+
+  Do not abort on intermediate failures, allowing cleanup after a previous failure.
 
   &lt;path&gt;
 
@@ -16,6 +22,7 @@ git-delete-submodule(1) -- Delete submodules
 ## EXAMPLES
 
     $ git delete-submodule lib/foo
+    $ git delete-submodule --force lib/foo
 
 ## AUTHOR
 

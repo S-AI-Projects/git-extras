@@ -1,0 +1,62 @@
+{
+  "task": "R13-T026",
+  "target": "man/git-delete-submodule.md",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 10,
+  "cases": [
+    {
+      "name": "missing_submodule_argument_failure",
+      "type": "characterization_failure",
+      "command": "git delete-submodule",
+      "actual_args": [],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing_gitmodules_file_failure",
+      "type": "characterization_failure",
+      "command": "git delete-submodule sub",
+      "actual_args": [
+        "sub"
+      ],
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "passed": true
+    },
+    {
+      "name": "submodule_not_found_failure",
+      "type": "characterization_failure",
+      "command": "git delete-submodule nonexistent",
+      "actual_args": [
+        "nonexistent"
+      ],
+      "expected_exit_code": 3,
+      "actual_exit_code": 3,
+      "passed": true
+    },
+    {
+      "name": "successful_submodule_deletion",
+      "type": "characterization_success",
+      "command": "git delete-submodule my_sub",
+      "actual_args": [
+        "my_sub"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-delete-submodule.bats",
+    "exit_code": 0,
+    "stdout": "1..4\nok 1 git-delete-submodule without arguments fails and displays error\nok 2 git-delete-submodule fails when .gitmodules file not found\nok 3 git-delete-submodule fails when submodule not registered in .gitmodules\nok 4 git-delete-submodule successfully deletes an existing submodule"
+  },
+  "all_passed": true
+}
