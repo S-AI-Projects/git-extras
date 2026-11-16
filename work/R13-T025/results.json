@@ -1,0 +1,59 @@
+{
+  "task": "R13-T025",
+  "target": "man/git-show-merged-branches.md",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 10,
+  "cases": [
+    {
+      "name": "standard_merged_branches_success",
+      "type": "standard_success",
+      "command": "git show-merged-branches",
+      "actual_args": [],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "deterministic_local_config_isolation",
+      "type": "config_isolation_success",
+      "command": "git show-merged-branches (with git-extras.default-branch=feature-merged)",
+      "actual_args": [],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "explicit_target_branch_success",
+      "type": "argument_success",
+      "command": "git show-merged-branches main",
+      "actual_args": [
+        "main"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "missing_grep_dependency_failure",
+      "type": "missing_dependency_failure",
+      "command": "git show-merged-branches (stubbed missing grep)",
+      "actual_args": [],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "expected_stderr": "grep required.",
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-show-merged-branches.bats",
+    "exit_code": 0,
+    "stdout": "1..4\nok 1 git-show-merged-branches lists merged branches excluding default branch\nok 2 git-show-merged-branches respects local git-extras.default-branch configuration\nok 3 git-show-merged-branches accepts an explicit commit target\nok 4 git-show-merged-branches fails when grep dependency is missing"
+  },
+  "all_passed": true
+}
