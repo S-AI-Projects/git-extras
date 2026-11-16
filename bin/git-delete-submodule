@@ -29,15 +29,13 @@ git config --file='.gitmodules' --remove-section "submodule.$NAME" 2>/dev/null |
 # 2.b and stage changes
 git add '.gitmodules'
 # 2.c. Delete empty .gitmodules
-[  "$(wc -l '.gitmodules' | cut -d' ' -f1)" = '0' ] && git rm -f '.gitmodules'
+[ ! -s '.gitmodules' ] && git rm -f '.gitmodules'
 
 # 3. Need to confirm and commit the changes for yourself
 git_status_text="$(git submodule status 2>&1)"
 git_status_exit=$?
 if [ "$git_status_exit" -eq 0 ] \
-    && printf '%s' "DUMMY$git_status_text" | grep -v "$NAME" > /dev/null; then
-    #  grep fails when piping in an empty string, so we add a DUMMY prefix
-
+    && ! echo "$git_status_text" | grep -F -q -- "$NAME"; then
 	echo "Successfully deleted $NAME."
 else
 	abort 6 "Failed to delete $NAME with error:\n$git_status_text"
