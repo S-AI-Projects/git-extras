@@ -1,0 +1,65 @@
+{
+  "task": "R13-T024",
+  "target": "man/git-contrib.md",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 12,
+  "cases": [
+    {
+      "name": "missing_username_failure",
+      "type": "failure_edge_state",
+      "command": "git contrib",
+      "actual_args": [],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "author_with_spaces_success",
+      "type": "quoted_argument_success",
+      "command": "git contrib 'Jane Doe'",
+      "actual_args": [
+        "Jane Doe"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "wildcard_author_argument_success",
+      "type": "wildcard_argument_success",
+      "command": "git contrib 'Jane*'",
+      "actual_args": [
+        "Jane*"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "unrelated_files_preserved": true,
+      "passed": true
+    },
+    {
+      "name": "path_with_spaces_after_double_dash",
+      "type": "path_quoting_success",
+      "command": "git contrib 'Jane Doe' -- 'docs and guides/guide with space.txt'",
+      "actual_args": [
+        "Jane Doe",
+        "--",
+        "docs and guides/guide with space.txt"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "passed": true
+    }
+  ],
+  "bats_suite": {
+    "file": "tests/git-contrib.bats",
+    "exit_code": 0,
+    "stdout": "1..5\nok 1 git-contrib without arguments fails and displays error\nok 2 git-contrib with empty string fails and displays error\nok 3 git-contrib finds commits for author with spaces in name\nok 4 git-contrib finds commits using wildcard pattern\nok 5 git-contrib preserves path containing spaces after double dash"
+  },
+  "all_passed": true
+}

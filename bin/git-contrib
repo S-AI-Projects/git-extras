@@ -1,7 +1,29 @@
 #!/usr/bin/env bash
 
-user="$*"
+user=""
+path_args=()
+has_dash=false
+
+for arg in "$@"; do
+  if [ "$arg" = "--" ]; then
+    has_dash=true
+    continue
+  fi
+  if [ "$has_dash" = true ]; then
+    path_args+=("$arg")
+  else
+    if [ -z "$user" ]; then
+      user="$arg"
+    else
+      user="$user $arg"
+    fi
+  fi
+done
 
 test -z "$user" && echo "user name required." 1>&2 && exit 1
 
-git shortlog --format=format:"%h %s" --author="$user"
+if [ ${#path_args[@]} -gt 0 ]; then
+  git shortlog --format=format:"%h %s" --author="$user" -- "${path_args[@]}"
+else
+  git shortlog --format=format:"%h %s" --author="$user"
+fi
