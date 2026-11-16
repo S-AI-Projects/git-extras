@@ -8,6 +8,16 @@ usage() {
     echo "Usage: git merge-into [src] dest [--ff-only]"
 }
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    usage
+    exit 0
+fi
+
+if [ $# -lt 1 ]; then
+    usage
+    exit 1
+fi
+
 cur_branch=$(current_branch)
 
 stashed=0
@@ -18,31 +28,42 @@ then
     git stash
 fi
 
+res=0
 if [ "${!#}" = '--ff-only' ]; then
     case $# in
         2 ) # dest --ff
-            git push "$(git rev-parse --show-toplevel)" "$cur_branch":"$1";;
+            git push "$(git rev-parse --show-toplevel)" "$cur_branch":"$1"
+            res=$?
+            ;;
         3 )
-            git push "$(git rev-parse --show-toplevel)" "$1":"$2";;
+            git push "$(git rev-parse --show-toplevel)" "$1":"$2"
+            res=$?
+            ;;
         * )
             usage
+            res=1
+            ;;
     esac
 else
     case $# in
         1 )
-            git checkout "$1"
-            git merge "$cur_branch" "$1" && git checkout "$cur_branch"
+            git checkout "$1" && git merge "$cur_branch" "$1" && git checkout "$cur_branch"
+            res=$?
             ;;
         2 )
-            git checkout "$2"
-            git merge "$1" "$2" && git checkout "$cur_branch"
+            git checkout "$2" && git merge "$1" "$2" && git checkout "$cur_branch"
+            res=$?
             ;;
         * )
             usage
+            res=1
+            ;;
     esac
 fi
 
 if [ $stashed -eq 1 ];
 then
-    git stash pop;
+    git stash pop
 fi
+
+exit $res

@@ -3,17 +3,21 @@ git-merge-into(1) -- Merge one branch into another
 
 ## SYNOPSIS
 
-`git merge-into` [src] &lt;dest&gt; [--ff-only]
+`git merge-into` [-h|--help] [src] &lt;dest&gt; [--ff-only]
 
 ## DESCRIPTION
 
 Merge one branch into another, and keep yourself on current branch. If src branch not given, it will merge current one to dest.
 
 ## OPTIONS
-  
+
+  -h, --help
+
+  Show help message and exit.
+
   &lt;src&gt;
 
-  The name of the branch will be merged into. If this not given, use current branch as default.
+  The name of the branch to be merged. If not given, uses current branch as default.
 
   &lt;dest&gt;
 
