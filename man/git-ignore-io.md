@@ -81,6 +81,15 @@ $ git ignore-io -s ja
     ninja
 ```
 
+## TROUBLESHOOTING
+
+If a requested type is not in the cached template list, the command exits with
+a non-zero status and prints `Template not found: <type>`. Check the available
+names with `git ignore-io --list-alphabetically` and retry with a listed name.
+For example, use `git ignore-io --replace vim` if the intended template is Vim.
+Use `git ignore-io --update-list` when the cached list needs refreshing; this
+option contacts GitHub.
+
 
 ## AUTHOR
 
