@@ -1,0 +1,106 @@
+{
+  "task": "R13-T008",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-ignore-io.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 1,
+    "test_names": [
+      "diagnoses an unknown template and succeeds with the corrected name"
+    ],
+    "failure": {
+      "argv": [
+        "git-ignore-io",
+        "--replace",
+        "Vmi"
+      ],
+      "status": 1,
+      "diagnostic": "Template not found: Vmi. Use --list-alphabetically to see available templates."
+    },
+    "success": {
+      "argv": [
+        "git-ignore-io",
+        "--replace",
+        "Vim"
+      ],
+      "status": 0,
+      "file": "# Vim rules\n*.swp\n\n"
+    }
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..1",
+    "passed_test_names": [
+      "diagnoses an unknown template and succeeds with the corrected name"
+    ],
+    "stdout": "1..1\nok 1 diagnoses an unknown template and succeeds with the corrected name\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "unknown template is rejected without changing the file",
+        "argv": [
+          "git-ignore-io",
+          "--replace",
+          "Vmi"
+        ],
+        "exit_status": 1,
+        "before": {
+          "head": "4c651bb3e74784a6fbe1f545a3f7044ed694e859",
+          "status": [],
+          "gitignore_exists": true,
+          "gitignore": "keep-me\n",
+          "temporary_files": []
+        },
+        "after": {
+          "head": "4c651bb3e74784a6fbe1f545a3f7044ed694e859",
+          "status": [],
+          "gitignore_exists": true,
+          "gitignore": "keep-me\n",
+          "temporary_files": []
+        },
+        "output": "Template not found: Vmi. Use --list-alphabetically to see available templates."
+      },
+      {
+        "name": "listed template succeeds after correcting the name",
+        "argv": [
+          "git-ignore-io",
+          "--replace",
+          "Vim"
+        ],
+        "exit_status": 0,
+        "before": {
+          "head": "4c651bb3e74784a6fbe1f545a3f7044ed694e859",
+          "status": [],
+          "gitignore_exists": true,
+          "gitignore": "keep-me\n",
+          "temporary_files": []
+        },
+        "after": {
+          "head": "4c651bb3e74784a6fbe1f545a3f7044ed694e859",
+          "status": [
+            " M .gitignore"
+          ],
+          "gitignore_exists": true,
+          "gitignore": "# Vim rules\n*.swp\n\n",
+          "temporary_files": []
+        },
+        "output": ""
+      }
+    ]
+  },
+  "inputs": {
+    "cached_templates": [
+      "Vim",
+      "Python"
+    ],
+    "original_gitignore": "keep-me\n"
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}

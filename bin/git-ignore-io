@@ -91,7 +91,7 @@ gi() {
                     }
                 }')
         if [[ -z "$template" ]]; then
-            echo "Template not found: $type" >&2
+            echo "Template not found: $type. Use --list-alphabetically to see available templates." >&2
             failed=1
             continue
         fi
