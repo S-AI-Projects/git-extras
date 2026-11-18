@@ -66,3 +66,20 @@ setup() {
 	run git config --get branch.mr/51.remote
 	assert_output 'https://codeberg.org/owner/repository.git'
 }
+
+@test "checks out a Forgejo pull request URL with a query suffix" {
+	git config --local url."$remote_dir".insteadOf "https://codeberg.org/owner/repository.git"
+
+	run git mr "https://codeberg.org/owner/repository/pulls/51?diff=split"
+	assert_success
+	assert_output --partial "refs/pull/51/head"
+
+	run git rev-parse --abbrev-ref HEAD
+	assert_output 'mr/51'
+
+	run git config --get branch.mr/51.merge
+	assert_output 'refs/pull/51/head'
+
+	run git config --get branch.mr/51.remote
+	assert_output 'https://codeberg.org/owner/repository.git'
+}
