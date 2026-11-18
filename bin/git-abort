@@ -17,7 +17,7 @@ discover_op() {
 validate_op() {
   local op="$1"
   if [ -z "$op" ]; then
-    echo "No active operation found" >&2
+    echo "No active operation found; nothing to abort or continue" >&2
     exit 1
   fi
   if [[ "$(echo "$op" | wc -l)" -gt 1 ]]; then

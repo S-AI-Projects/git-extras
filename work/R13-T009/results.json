@@ -1,0 +1,70 @@
+{
+  "task": "R13-T009",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-abort.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 5,
+    "failure_test": "explicit git-dir abort with no active operation is a safe failure",
+    "success_tests": [
+      "works with cherry pick",
+      "works with merge",
+      "works with rebase",
+      "works with revert"
+    ]
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..5",
+    "passed_test_names": [
+      "explicit git-dir abort with no active operation is a safe failure",
+      "works with cherry pick",
+      "works with merge",
+      "works with rebase",
+      "works with revert"
+    ],
+    "stdout": "1..5\nok 1 explicit git-dir abort with no active operation is a safe failure\nok 2 works with cherry pick\nok 3 works with merge\nok 4 works with rebase\nok 5 works with revert\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "explicit git-dir abort with no active operation is a safe failure",
+        "argv": [
+          "git",
+          "--git-dir",
+          ".git",
+          "abort"
+        ],
+        "exit_status": 1,
+        "before": {
+          "head": "db04b0232439f45f6bb5221e8edc9232d55fd22d",
+          "status": [],
+          "operation_markers": []
+        },
+        "after": {
+          "head": "db04b0232439f45f6bb5221e8edc9232d55fd22d",
+          "status": [],
+          "operation_markers": []
+        },
+        "output": "No active operation found; nothing to abort or continue"
+      }
+    ]
+  },
+  "inputs": {
+    "failure_argv": [
+      "git",
+      "--git-dir",
+      ".git",
+      "abort"
+    ],
+    "expected_failure_status": 1,
+    "expected_success_status": 0
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}
