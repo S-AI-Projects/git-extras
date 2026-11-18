@@ -17,6 +17,12 @@ git-abort(1) -- Abort current git operation
 
   `git abort`
 
+## TROUBLESHOOTING
+
+If no merge, rebase, revert, or cherry-pick is active, `git abort` exits with
+status 1 and reports that there is nothing to abort. The repository state is
+left unchanged. Start or continue the intended Git operation before retrying.
+
 ## AUTHOR
 
 Written by Przemek Kitszel &lt;<pkitszel@gmail.com>&gt;

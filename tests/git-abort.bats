@@ -24,6 +24,55 @@ setup() {
 	git status
 }
 
+repo_state() {
+	python3 - <<'PY'
+import json
+import pathlib
+import subprocess
+
+def git(*args):
+    return subprocess.run(["git", *args], text=True, capture_output=True, check=False)
+
+gitdir = pathlib.Path(git("rev-parse", "--git-dir").stdout.strip())
+print(json.dumps({
+    "head": git("rev-parse", "HEAD").stdout.strip(),
+    "status": git("status", "--porcelain").stdout.splitlines(),
+    "operation_markers": sorted(path.name for path in gitdir.glob("*_HEAD")),
+}))
+PY
+}
+
+record_scenario() {
+	local status="$1" before="$2" after="$3" output="$4"
+	[[ -n "${R13_SCENARIO_LOG:-}" ]] || return 0
+	python3 - "$R13_SCENARIO_LOG" "$status" "$before" "$after" "$output" <<'PY'
+import json
+import sys
+
+path, status, before, after, output = sys.argv[1:]
+with open(path, "a", encoding="utf-8") as stream:
+    stream.write(json.dumps({
+        "name": "explicit git-dir abort with no active operation is a safe failure",
+        "argv": ["git", "--git-dir", ".git", "abort"],
+        "exit_status": int(status),
+        "before": json.loads(before),
+        "after": json.loads(after),
+        "output": output,
+    }) + "\n")
+PY
+}
+
+@test "explicit git-dir abort with no active operation is a safe failure" {
+	local before after
+	before="$(repo_state)"
+	run git --git-dir .git abort
+	after="$(repo_state)"
+	record_scenario "$status" "$before" "$after" "$output"
+	assert_failure 1
+	assert_output --partial 'No active operation found; nothing to abort or continue'
+	assert_equal "$(repo_state)" "$before"
+}
+
 @test "works with cherry pick" {
 	run git cherry-pick A
 	assert_failure
