@@ -23,6 +23,9 @@ git-effort(1) -- Show effort statistics on file(s)
 
   Only count commits that touches the given paths.
 
+  Each path is passed as one argument. Quote paths containing spaces or shell
+  metacharacters; Git's own pathspec matching still applies to the resulting path.
+
   Note: `git effort` does not accept revision ranges, but the underlying `git log` does (See the examples).  
 
   &lt;log options&gt;...
