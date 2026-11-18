@@ -42,6 +42,19 @@ Also runs git commit if -c is provided.
 
 ## EXAMPLES
 
+Replace every `hello` in a tracked file, then verify the working-tree change:
+
+    $ git init --quiet --initial-branch=main example && cd example
+    $ git config user.name Example
+    $ git config user.email example@example.com
+    $ printf 'hello hello\n' > note.txt
+    $ git add note.txt && git commit -q -m 'Add note'
+    $ git sed -f g hello goodbye -- note.txt
+    $ cat note.txt
+    goodbye goodbye
+    $ git diff --numstat -- note.txt
+    1       1       note.txt
+
     $ git sed 'my_function' 'do_stuff'
     # ... only does the changes, without committing
     $ git commit -m"use proper function name"
