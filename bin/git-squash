@@ -1,22 +1,39 @@
 #!/usr/bin/env bash
 
+usage() {
+  echo "Usage: git squash [--squash-msg] <source-branch|commit-ref> [commit-message]" >&2
+}
+
 SQUASH_MSG=
-for arg in "$@"; do
-    case "$arg" in
+while [[ $# -gt 0 ]]; do
+    case "$1" in
         --squash-msg)
             SQUASH_MSG=1
+            shift
+            ;;
+        --*)
+            echo "Unknown option: $1" >&2
+            usage
+            exit 2
             ;;
         *)
-            # set the argument back
-            set -- "$@" "$arg"
+            break
             ;;
     esac
-
-    shift
 done
 
-src="$1"
-msg="$2"
+src="${1-}"
+msg="${2-}"
+if [[ -z "$src" ]]; then
+    echo "Source branch or commit reference required." >&2
+    usage
+    exit 1
+fi
+if [[ $# -gt 2 ]]; then
+    echo "Too many arguments." >&2
+    usage
+    exit 2
+fi
 if [[ -n "$msg" ]] && [[ -n "$SQUASH_MSG" ]]; then
     >&2 echo "When commit message is given, --squash-msg is not allowed."
     exit 1

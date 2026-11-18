@@ -1,0 +1,128 @@
+{
+  "task": "R13-T001",
+  "repository": "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras",
+  "native_test_command": [
+    "/opt/homebrew/bin/bats",
+    "tests/git-squash.bats"
+  ],
+  "native_test_exit_status": 0,
+  "native_test_stdout": "1..4\nok 1 squashes a topic branch into the index without moving HEAD\nok 2 rejects a missing source without changing repository state\nok 3 commits the squash with concatenated messages\nok 4 rejects a message with --squash-msg without changing state\n",
+  "native_test_stderr": "",
+  "tool_versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "python": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "bats": "Bats 1.14.0"
+  },
+  "cases": [
+    {
+      "name": "ordinary-success",
+      "command_argv": [
+        "git",
+        "squash",
+        "topic"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "Squash commit -- not updating HEAD",
+        "after_state": {
+          "head": "<before>",
+          "status_porcelain": "A  B.txt",
+          "staged_paths": "B.txt"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "Updating e82a112..4264b7d\nFast-forward\nSquash commit -- not updating HEAD\n B.txt | 1 +\n C.txt | 1 +\n 2 files changed, 2 insertions(+)\n create mode 100644 B.txt\n create mode 100644 C.txt\n",
+        "stderr": "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/bin/git-squash: line 64: git_extra_default_branch: command not found\n",
+        "after_state": {
+          "head": "e82a112d03a8a05b9f7d495912a11b1f527ec3af",
+          "branch": "main",
+          "status_porcelain": "A  B.txt\nA  C.txt",
+          "staged_paths": "B.txt\nC.txt",
+          "latest_commit_message": "A"
+        },
+        "before_state": {
+          "head": "e82a112d03a8a05b9f7d495912a11b1f527ec3af",
+          "branch": "main",
+          "status_porcelain": "",
+          "staged_paths": "",
+          "latest_commit_message": "A"
+        }
+      }
+    },
+    {
+      "name": "missing-source",
+      "command_argv": [
+        "git",
+        "squash"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "Source branch or commit reference required.",
+        "after_state": {
+          "head": "<before>",
+          "status_porcelain": "",
+          "staged_paths": ""
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "Source branch or commit reference required.\nUsage: git squash [--squash-msg] <source-branch|commit-ref> [commit-message]\n",
+        "after_state": {
+          "head": "d30dbd5293c3bf31b1a7edcf95ce93ed8ab57ba7",
+          "branch": "main",
+          "status_porcelain": "",
+          "staged_paths": "",
+          "latest_commit_message": "A"
+        },
+        "before_state": {
+          "head": "d30dbd5293c3bf31b1a7edcf95ce93ed8ab57ba7",
+          "branch": "main",
+          "status_porcelain": "",
+          "staged_paths": "",
+          "latest_commit_message": "A"
+        }
+      }
+    },
+    {
+      "name": "squash-msg-success",
+      "command_argv": [
+        "git",
+        "squash",
+        "--squash-msg",
+        "topic"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<changed>",
+          "status_porcelain": "",
+          "latest_commit_message": "B"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "Updating 6d9a51e..638e1be\nFast-forward\nSquash commit -- not updating HEAD\n B.txt | 1 +\n C.txt | 1 +\n 2 files changed, 2 insertions(+)\n create mode 100644 B.txt\n create mode 100644 C.txt\n[main 5c6a053] B\n 2 files changed, 2 insertions(+)\n create mode 100644 B.txt\n create mode 100644 C.txt\n",
+        "stderr": "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/bin/git-squash: line 64: git_extra_default_branch: command not found\n",
+        "after_state": {
+          "head": "5c6a0531cd6b1733e4ebc94210175d8ce8e909d1",
+          "branch": "main",
+          "status_porcelain": "",
+          "staged_paths": "",
+          "latest_commit_message": "B\n\nC"
+        },
+        "before_state": {
+          "head": "6d9a51ee315eb210f8c5f5839d7b0de269f4dc97",
+          "branch": "main",
+          "status_porcelain": "",
+          "staged_paths": "",
+          "latest_commit_message": "A"
+        }
+      }
+    }
+  ],
+  "assertions_passed": true,
+  "errors": []
+}
