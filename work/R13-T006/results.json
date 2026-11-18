@@ -1,0 +1,104 @@
+{
+  "task": "R13-T006",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-guilt.bats"
+  ],
+  "expected": {
+    "bats_exit_status": 0,
+    "scenario_exit_statuses": [
+      1,
+      1
+    ],
+    "test_count": 2,
+    "test_names": [
+      "characterizes positive and negative contribution bars at the 50-line boundary",
+      "characterizes email labeling without changing contribution counts"
+    ]
+  },
+  "actual": {
+    "bats_exit_status": 0,
+    "tap_plan": "1..2",
+    "passed_test_names": [
+      "characterizes positive and negative contribution bars at the 50-line boundary",
+      "characterizes email labeling without changing contribution counts"
+    ],
+    "stdout": "1..2\nok 1 characterizes positive and negative contribution bars at the 50-line boundary\nok 2 characterizes email labeling without changing contribution counts\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "characterizes positive and negative contribution bars at the 50-line boundary",
+        "argv": [
+          "git-guilt",
+          "5ea10f1c416a3a911775127428191353e7748d44",
+          "574c24ffa83f731435ea989058d0e91472bc9d61"
+        ],
+        "exit_status": 1,
+        "before": {
+          "branch": "topic",
+          "head": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "base_ref": "5ea10f1c416a3a911775127428191353e7748d44",
+          "topic_ref": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "status": [],
+          "file": "Bob line 01\nBob line 02\nBob line 03\nBob line 04\nBob line 05\nBob line 06\nBob line 07\nBob line 08\nBob line 09\nBob line 10\nBob line 11\nBob line 12\nBob line 13\nBob line 14\nBob line 15\nBob line 16\nBob line 17\nBob line 18\nBob line 19\nBob line 20\nBob line 21\nBob line 22\nBob line 23\nBob line 24\nBob line 25\nBob line 26\nBob line 27\nBob line 28\nBob line 29\nBob line 30\nBob line 31\nBob line 32\nBob line 33\nBob line 34\nBob line 35\nBob line 36\nBob line 37\nBob line 38\nBob line 39\nBob line 40\nBob line 41\nBob line 42\nBob line 43\nBob line 44\nBob line 45\nBob line 46\nBob line 47\nBob line 48\nBob line 49\nBob line 50\n"
+        },
+        "after": {
+          "branch": "topic",
+          "head": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "base_ref": "5ea10f1c416a3a911775127428191353e7748d44",
+          "topic_ref": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "status": [],
+          "file": "Bob line 01\nBob line 02\nBob line 03\nBob line 04\nBob line 05\nBob line 06\nBob line 07\nBob line 08\nBob line 09\nBob line 10\nBob line 11\nBob line 12\nBob line 13\nBob line 14\nBob line 15\nBob line 16\nBob line 17\nBob line 18\nBob line 19\nBob line 20\nBob line 21\nBob line 22\nBob line 23\nBob line 24\nBob line 25\nBob line 26\nBob line 27\nBob line 28\nBob line 29\nBob line 30\nBob line 31\nBob line 32\nBob line 33\nBob line 34\nBob line 35\nBob line 36\nBob line 37\nBob line 38\nBob line 39\nBob line 40\nBob line 41\nBob line 42\nBob line 43\nBob line 44\nBob line 45\nBob line 46\nBob line 47\nBob line 48\nBob line 49\nBob line 50\n"
+        },
+        "output": "Bob                           \u001b[00;32m++++++++++++++++++++++++++++++++++++++++++++++(50)\u001b[00m\nAlice                         \u001b[00;31m---------------------------------------------(-50)\u001b[00m"
+      },
+      {
+        "name": "characterizes email labeling without changing contribution counts",
+        "argv": [
+          "git-guilt",
+          "--email",
+          "5ea10f1c416a3a911775127428191353e7748d44",
+          "574c24ffa83f731435ea989058d0e91472bc9d61"
+        ],
+        "exit_status": 1,
+        "before": {
+          "branch": "topic",
+          "head": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "base_ref": "5ea10f1c416a3a911775127428191353e7748d44",
+          "topic_ref": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "status": [],
+          "file": "Bob line 01\nBob line 02\nBob line 03\nBob line 04\nBob line 05\nBob line 06\nBob line 07\nBob line 08\nBob line 09\nBob line 10\nBob line 11\nBob line 12\nBob line 13\nBob line 14\nBob line 15\nBob line 16\nBob line 17\nBob line 18\nBob line 19\nBob line 20\nBob line 21\nBob line 22\nBob line 23\nBob line 24\nBob line 25\nBob line 26\nBob line 27\nBob line 28\nBob line 29\nBob line 30\nBob line 31\nBob line 32\nBob line 33\nBob line 34\nBob line 35\nBob line 36\nBob line 37\nBob line 38\nBob line 39\nBob line 40\nBob line 41\nBob line 42\nBob line 43\nBob line 44\nBob line 45\nBob line 46\nBob line 47\nBob line 48\nBob line 49\nBob line 50\n"
+        },
+        "after": {
+          "branch": "topic",
+          "head": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "base_ref": "5ea10f1c416a3a911775127428191353e7748d44",
+          "topic_ref": "574c24ffa83f731435ea989058d0e91472bc9d61",
+          "status": [],
+          "file": "Bob line 01\nBob line 02\nBob line 03\nBob line 04\nBob line 05\nBob line 06\nBob line 07\nBob line 08\nBob line 09\nBob line 10\nBob line 11\nBob line 12\nBob line 13\nBob line 14\nBob line 15\nBob line 16\nBob line 17\nBob line 18\nBob line 19\nBob line 20\nBob line 21\nBob line 22\nBob line 23\nBob line 24\nBob line 25\nBob line 26\nBob line 27\nBob line 28\nBob line 29\nBob line 30\nBob line 31\nBob line 32\nBob line 33\nBob line 34\nBob line 35\nBob line 36\nBob line 37\nBob line 38\nBob line 39\nBob line 40\nBob line 41\nBob line 42\nBob line 43\nBob line 44\nBob line 45\nBob line 46\nBob line 47\nBob line 48\nBob line 49\nBob line 50\n"
+        },
+        "output": "bob@example.com               \u001b[00;32m++++++++++++++++++++++++++++++++++++++++++++++(50)\u001b[00m\nalice@example.com             \u001b[00;31m---------------------------------------------(-50)\u001b[00m"
+      }
+    ]
+  },
+  "inputs": {
+    "commits": [
+      "A (Alice, 50 lines)",
+      "B (Bob, replaces all 50 lines)"
+    ],
+    "branches": [
+      "main",
+      "topic"
+    ],
+    "date_range": [
+      "2020-01-01",
+      "2020-01-02"
+    ]
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}
