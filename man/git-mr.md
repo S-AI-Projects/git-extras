@@ -24,6 +24,8 @@ git-mr(1) -- Checks out a merge request locally
   `https://gitlab.tld/owner/repository/merge_requests/453`, or a
   Forgejo/Codeberg pull request URL in the format
   `https://codeberg.tld/owner/repository/pulls/453`.
+  Query parameters and other trailing URL text do not change the pull request
+  number, which is read from the URL path.
 
 
 ## EXAMPLES

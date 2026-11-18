@@ -1,0 +1,57 @@
+{
+  "task": "R13-T010",
+  "mutant": {
+    "command": [
+      "bats",
+      "--filter",
+      "query suffix",
+      "tests/git-mr.bats"
+    ],
+    "condition_before": "pulls/([0-9]+).*$",
+    "condition_after": "pulls/([0-9]+)$",
+    "expected": {
+      "exit_status": "non-zero",
+      "test_name": "checks out a Forgejo pull request URL with a query suffix"
+    },
+    "actual": {
+      "exit_status": 1,
+      "stdout": "1..1\nnot ok 1 checks out a Forgejo pull request URL with a query suffix\n# (from function `assert_success' in file tests/../vendor/bats-all/bats-assert/src/assert_success.bash, line 42,\n#  in test file tests/git-mr.bats, line 74)\n#   `assert_success' failed\n# Initialized empty Git repository in /private/var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-fubpX3/test/1/.git/\n# [main (root-commit) c716bfc] Initial commit\n#  1 file changed, 0 insertions(+), 0 deletions(-)\n#  create mode 100644 tracked\n# Initialized empty Git repository in /private/var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-fubpX3/test/1/remote.git/\n# To /var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-fubpX3/test/1/remote.git\n#  * [new reference]   HEAD -> refs/merge-requests/51/head\n# To /var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-fubpX3/test/1/remote.git\n#  * [new reference]   HEAD -> refs/pull/51/head\n#\n# -- command failed --\n# status : 128\n# output : fatal: invalid refspec 'refs/merge-requests/https://codeberg.org/owner/repository/pulls/51?diff=split/head:mr/https://codeberg.org/owner/repository/pulls/51?diff=split'\n# --\n#\n",
+      "stderr": ""
+    }
+  },
+  "regression": {
+    "command": [
+      "bats",
+      "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-mr.bats"
+    ],
+    "expected": {
+      "exit_status": 0,
+      "test_count": 4,
+      "test_names": [
+        "checks out a merge request by numeric id",
+        "checks out a merge request by numeric id and explicit remote",
+        "checks out a Forgejo/Codeberg pull request by URL",
+        "checks out a Forgejo pull request URL with a query suffix"
+      ]
+    },
+    "actual": {
+      "exit_status": 0,
+      "tap_plan": "1..4",
+      "passed_test_names": [
+        "checks out a merge request by numeric id",
+        "checks out a merge request by numeric id and explicit remote",
+        "checks out a Forgejo/Codeberg pull request by URL",
+        "checks out a Forgejo pull request URL with a query suffix"
+      ],
+      "stdout": "1..4\nok 1 checks out a merge request by numeric id\nok 2 checks out a merge request by numeric id and explicit remote\nok 3 checks out a Forgejo/Codeberg pull request by URL\nok 4 checks out a Forgejo pull request URL with a query suffix\n",
+      "stderr": ""
+    }
+  },
+  "input": "https://codeberg.org/owner/repository/pulls/51?diff=split",
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}
