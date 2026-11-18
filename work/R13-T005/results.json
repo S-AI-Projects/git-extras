@@ -1,0 +1,107 @@
+{
+  "task": "R13-T005",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-undo.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 2,
+    "test_names": [
+      "undo removes one latest commit using only temporary repository config",
+      "reports a missing git executable without changing the repository"
+    ]
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..2",
+    "passed_test_names": [
+      "undo removes one latest commit using only temporary repository config",
+      "reports a missing git executable without changing the repository"
+    ],
+    "stdout": "1..2\nok 1 undo removes one latest commit using only temporary repository config\nok 2 reports a missing git executable without changing the repository\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "undo removes one latest commit using only temporary repository config",
+        "argv": [
+          "git-undo"
+        ],
+        "exit_status": 0,
+        "before": {
+          "branch": "topic",
+          "head": "a99a4d5ec38bd7cd571ebdccd740c69dee9e07c4",
+          "main_ref": "2a7ec1f603f776f41de944be0935e1aecb38fb8c",
+          "topic_ref": "a99a4d5ec38bd7cd571ebdccd740c69dee9e07c4",
+          "status": [],
+          "files": {
+            "a.txt": "A\nB\nC\n"
+          },
+          "user_name": "Name",
+          "user_email": "name@example.com"
+        },
+        "after": {
+          "branch": "topic",
+          "head": "605267092f10eb52b974d08631a6ff356ffe5688",
+          "main_ref": "2a7ec1f603f776f41de944be0935e1aecb38fb8c",
+          "topic_ref": "605267092f10eb52b974d08631a6ff356ffe5688",
+          "status": [
+            "M  a.txt"
+          ],
+          "files": {
+            "a.txt": "A\nB\nC\n"
+          },
+          "user_name": "Name",
+          "user_email": "name@example.com"
+        },
+        "output": ""
+      },
+      {
+        "name": "reports a missing git executable without changing the repository",
+        "argv": [
+          "/bin/bash",
+          "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/../bin/git-undo"
+        ],
+        "exit_status": 127,
+        "before": {
+          "branch": "topic",
+          "head": "31fee2fb95acbd9b365789a117dbb500e9ab0d17",
+          "main_ref": "0440514d4d02d1fd0219a6e91e8ee772461ae03e",
+          "topic_ref": "31fee2fb95acbd9b365789a117dbb500e9ab0d17",
+          "status": [],
+          "files": {
+            "a.txt": "A\nB\nC\n"
+          },
+          "user_name": "Name",
+          "user_email": "name@example.com"
+        },
+        "after": {
+          "branch": "topic",
+          "head": "31fee2fb95acbd9b365789a117dbb500e9ab0d17",
+          "main_ref": "0440514d4d02d1fd0219a6e91e8ee772461ae03e",
+          "topic_ref": "31fee2fb95acbd9b365789a117dbb500e9ab0d17",
+          "status": [],
+          "files": {
+            "a.txt": "A\nB\nC\n"
+          },
+          "user_name": "Name",
+          "user_email": "name@example.com"
+        },
+        "output": "git undo: git executable not found on PATH"
+      }
+    ]
+  },
+  "inputs": {
+    "temporary_repository": "three commits A/B/C, main and topic branches, local user.name/user.email",
+    "success_invocation": [
+      "git-undo"
+    ],
+    "dependency_failure": "run the actual script under /bin/bash with PATH containing no git executable"
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}

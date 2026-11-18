@@ -9,6 +9,8 @@ git-undo(1) -- Remove latest commits
 
   Removes the latest commits.
 
+  Requires Git and a repository with at least one commit.
+
 ## OPTIONS
 
   --soft or -s

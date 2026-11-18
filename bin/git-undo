@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 
+if ! command -v git >/dev/null 2>&1; then
+  echo "git undo: git executable not found on PATH" >&2
+  exit 127
+fi
+
 cstr="commits"
-ccnt=$(git rev-list --count HEAD)
+if ! ccnt=$(git rev-list --count HEAD); then
+  echo "git undo: unable to read commit count; run inside a Git repository with at least one commit" >&2
+  exit 1
+fi
+if [[ ! $ccnt =~ ^[0-9]+$ ]] || [ "$ccnt" -eq 0 ]; then
+  echo "git undo: repository has no commits to undo" >&2
+  exit 1
+fi
 if [ "$ccnt" -eq 1 ]; then cstr="commit"; fi
 parm3=""
 
