@@ -1,0 +1,75 @@
+{
+  "task": "R13-T007",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-sed.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 1,
+    "test_names": [
+      "executes the documented git-sed example and verifies its state"
+    ]
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..1",
+    "passed_test_names": [
+      "executes the documented git-sed example and verifies its state"
+    ],
+    "stdout": "1..1\nok 1 executes the documented git-sed example and verifies its state\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "documented git-sed example replaces text and verifies the working tree",
+        "argv": [
+          "git-sed",
+          "-f",
+          "g",
+          "hello",
+          "goodbye",
+          "--",
+          "note.txt"
+        ],
+        "exit_status": 0,
+        "before": {
+          "branch": "main",
+          "head": "5af006a070144ada36088aaff2025e1e8af64545",
+          "status": [],
+          "staged_diff": [],
+          "file": "hello hello\n"
+        },
+        "after": {
+          "branch": "main",
+          "head": "5af006a070144ada36088aaff2025e1e8af64545",
+          "status": [
+            " M note.txt"
+          ],
+          "staged_diff": [],
+          "file": "goodbye goodbye\n"
+        },
+        "output": ""
+      }
+    ]
+  },
+  "inputs": {
+    "tracked_file_before": "hello hello\n",
+    "command_argv": [
+      "git-sed",
+      "-f",
+      "g",
+      "hello",
+      "goodbye",
+      "--",
+      "note.txt"
+    ],
+    "expected_file_after": "goodbye goodbye\n",
+    "expected_numstat": "1\t1\tnote.txt"
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}
