@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ "$#" -ne 1 ]; then
+        echo "Usage: git rebase-patch <patch-file>" >&2
+        exit 2
+fi
+
 # Warn on a dirty work tree.
 git rev-parse --verify HEAD >/dev/null || exit 1
 git update-index -q --ignore-submodules --refresh

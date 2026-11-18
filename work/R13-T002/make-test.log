@@ -1,0 +1,89 @@
+bats ./tests
+1..87
+ok 1 works with cherry pick
+ok 2 works with merge
+ok 3 works with rebase
+ok 4 works with revert
+ok 5 list all works
+ok 6 list all globally works
+ok 7 list all locally works
+ok 8 search globally works
+ok 9 search locally works
+ok 10 get alias globally and defaultly
+ok 11 set alias globally and defaultly
+ok 12 get alias locally
+ok 13 set alias locally
+ok 14 archive file on tags branch
+ok 15 archive file on any not tags branch without default branch
+ok 16 archive file on any not tags branch with default branch
+ok 17 archive file on branch name has slash
+ok 18 archive file on dirname has backslash
+ok 19 archive file on tag name has slash
+ok 20 output authors has email without any parameter
+ok 21 list authors has email defaultly
+ok 22 list authors has no email
+ok 23 works with mac and github
+ok 24 works with mac and gitlab
+ok 25 works with mac and bitbucket
+ok 26 works with windows and github
+ok 27 works with windows and gitlab
+ok 28 works with windows and bitbucket
+ok 29 works with linux and github
+ok 30 works with WSL and github
+ok 31 works with WSL and gitlab
+ok 32 works with WSL and bitbucket
+ok 33 works with linux without Microsoft kernel and github
+ok 34 works with linux without Microsoft kernel and gitlab
+ok 35 works with linux without Microsoft kernel and bitbucket
+ok 36 falls back to xdg-open on an unknown OS with github
+ok 37 falls back to xdg-open on an unknown OS with gitlab
+ok 38 falls back to xdg-open on an unknown OS with bitbucket
+ok 39 opens an empty URL for an unknown site
+ok 40 works with linux and gitlab
+ok 41 works with linux and bitbucket
+ok 42 works with mac and github
+ok 43 works with mac and gitlab
+ok 44 works with mac and bitbucket
+ok 45 works with windows and github
+ok 46 works with windows and gitlab
+ok 47 works with windows and bitbucket
+ok 48 works with linux and github
+ok 49 works with WSL and github
+ok 50 works with WSL and gitlab
+ok 51 works with WSL and bitbucket
+ok 52 works with linux without Microsoft kernel and github
+ok 53 works with linux without Microsoft kernel and gitlab
+ok 54 works with linux without Microsoft kernel and bitbucket
+ok 55 falls back to xdg-open on an unknown OS with github
+ok 56 falls back to xdg-open on an unknown OS with gitlab
+ok 57 falls back to xdg-open on an unknown OS with bitbucket
+ok 58 adds github line numbers
+ok 59 adds gitlab line numbers
+ok 60 adds bitbucket line numbers
+ok 61 opens an unknown site repository
+ok 62 does not add file or line information for an unknown site
+ok 63 works with linux and gitlab
+ok 64 works with linux and bitbucket
+ok 65 excludes commits matching a pathspec
+ok 66 works with cherry pick
+ok 67 works with merge
+ok 68 works with rebase
+ok 69 works with revert
+ok 70 show-merged-branches lists merged branches but not default branch
+ok 71 show-unmerged-branches lists unmerged branches
+ok 72 delete-merged-branches deletes merged branches and preserves default and unmerged branches
+ok 73 delete-merged-branches when checked out on feature branch protects default branch
+ok 74 delete-merged-branches handles branch names with special characters
+ok 75 delete-merged-branches protects master when master is the default branch
+ok 76 show-merged-branches, show-unmerged-branches, and delete-merged-branches succeed when no branches match
+ok 77 checks out a merge request by numeric id
+ok 78 checks out a merge request by numeric id and explicit remote
+ok 79 checks out a Forgejo/Codeberg pull request by URL
+ok 80 applies one patch-file argument whose path contains spaces
+ok 81 rejects a missing patch-file argument with usage
+ok 82 rejects an extra positional argument with usage
+ok 83 dry-run previews the sync without changing anything
+ok 84 interactive mode aborts without syncing when declined
+ok 85 is_git_repo succeeds inside a normal (non-bare) repository
+ok 86 is_git_repo succeeds inside a bare repository (see #1238)
+ok 87 is_git_repo fails outside of a repository

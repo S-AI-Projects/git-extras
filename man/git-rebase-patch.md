@@ -5,6 +5,9 @@ git-rebase-patch(1) -- Rebases a patch
 
 `git rebase-patch` &lt;patch-file&gt;
 
+Exactly one patch file must be provided. Additional arguments are rejected.
+Quote the patch-file path when it contains spaces.
+
 ## DESCRIPTION
 
 Given you have a patch that doesn't apply to the current HEAD, but you know it

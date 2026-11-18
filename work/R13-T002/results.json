@@ -1,0 +1,100 @@
+{
+  "task": "R13-T002",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-rebase-patch.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 3,
+    "test_names": [
+      "applies one patch-file argument whose path contains spaces",
+      "rejects a missing patch-file argument with usage",
+      "rejects an extra positional argument with usage"
+    ]
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..3",
+    "passed_test_names": [
+      "applies one patch-file argument whose path contains spaces",
+      "rejects a missing patch-file argument with usage",
+      "rejects an extra positional argument with usage"
+    ],
+    "stdout": "1..3\nok 1 applies one patch-file argument whose path contains spaces\nok 2 rejects a missing patch-file argument with usage\nok 3 rejects an extra positional argument with usage\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "applies one patch-file argument whose path contains spaces",
+        "argv": [
+          "git",
+          "rebase-patch",
+          "/var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-8FeXEO/test/1/.git/patch with spaces.diff"
+        ],
+        "exit_status": 0,
+        "before": {
+          "head": "a70a41ee64f220620b36d4a3a1ca5590dedacbf9",
+          "branch": "topic",
+          "status": []
+        },
+        "after": {
+          "head": "df6acdd477f911f0fc6684f8f58b52b4c79d5eb0",
+          "branch": "topic",
+          "status": []
+        },
+        "output": "Trying to find a commit the patch applies to...\nPatch applied to a70a41e as df6acdd\n[topic df6acdd] /var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-8FeXEO/test/1/.git/patch with spaces.diff\n Date: Wed Nov 18 13:01:32 2026 +0530\n 1 file changed, 1 insertion(+), 1 deletion(-)"
+      },
+      {
+        "name": "rejects a missing patch-file argument with usage",
+        "argv": [
+          "git",
+          "rebase-patch"
+        ],
+        "exit_status": 2,
+        "before": {
+          "head": "27aefb8a0b6a368f73e4cc31d5ad79fb5277af07",
+          "branch": "topic",
+          "status": []
+        },
+        "after": {
+          "head": "27aefb8a0b6a368f73e4cc31d5ad79fb5277af07",
+          "branch": "topic",
+          "status": []
+        },
+        "output": "Usage: git rebase-patch <patch-file>"
+      },
+      {
+        "name": "rejects an extra positional argument with usage",
+        "argv": [
+          "git",
+          "rebase-patch",
+          "/var/folders/cr/jdqkd5w95kq5h5b32qjsdx3m0000gn/T/bats-run-8FeXEO/test/3/.git/patch with spaces.diff",
+          "extra"
+        ],
+        "exit_status": 2,
+        "before": {
+          "head": "27aefb8a0b6a368f73e4cc31d5ad79fb5277af07",
+          "branch": "topic",
+          "status": []
+        },
+        "after": {
+          "head": "27aefb8a0b6a368f73e4cc31d5ad79fb5277af07",
+          "branch": "topic",
+          "status": []
+        },
+        "output": "Usage: git rebase-patch <patch-file>"
+      }
+    ]
+  },
+  "inputs": [
+    "A patch file located under the temporary repository's .git directory with a path containing spaces.",
+    "The same command invoked with no patch-file argument.",
+    "The same command invoked with an unsupported extra positional argument."
+  ],
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}
