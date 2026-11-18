@@ -1,0 +1,86 @@
+{
+  "task": "R13-T003",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-gh-pages.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 1,
+    "test_names": [
+      "creates gh-pages while preserving the original branch state"
+    ]
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..1",
+    "passed_test_names": [
+      "creates gh-pages while preserving the original branch state"
+    ],
+    "stdout": "1..1\nok 1 creates gh-pages while preserving the original branch state\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "creates gh-pages while preserving the original branch state",
+        "argv": [
+          "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/../bin/git-gh-pages"
+        ],
+        "stdin": [
+          "sampleuser",
+          "samplerepo"
+        ],
+        "exit_status": 0,
+        "before": {
+          "branch": "main",
+          "head": "be9ffe1b30a26bd5434441f7b113b20f1e39361a",
+          "main_ref": "be9ffe1b30a26bd5434441f7b113b20f1e39361a",
+          "topic_ref": "fe4292f03ee28fa33a1f62412b71f65e0216231b",
+          "status": [
+            " M tracked.txt"
+          ],
+          "stash_list": [],
+          "remote_origin": null,
+          "files": {
+            "tracked.txt": "base value\ndirty change\n",
+            "unrelated.txt": "keep this\n",
+            "index.html": null
+          },
+          "push_argv": []
+        },
+        "after": {
+          "branch": "gh-pages",
+          "head": "ac7427305777084e23641584f74c32b3f59d932a",
+          "main_ref": "be9ffe1b30a26bd5434441f7b113b20f1e39361a",
+          "topic_ref": "fe4292f03ee28fa33a1f62412b71f65e0216231b",
+          "status": [],
+          "stash_list": [
+            "stash@{0}: WIP on main: be9ffe1 A: add fixture files"
+          ],
+          "remote_origin": "https://github.com/sampleuser/samplerepo.git",
+          "files": {
+            "tracked.txt": "base value\n",
+            "unrelated.txt": "keep this\n",
+            "index.html": "My Page\n"
+          },
+          "push_argv": [
+            "push -u origin gh-pages"
+          ]
+        },
+        "output": "setting up gh-pages\n-------------------\nTell me your github account username: \nNow, tell me your repository name: \nSaved working directory and index state WIP on main: be9ffe1 A: add fixture files\nSwitched to a new branch 'gh-pages'\n[gh-pages ac74273] Initial commit\n 1 file changed, 1 insertion(+)\n create mode 100644 index.html\nComplete\n-------------------\nYou can find your last changes in the stash!"
+      }
+    ]
+  },
+  "inputs": {
+    "stdin": [
+      "sampleuser",
+      "samplerepo"
+    ],
+    "external_git_push": "intercepted by a temporary git wrapper; no network push is performed"
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}

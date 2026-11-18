@@ -8,6 +8,10 @@ git-gh-pages(1) -- Create the GitHub Pages branch
 ## DESCRIPTION
 
   Create the GitHub Pages branch (gh-pages) with an initial dummy index.html file.
+  The command stashes tracked working-tree changes, adds an origin remote for the
+  supplied GitHub account and repository, then pushes the new branch.
+
+  This command changes the current repository and contacts the configured remote.
 
 ## EXAMPLES
 
