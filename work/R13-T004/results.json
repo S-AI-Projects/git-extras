@@ -1,0 +1,146 @@
+{
+  "task": "R13-T004",
+  "command": [
+    "bats",
+    "/Users/aryansingh/Documents/Codex/2026-11-15/he/git-extras/tests/git-effort.bats"
+  ],
+  "expected": {
+    "exit_status": 0,
+    "test_count": 2,
+    "test_names": [
+      "passes one quoted path containing spaces and a wildcard as one argument",
+      "enumerates special filenames without shell glob expansion"
+    ]
+  },
+  "actual": {
+    "exit_status": 0,
+    "tap_plan": "1..2",
+    "passed_test_names": [
+      "passes one quoted path containing spaces and a wildcard as one argument",
+      "enumerates special filenames without shell glob expansion"
+    ],
+    "stdout": "1..2\nok 1 passes one quoted path containing spaces and a wildcard as one argument\nok 2 enumerates special filenames without shell glob expansion\n",
+    "stderr": "",
+    "scenarios": [
+      {
+        "name": "passes one quoted path containing spaces and a wildcard as one argument",
+        "argv": [
+          "git-effort",
+          "dir with spaces/name[*].txt"
+        ],
+        "exit_status": 0,
+        "before": {
+          "branch": "topic",
+          "head": "2e505486e22a46857caea3363dac96493098015f",
+          "status": [],
+          "files": {
+            "unrelated.txt": "unrelated\nlater\n",
+            "topic.txt": "topic file\n",
+            "dir with spaces/name*.txt": "matching shell glob\n",
+            "dir with spaces/name[*].txt": "special path\n"
+          }
+        },
+        "after": {
+          "branch": "topic",
+          "head": "2e505486e22a46857caea3363dac96493098015f",
+          "status": [],
+          "files": {
+            "unrelated.txt": "unrelated\nlater\n",
+            "topic.txt": "topic file\n",
+            "dir with spaces/name*.txt": "matching shell glob\n",
+            "dir with spaces/name[*].txt": "special path\n"
+          }
+        },
+        "output": "\n  path                             commits    active days\n\n  dir with spaces/name[*].txt..... 1           1",
+        "git_log_argv": [
+          [
+            "log",
+            "--pretty=format: %ad",
+            "--date=short",
+            "--",
+            "dir with spaces/name[*].txt"
+          ]
+        ]
+      },
+      {
+        "name": "enumerates special filenames without shell glob expansion",
+        "argv": [
+          "git-effort"
+        ],
+        "exit_status": 0,
+        "before": {
+          "branch": "topic",
+          "head": "1e12af0fb25ba2ab4e65f9abe48bd1f6d14d1ec9",
+          "status": [],
+          "files": {
+            "unrelated.txt": "unrelated\nlater\n",
+            "topic.txt": "topic file\n",
+            "dir with spaces/name*.txt": "matching shell glob\n",
+            "dir with spaces/name[*].txt": "special path\n"
+          }
+        },
+        "after": {
+          "branch": "topic",
+          "head": "1e12af0fb25ba2ab4e65f9abe48bd1f6d14d1ec9",
+          "status": [],
+          "files": {
+            "unrelated.txt": "unrelated\nlater\n",
+            "topic.txt": "topic file\n",
+            "dir with spaces/name*.txt": "matching shell glob\n",
+            "dir with spaces/name[*].txt": "special path\n"
+          }
+        },
+        "output": "\n  path                             commits    active days\n\n  topic.txt....................... 1           1\n  dir with spaces/name[*].txt..... 1           1\n  dir with spaces/name*.txt....... 1           1\n  unrelated.txt................... 2           1\n \n\n  path                             commits    active days\n\n  unrelated.txt................... 2           1\n  topic.txt....................... 1           1\n  dir with spaces/name[*].txt..... 1           1\n  dir with spaces/name*.txt....... 1           1",
+        "git_log_argv": [
+          [
+            "log",
+            "--pretty=format: %ad",
+            "--date=short",
+            "--",
+            "unrelated.txt"
+          ],
+          [
+            "log",
+            "--pretty=format: %ad",
+            "--date=short",
+            "--",
+            "dir with spaces/name[*].txt"
+          ],
+          [
+            "log",
+            "--pretty=format: %ad",
+            "--date=short",
+            "--",
+            "topic.txt"
+          ],
+          [
+            "log",
+            "--pretty=format: %ad",
+            "--date=short",
+            "--",
+            "dir with spaces/name*.txt"
+          ]
+        ]
+      }
+    ]
+  },
+  "inputs": {
+    "commits": [
+      "A",
+      "B",
+      "C"
+    ],
+    "branches": [
+      "main",
+      "topic"
+    ],
+    "quoted_path": "dir with spaces/name[*].txt",
+    "unrelated_glob_sibling": "dir with spaces/name*.txt"
+  },
+  "versions": {
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin25.6.0)",
+    "bats": "Bats 1.14.0",
+    "python": "3.15.2"
+  }
+}
