@@ -79,39 +79,28 @@ do
     people=${line#* }
     num=${line%% *}
 
-    if [[ $num -gt 0 ]]
-    then
-        printf "%-29s \033[00;32m" "$people"
-        if [[ $num -ge 50 ]]
-        then
-            len=${#num}
-            for (( i = 0; i < 48 - len; i++ ))
-            do
-                printf "+"
-            done
-            printf "(%s)" "$num"
-        else
-            for (( i = 0; i < num; i++ ))
-            do
-                printf "+"
-            done
-        fi
+    # Normalize the sign first so both directions share the bar-width logic.
+    if [[ $num -lt 0 ]]; then
+        sign='-'
+        color=31
+        magnitude=$((-num))
     else
-        printf "%-29s \033[00;31m" "$people"
-        if [[ $num -le -50 ]]
-        then
-            len=${#num}
-            for (( i = 0; i < 48 - len; i++ ))
-            do
-                printf "-"
-            done
-            printf "(%s)" "$num"
-        else
-            for (( i = 0; i > num; i-- ))
-            do
-                printf "-"
-            done
-        fi
+        sign='+'
+        color=32
+        magnitude=$num
+    fi
+
+    printf "%-29s \033[00;%sm" "$people" "$color"
+    if [[ $magnitude -ge 50 ]]; then
+        len=${#num}
+        for (( i = 0; i < 48 - len; i++ )); do
+            printf '%s' "$sign"
+        done
+        printf "(%s)" "$num"
+    else
+        for (( i = 0; i < magnitude; i++ )); do
+            printf '%s' "$sign"
+        done
     fi
     printf "\033[00m\n"
 done
