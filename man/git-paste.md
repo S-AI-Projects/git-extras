@@ -3,7 +3,7 @@ git-paste(1) -- Send patches to pastebin for chat conversations
 
 ## SYNOPSIS
 
-`git paste` &lt;git format-patch options&gt;
+`git paste` [-h|--help] [&lt;git format-patch options&gt;]
 
 ## DESCRIPTION
 
@@ -12,10 +12,15 @@ git-paste(1) -- Send patches to pastebin for chat conversations
 
 ## OPTIONS
 
+  -h, --help
+
+  Display help message.
+
   &lt;git format-patch options&gt;
 
   All options are passed directly to `git format-patch`.
   Given no arguments, `git paste` passes `@{u}` to `git format-patch`.
+  Positional arguments and options containing spaces or wildcard characters are preserved and passed directly to `git format-patch` without word-splitting or premature shell expansion.
 
 ## CONFIGURATION
 
@@ -37,6 +42,10 @@ git-paste(1) -- Send patches to pastebin for chat conversations
  Pastebin the latest three commits:
 
     $ git paste -3
+
+ Pastebin changes for files matching a path containing spaces and wildcards:
+
+    $ git paste -1 HEAD -- "dir with spaces/*.txt"
 
 ## AUTHOR
 
