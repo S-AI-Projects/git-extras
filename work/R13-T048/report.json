@@ -1,0 +1,127 @@
+{
+  "task_id": "R13-T048",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin26)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0"
+  },
+  "total_checks": 7,
+  "passed": true,
+  "failures": [],
+  "results": [
+    {
+      "name": "native_bats_git_pr",
+      "command": [
+        "bats",
+        "--tap",
+        "/Users/muskan/git-extras/tests/git-pr.bats"
+      ],
+      "returncode": 0,
+      "stdout": "1..6\nok 1 git-pr: fails with diagnostic on missing pull request ref, then succeeds on corrected invocation\nok 2 git-pr: fails with diagnostic when no argument is passed\nok 3 git-pr: fails with diagnostic when invalid pattern is provided\nok 4 git-pr: displays help synopsis with -h or --help\nok 5 git-pr: supports --merge option to checkout merge ref\nok 6 git-pr: clean deletes local pr branches",
+      "stderr": "",
+      "executed_cases": 6,
+      "passed": true
+    },
+    {
+      "name": "failing_invocation_diagnostic",
+      "arguments": [
+        "999",
+        "origin"
+      ],
+      "expected": {
+        "returncode": 1,
+        "stderr_contains": "Failed to fetch refs/pull/999/head from 'origin'. Please verify the pull request number and remote.",
+        "branch_unchanged": "main",
+        "pr_branch_created": false
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "fatal: couldn't find remote ref refs/pull/999/head\nFailed to fetch refs/pull/999/head from 'origin'. Please verify the pull request number and remote.",
+        "branch_after": "main",
+        "pr_branch_created": false
+      },
+      "passed": true
+    },
+    {
+      "name": "corrected_invocation_success",
+      "arguments": [
+        "42",
+        "origin"
+      ],
+      "expected": {
+        "returncode": 0,
+        "branch": "pr/42",
+        "config_remote": "origin",
+        "config_merge": "refs/pull/42/head"
+      },
+      "actual": {
+        "returncode": 0,
+        "branch": "pr/42",
+        "config_remote": "origin",
+        "config_merge": "refs/pull/42/head"
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_argument_failure",
+      "arguments": [],
+      "expected": {
+        "returncode": 1,
+        "stderr_contains": "pr number required."
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "pr number required. Run 'git pr -h' or see 'man git-pr' for usage."
+      },
+      "passed": true
+    },
+    {
+      "name": "invalid_pattern_failure",
+      "arguments": [
+        "invalid_pattern_spec"
+      ],
+      "expected": {
+        "returncode": 1,
+        "stderr_contains": "doesn't match the pr id pattern"
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "invalid_pattern_spec doesn't match the pr id pattern. Expected format: <number>, <remote>:<number>, or <url>."
+      },
+      "passed": true
+    },
+    {
+      "name": "help_options",
+      "arguments": [
+        "-h",
+        "--help"
+      ],
+      "expected": {
+        "returncode": 0,
+        "stdout_contains": "Usage: git pr"
+      },
+      "actual": {
+        "short_returncode": 0,
+        "short_stdout": "Usage: git pr [-m|--merge] <number> [<remote>]\n   or: git pr [-m|--merge] <[remote]:number>...\n   or: git pr [-m|--merge] <url>...\n   or: git pr clean",
+        "long_returncode": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "clean_pr_branches",
+      "arguments": [
+        "clean"
+      ],
+      "expected": {
+        "returncode": 0,
+        "pr_branch_deleted": true
+      },
+      "actual": {
+        "returncode": 0,
+        "pr_branch_exists": false
+      },
+      "passed": true
+    }
+  ]
+}

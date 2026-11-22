@@ -2,6 +2,13 @@
 # Based on https://gist.github.com/gnarf/5406589 and https://gist.github.com/jhnns/d654d9d6da6d3b749986
 TO_MERGE=
 
+show_help() {
+  echo "Usage: git pr [-m|--merge] <number> [<remote>]"
+  echo "   or: git pr [-m|--merge] <[remote]:number>..."
+  echo "   or: git pr [-m|--merge] <url>..."
+  echo "   or: git pr clean"
+}
+
 pull() {
   local remote="$1"
   local id="$2"
@@ -12,7 +19,11 @@ pull() {
     ref="refs/pull/$id/merge"
   fi
 
-  git fetch -fu "$remote" "$ref:$branch" && \
+  if ! git fetch -fu "$remote" "$ref:$branch"; then
+    echo "Failed to fetch $ref from '$remote'. Please verify the pull request number and remote." 1>&2
+    return 1
+  fi
+
   git checkout "$branch" && \
   git config --local --replace "branch.$branch.merge" "$ref" && \
   git config --local --replace "branch.$branch.remote" "$remote"
@@ -28,17 +39,21 @@ pull_pr_if_matched() {
         id="${BASH_REMATCH[4]}"
     fi
 
-    branch=pr/$id
+    branch="pr/$id"
     pull "$remote" "$id" "$branch"
     return $?
   fi
 
-  echo "$1 doesn't match the pr id pattern."
+  echo "$1 doesn't match the pr id pattern. Expected format: <number>, <remote>:<number>, or <url>." 1>&2
   return 1
 }
 
 for arg in "$@"; do
     case "$arg" in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
         -m|--merge)
             TO_MERGE=1
             ;;
@@ -51,18 +66,18 @@ for arg in "$@"; do
     shift
 done
 
-test -z "$1" && echo "pr number required." 1>&2 && exit 1
+test -z "$1" && echo "pr number required. Run 'git pr -h' or see 'man git-pr' for usage." 1>&2 && exit 1
 
 if test "$1" = "clean"; then
-  git for-each-ref refs/heads/pr/* --format='%(refname)' | while read -r ref; do
+  git for-each-ref 'refs/heads/pr/*' --format='%(refname)' | while read -r ref; do
     git branch -D "${ref#refs/heads/}"
   done
 
 elif [[ "$1" =~ ^[0-9]+$ ]]; then
-  remote_pref=${2:-$(git config --get git-extras.pr.remote)}
-  remote=${remote_pref:-origin}
-  id=$1
-  branch=pr/$id
+  remote_pref="${2:-$(git config --get git-extras.pr.remote)}"
+  remote="${remote_pref:-origin}"
+  id="$1"
+  branch="pr/$id"
   pull "$remote" "$id" "$branch"
 
 else
