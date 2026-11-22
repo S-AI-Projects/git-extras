@@ -17,7 +17,7 @@ git-extras(1) -- Awesome GIT utilities
 
   update
 
-  Self update.
+  Self update. Requires `curl` to fetch the installation script.
 
 ## ENVIRONMENT AND CONFIGURATION VARIABLES
 

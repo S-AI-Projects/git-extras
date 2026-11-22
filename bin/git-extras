@@ -4,6 +4,11 @@ VERSION="7.6.0-dev"
 INSTALL_SCRIPT="https://raw.githubusercontent.com/tj/git-extras/main/install.sh"
 
 update() {
+  if ! command -v curl &>/dev/null; then
+    echo >&2 "curl is required to update git-extras"
+    exit 1
+  fi
+
   local bin="$(command -v git-extras)"
   local prefix=${bin%/*/*}
   local orig=$PWD
@@ -36,6 +41,10 @@ updateForWindows() {
 case "$1" in
   -v|--version)
     echo $VERSION && exit 0
+    ;;
+  -h|--help)
+    echo "Usage: git extras [-v|--version] [-h|--help] [update]"
+    exit 0
     ;;
   update)
     platform=$(uname -s)

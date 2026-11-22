@@ -1,0 +1,228 @@
+{
+  "task_id": "R13-T035",
+  "item": "git-extras",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 10,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_5/tests/git-extras.bats",
+    "exit_status": 0,
+    "test_count": 5,
+    "test_names": [
+      "git-extras: -v and --version display version number",
+      "git-extras: -h and --help display usage information",
+      "git-extras: respects local config with --add git-extras.default-branch",
+      "git-extras: update succeeds with stubbed curl dependency",
+      "git-extras: update fails with documented error when curl is missing"
+    ]
+  },
+  "cases": [
+    {
+      "name": "version-flag-success",
+      "arguments": [
+        "--version"
+      ],
+      "command": [
+        "git",
+        "extras",
+        "--version"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "7.6.0-dev",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "7.6.0-dev\n",
+        "stderr": "",
+        "captured_curl_args": "",
+        "before_state": {
+          "head": "921b1830cfaa975645e26523efc5407e871ded0e",
+          "branch": "main",
+          "topic_ref": "1770782fcdb552c70c3bf58fca59ab576a606138",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "921b1830cfaa975645e26523efc5407e871ded0e",
+          "branch": "main",
+          "topic_ref": "1770782fcdb552c70c3bf58fca59ab576a606138",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "help-flag-success",
+      "arguments": [
+        "-h"
+      ],
+      "command": [
+        "git",
+        "extras",
+        "-h"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "Usage: git extras",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "Usage: git extras [-v|--version] [-h|--help] [update]\n",
+        "stderr": "",
+        "captured_curl_args": "",
+        "before_state": {
+          "head": "900d3c892253fa77bd3cd13ed9acbd5d5e295ec9",
+          "branch": "main",
+          "topic_ref": "41ca09aeb2d5423c63c5b3122c5871e7326e36ec",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "900d3c892253fa77bd3cd13ed9acbd5d5e295ec9",
+          "branch": "main",
+          "topic_ref": "41ca09aeb2d5423c63c5b3122c5871e7326e36ec",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "local-config-add-branch-success",
+      "arguments": [
+        "--version"
+      ],
+      "command": [
+        "git",
+        "extras",
+        "--version"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "7.6.0-dev",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "7.6.0-dev\n",
+        "stderr": "",
+        "captured_curl_args": "",
+        "before_state": {
+          "head": "900d3c892253fa77bd3cd13ed9acbd5d5e295ec9",
+          "branch": "main",
+          "topic_ref": "41ca09aeb2d5423c63c5b3122c5871e7326e36ec",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "900d3c892253fa77bd3cd13ed9acbd5d5e295ec9",
+          "branch": "main",
+          "topic_ref": "41ca09aeb2d5423c63c5b3122c5871e7326e36ec",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "stubbed-update-success",
+      "arguments": [
+        "update"
+      ],
+      "command": [
+        "git",
+        "extras",
+        "update"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "... updated git-extras",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "mock install successful\n... updated git-extras 7.6.0-dev -> 7.6.0-dev\n",
+        "stderr": "",
+        "captured_curl_args": "-s\nhttps://raw.githubusercontent.com/tj/git-extras/main/install.sh\n",
+        "before_state": {
+          "head": "900d3c892253fa77bd3cd13ed9acbd5d5e295ec9",
+          "branch": "main",
+          "topic_ref": "41ca09aeb2d5423c63c5b3122c5871e7326e36ec",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "900d3c892253fa77bd3cd13ed9acbd5d5e295ec9",
+          "branch": "main",
+          "topic_ref": "41ca09aeb2d5423c63c5b3122c5871e7326e36ec",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-curl-dependency-failure",
+      "arguments": [
+        "update"
+      ],
+      "command": [
+        "git",
+        "extras",
+        "update"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "curl is required to update git-extras",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "curl is required to update git-extras\n",
+        "captured_curl_args": "",
+        "before_state": {
+          "head": "358dcf60ded55b120a34e8403cb3922a99896ad4",
+          "branch": "main",
+          "topic_ref": "39f403e8b8ee0fed8d64a56996c28f452370c9dd",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "358dcf60ded55b120a34e8403cb3922a99896ad4",
+          "branch": "main",
+          "topic_ref": "39f403e8b8ee0fed8d64a56996c28f452370c9dd",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    }
+  ]
+}
