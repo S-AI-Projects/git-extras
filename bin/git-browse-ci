@@ -1,21 +1,28 @@
 #!/usr/bin/env bash
 
 set -e -o pipefail
-if [[ $1 == "" ]]
+if [[ -z "${1-}" ]]
 then
-    branch=$(git rev-parse --abbrev-ref HEAD &> /dev/null)
-    remote=$(git config branch."${branch}".remote || echo "origin")
+    branch=$(git branch --show-current 2>/dev/null || true)
+    if [[ -z $branch || $branch == "HEAD" ]]
+    then
+        branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)
+    fi
+    remote=$(git config branch."${branch}".remote 2>/dev/null || echo "origin")
 else
     remote=$1
 fi
 
 if [[ -z $remote ]]
 then
-    echo "Remote not found"
+    echo "Remote not found" 1>&2
     exit 1
 fi
 
-remote_url=$(git remote get-url "${remote}") || exit $?
+if ! remote_url=$(git remote get-url "${remote}" 2>/dev/null); then
+    echo "Remote not found" 1>&2
+    exit 1
+fi
 
 if [[ $remote_url = git@* ]]
 then

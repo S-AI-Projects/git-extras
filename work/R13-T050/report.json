@@ -1,0 +1,120 @@
+{
+  "task_id": "R13-T050",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin26)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0"
+  },
+  "total_checks": 8,
+  "passed": true,
+  "failures": [],
+  "results": [
+    {
+      "name": "native_bats_git_browse_ci",
+      "command": [
+        "bats",
+        "--tap",
+        "/Users/muskan/git-extras/tests/git-browse-ci.bats"
+      ],
+      "returncode": 0,
+      "stdout": "1..23\nok 1 works with mac and github\nok 2 works with mac and gitlab\nok 3 works with mac and bitbucket\nok 4 works with windows and github\nok 5 works with windows and gitlab\nok 6 works with windows and bitbucket\nok 7 works with linux and github\nok 8 works with WSL and github\nok 9 works with WSL and gitlab\nok 10 works with WSL and bitbucket\nok 11 works with linux without Microsoft kernel and github\nok 12 works with linux without Microsoft kernel and gitlab\nok 13 works with linux without Microsoft kernel and bitbucket\nok 14 falls back to xdg-open on an unknown OS with github\nok 15 falls back to xdg-open on an unknown OS with gitlab\nok 16 falls back to xdg-open on an unknown OS with bitbucket\nok 17 opens an empty URL for an unknown site\nok 18 works with linux and gitlab\nok 19 works with linux and bitbucket\nok 20 defaults to branch configured remote when no argument is given\nok 21 falls back to origin when branch has no configured remote\nok 22 regression: preserves stdout of rev-parse --abbrev-ref to resolve configured remote instead of falling back\nok 23 fails with exit status 1 when remote does not exist",
+      "stderr": "",
+      "executed_cases": 23,
+      "passed": true
+    },
+    {
+      "name": "branch_remote_resolution_regression",
+      "arguments": [],
+      "expected": {
+        "returncode": 0,
+        "stdout": "open https://github.com/upstream-org/git-extras/actions"
+      },
+      "actual": {
+        "returncode": 0,
+        "stdout": "open https://github.com/upstream-org/git-extras/actions"
+      },
+      "passed": true
+    },
+    {
+      "name": "mutant_rejected_demonstration",
+      "description": "Mutant with &> /dev/null drops branch name and incorrectly falls back to origin",
+      "mutant_output": "mutant_remote:origin",
+      "expected_rejection": "mutant_remote:origin",
+      "passed": true
+    },
+    {
+      "name": "fallback_to_origin",
+      "arguments": [],
+      "expected": {
+        "returncode": 0,
+        "stdout": "open https://github.com/origin-org/git-extras/actions"
+      },
+      "actual": {
+        "returncode": 0,
+        "stdout": "open https://github.com/origin-org/git-extras/actions"
+      },
+      "passed": true
+    },
+    {
+      "name": "explicit_remote_argument",
+      "arguments": [
+        "upstream"
+      ],
+      "expected": {
+        "returncode": 0,
+        "stdout": "open https://github.com/upstream-org/git-extras/actions"
+      },
+      "actual": {
+        "returncode": 0,
+        "stdout": "open https://github.com/upstream-org/git-extras/actions"
+      },
+      "passed": true
+    },
+    {
+      "name": "nonexistent_remote_failure",
+      "arguments": [
+        "nonexistent-remote"
+      ],
+      "expected": {
+        "returncode": 1,
+        "output_contains": "Remote not found"
+      },
+      "actual": {
+        "returncode": 1,
+        "output": "Remote not found"
+      },
+      "passed": true
+    },
+    {
+      "name": "gitlab_remote_ci_url",
+      "arguments": [
+        "gitlab"
+      ],
+      "expected": {
+        "returncode": 0,
+        "stdout": "open http://gitlab.com/owner/project/-/pipelines"
+      },
+      "actual": {
+        "returncode": 0,
+        "stdout": "open http://gitlab.com/owner/project/-/pipelines"
+      },
+      "passed": true
+    },
+    {
+      "name": "bitbucket_remote_ci_url",
+      "arguments": [
+        "bitbucket"
+      ],
+      "expected": {
+        "returncode": 0,
+        "stdout": "open https://bitbucket.org/owner/project/addon/pipelines/home"
+      },
+      "actual": {
+        "returncode": 0,
+        "stdout": "open https://bitbucket.org/owner/project/addon/pipelines/home"
+      },
+      "passed": true
+    }
+  ]
+}
