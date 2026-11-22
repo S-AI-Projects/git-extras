@@ -49,13 +49,13 @@
         "stdout": "",
         "stderr": "",
         "before_state": {
-          "head": "9f093c690f8f090d52223689f195b2f2dbeb736f",
+          "head": "fef369768440ec0388c9a85ba56c3ab1b02285f2",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
         },
         "after_state": {
-          "head": "9f093c690f8f090d52223689f195b2f2dbeb736f",
+          "head": "fef369768440ec0388c9a85ba56c3ab1b02285f2",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "H commit_a.txt"
@@ -86,13 +86,13 @@
         "stdout": "",
         "stderr": "filename required.\n",
         "before_state": {
-          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "head": "fef369768440ec0388c9a85ba56c3ab1b02285f2",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
         },
         "after_state": {
-          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "head": "fef369768440ec0388c9a85ba56c3ab1b02285f2",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
@@ -126,13 +126,13 @@
         "stdout": "",
         "stderr": "filename required.\n",
         "before_state": {
-          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "head": "68ca755686c1599f17916e1aa82979474a73d63a",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
         },
         "after_state": {
-          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "head": "68ca755686c1599f17916e1aa82979474a73d63a",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
@@ -165,13 +165,13 @@
         "stdout": "",
         "stderr": "fatal: Unable to mark file nonexistent_file.txt\n",
         "before_state": {
-          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "head": "68ca755686c1599f17916e1aa82979474a73d63a",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
         },
         "after_state": {
-          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "head": "68ca755686c1599f17916e1aa82979474a73d63a",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "S commit_a.txt"
@@ -204,13 +204,13 @@
         "stdout": "",
         "stderr": "",
         "before_state": {
-          "head": "198bf771e5208a9ef28248cb1bc81d80fa7f352e",
+          "head": "68ca755686c1599f17916e1aa82979474a73d63a",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "H commit_a.txt"
         },
         "after_state": {
-          "head": "198bf771e5208a9ef28248cb1bc81d80fa7f352e",
+          "head": "68ca755686c1599f17916e1aa82979474a73d63a",
           "branch": "main",
           "status_short": "",
           "ls_files_v": "H commit_a.txt"

@@ -48,3 +48,4 @@ Not applicable; command-line utility.
 # Additional Notes
 
 The check reports actual command arguments, exit status, stdout, stderr, and repository before/after state in `work/R13-T031/results.json`.
+

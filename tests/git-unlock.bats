@@ -68,3 +68,4 @@ setup() {
 	run git ls-files -v A.txt
 	assert_output "S A.txt"
 }
+
