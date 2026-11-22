@@ -22,6 +22,11 @@ branch's configured remote, or `origin` if not specified.
 
   $ git browse-ci upstream
 
+## DIAGNOSTICS & EXIT STATUS
+
+0: CI page URL was constructed and launched successfully.
+1: Specified or resolved remote was not found in repository configuration.
+
 ## AUTHOR
 
 Written by Peter Benjamin &lt;<https://github.com/pbnj>&gt;

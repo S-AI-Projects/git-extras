@@ -229,3 +229,37 @@ mock_uname() {
 	assert_output "xdg-open $expected_url"
 	assert_success
 }
+
+@test "defaults to branch configured remote when no argument is given" {
+	git remote add upstream https://github.com/tj/git-extras
+	git config branch.main.remote upstream
+
+	OSTYPE=darwin run git browse-ci
+	assert_output "open https://github.com/tj/git-extras/actions"
+	assert_success
+}
+
+@test "falls back to origin when branch has no configured remote" {
+	git remote add origin https://github.com/tj/git-extras
+
+	OSTYPE=darwin run git browse-ci
+	assert_output "open https://github.com/tj/git-extras/actions"
+	assert_success
+}
+
+@test "regression: preserves stdout of rev-parse --abbrev-ref to resolve configured remote instead of falling back" {
+	git remote add origin https://github.com/origin-org/git-extras
+	git remote add upstream https://github.com/upstream-org/git-extras
+	git config branch.main.remote upstream
+
+	OSTYPE=darwin run git browse-ci
+	assert_output "open https://github.com/upstream-org/git-extras/actions"
+	assert_success
+	refute_output "open https://github.com/origin-org/git-extras/actions"
+}
+
+@test "fails with exit status 1 when remote does not exist" {
+	run git browse-ci nonexistent-remote
+	assert_failure 1
+	assert_output --partial "Remote not found"
+}
