@@ -6,6 +6,7 @@ git-pr(1) -- Checks out a pull request locally
 `git pr` [-m|--merge] &lt;number&gt; [&lt;remote&gt;]<br>
 `git pr` [-m|--merge] &lt;[remote]:number&gt;...<br>
 `git pr` [-m|--merge] &lt;url&gt;...<br>
+`git pr` [-h|--help]<br>
 `git pr clean`
 
 ## DESCRIPTION
@@ -30,6 +31,10 @@ git-pr(1) -- Checks out a pull request locally
   request's mergeability, it only works with the opened pull request. If the merge
   commit is not up-to-date, please visit the pull request web page to trigger the
   rebuild.
+
+  -h | --help
+
+  Show help synopsis and usage options.
 
 ## EXAMPLES
 
@@ -97,6 +102,29 @@ To clean up old branches:
     Deleted branch pr/226 (was b96a8c2).
     Deleted branch pr/220 (was d34dc0f).
     Deleted branch pr/775 (was de6e51c).
+
+## DIAGNOSTICS & TROUBLESHOOTING
+
+Common failure scenarios and diagnostics:
+
+* Missing pull request argument (`pr number required.`):
+  Occurs when `git pr` is invoked without arguments. Run `git pr <number>` or `git pr -h`.
+
+* Unmatched pull request identifier (`<arg> doesn't match the pr id pattern.`):
+  Occurs when passing a malformed argument. Expected format is `<number>`, `<remote>:<number>`, or `<url>`.
+
+* Remote ref not found (`Failed to fetch refs/pull/<id>/head from '<remote>'`):
+  Occurs when the specified pull request ID does not exist on the given remote, or the remote is unreachable.
+
+  Failing invocation:
+
+      $ git pr 999 origin
+      Failed to fetch refs/pull/999/head from 'origin'. Please verify the pull request number and remote.
+
+  Corrected invocation:
+
+      $ git pr 42 origin
+      Switched to branch 'pr/42'
 
 ## AUTHOR
 
