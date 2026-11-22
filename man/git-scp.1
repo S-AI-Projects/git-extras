@@ -91,6 +91,30 @@ $ git config \-\-global \-\-add extras\.scp\.sanitize php_lint
 .IP "" 0
 .
 .SH "EXAMPLES"
+Copy unstaged changes to remote with verbose preview:
+.
+.IP "" 4
+.
+.nf
+
+$ git remote add staging /var/www/staging
+$ echo "world" >> tracked\.txt
+$ git scp \-\-verbose staging
+diff \-\-git a/tracked\.txt b/tracked\.txt
+\-\-\- a/tracked\.txt
++++ b/tracked\.txt
+@@ \-1 +1,2 @@
+ hello
++world
+Pushing to staging (/var/www/staging)
+sending incremental file list
+tracked\.txt
+.
+.fi
+.
+.IP "" 0
+.
+.P
 Make sure you have \fBgit\-remote\fR(1) setup
 .
 .IP "" 4

@@ -121,6 +121,22 @@
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
 
+<p> Copy unstaged changes to remote with verbose preview:</p>
+
+<pre><code>$ git remote add staging /var/www/staging
+$ echo "world" &gt;&gt; tracked.txt
+$ git scp --verbose staging
+diff --git a/tracked.txt b/tracked.txt
+--- a/tracked.txt
++++ b/tracked.txt
+@@ -1 +1,2 @@
+ hello
++world
+Pushing to staging (/var/www/staging)
+sending incremental file list
+tracked.txt
+</code></pre>
+
 <p> Make sure you have <code>git-remote</code>(1) setup</p>
 
 <pre><code>$ git remote add staging myStagingServer:/var/www/html
