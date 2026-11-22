@@ -1,0 +1,136 @@
+{
+  "task_id": "R13-T049",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin26)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0"
+  },
+  "total_checks": 8,
+  "passed": true,
+  "failures": [],
+  "results": [
+    {
+      "name": "native_bats_git_mr",
+      "command": [
+        "bats",
+        "--tap",
+        "/Users/muskan/git-extras/tests/git-mr.bats"
+      ],
+      "returncode": 0,
+      "stdout": "1..8\nok 1 checks out a merge request by numeric id\nok 2 checks out a merge request by numeric id and explicit remote\nok 3 checks out a GitLab merge request by URL\nok 4 checks out a Forgejo/Codeberg pull request by URL\nok 5 displays usage synopsis with -h or --help\nok 6 fails when argument is missing\nok 7 fails when merge request reference does not exist on remote\nok 8 cleans up local mr branches",
+      "stderr": "",
+      "executed_cases": 8,
+      "passed": true
+    },
+    {
+      "name": "checkout_by_numeric_id",
+      "arguments": [
+        "51"
+      ],
+      "expected": {
+        "returncode": 0,
+        "branch": "mr/51",
+        "merge_ref": "refs/merge-requests/51/head"
+      },
+      "actual": {
+        "returncode": 0,
+        "branch": "mr/51",
+        "merge_ref": "refs/merge-requests/51/head"
+      },
+      "passed": true
+    },
+    {
+      "name": "clean_mr_branches",
+      "arguments": [
+        "clean"
+      ],
+      "expected": {
+        "returncode": 0,
+        "mr_branch_deleted": true
+      },
+      "actual": {
+        "returncode": 0,
+        "mr_branch_exists": false
+      },
+      "passed": true
+    },
+    {
+      "name": "checkout_by_gitlab_url",
+      "arguments": [
+        "https://gitlab.com/owner/repository/merge_requests/51"
+      ],
+      "expected": {
+        "returncode": 0,
+        "branch": "mr/51"
+      },
+      "actual": {
+        "returncode": 0,
+        "branch": "mr/51"
+      },
+      "passed": true
+    },
+    {
+      "name": "checkout_by_codeberg_url",
+      "arguments": [
+        "https://codeberg.org/owner/repository/pulls/51"
+      ],
+      "expected": {
+        "returncode": 0,
+        "branch": "mr/51",
+        "merge_ref": "refs/pull/51/head"
+      },
+      "actual": {
+        "returncode": 0,
+        "branch": "mr/51",
+        "merge_ref": "refs/pull/51/head"
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_argument_failure",
+      "arguments": [],
+      "expected": {
+        "returncode": 1,
+        "stderr_contains": "mr number or URL required. See --help for usage."
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "mr number or URL required. See --help for usage."
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_remote_ref_failure",
+      "arguments": [
+        "999"
+      ],
+      "expected": {
+        "returncode_nonzero": true,
+        "mr_branch_created": false
+      },
+      "actual": {
+        "returncode": 128,
+        "mr_branch_created": false
+      },
+      "passed": true
+    },
+    {
+      "name": "help_options",
+      "arguments": [
+        "-h",
+        "--help"
+      ],
+      "expected": {
+        "returncode": 0,
+        "stdout_contains": "Usage: git mr"
+      },
+      "actual": {
+        "short_returncode": 0,
+        "short_stdout": "Usage: git mr <number> [<remote>]\n   or: git mr <url>\n   or: git mr clean",
+        "long_returncode": 0
+      },
+      "passed": true
+    }
+  ]
+}
