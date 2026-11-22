@@ -4,10 +4,14 @@
 .SH "NAME"
 \fBgit\-local\-commits\fR \- List local commits
 .SH "SYNOPSIS"
-\fBgit local\-commits\fR <args>
+\fBgit local\-commits\fR [\-h|\-\-help] <args>
 .SH "DESCRIPTION"
 Lists commits in the local branch that have not been pushed to the remote tracked branch\. This requires that HEAD points to a branch which is tracking another branch\.
 .SH "OPTIONS"
+\-h, \-\-help
+.P
+Show help message and exit\.
+.P
 <args>
 .P
 All arguments passed to \fBgit local\-commits\fR will be passed directly to \fBgit log\fR\.

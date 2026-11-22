@@ -3,7 +3,7 @@ git-local-commits(1) -- List local commits
 
 ## SYNOPSIS
 
-`git local-commits` &lt;args&gt;
+`git local-commits` [-h|--help] [<args>]
 
 ## DESCRIPTION
 
@@ -12,7 +12,11 @@ git-local-commits(1) -- List local commits
 
 ## OPTIONS
 
-  &lt;args&gt;
+  -h, --help
+
+  Show help message and exit.
+
+  <args>
 
   All arguments passed to `git local-commits` will be passed directly to `git log`.
 
@@ -22,12 +26,12 @@ git-local-commits(1) -- List local commits
 
 ## AUTHOR
 
-Written by Michael Komitee &lt;<mkomitee@gmail.com>&gt;
+Written by Michael Komitee <mkomitee@gmail.com>
 
 ## REPORTING BUGS
 
-&lt;<https://github.com/tj/git-extras/issues>&gt;
+<https://github.com/tj/git-extras/issues>
 
 ## SEE ALSO
 
-&lt;<https://github.com/tj/git-extras>&gt;
+<https://github.com/tj/git-extras>
