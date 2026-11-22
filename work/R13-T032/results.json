@@ -1,0 +1,237 @@
+{
+  "task_id": "R13-T032",
+  "item": "git-release",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 10,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_2/tests/git-release.bats",
+    "exit_status": 0,
+    "test_count": 5,
+    "test_names": [
+      "git-release: minimum accepted argument list releases with tagname",
+      "git-release: optional argument -m sets custom commit message",
+      "git-release: optional argument --no-empty-commit skips empty commit",
+      "git-release: documented invalid combination -s and -u is rejected",
+      "git-release: missing tag argument is rejected"
+    ]
+  },
+  "cases": [
+    {
+      "name": "minimum-accepted-argument-list",
+      "arguments": [
+        "0.1.0"
+      ],
+      "command": [
+        "git",
+        "release",
+        "0.1.0"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "... releasing 0.1.0",
+        "after_state": {
+          "branch": "<before>",
+          "latest_tag": "0.1.0",
+          "latest_commit_message": "Release 0.1.0"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "... releasing 0.1.0\n[main a8a010a] Release 0.1.0\n... complete\n",
+        "stderr": "To /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T032-minimum-accepted-argument-list-yuc1x7cu/remote.git\n * [new tag]         0.1.0 -> 0.1.0\nTo /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T032-minimum-accepted-argument-list-yuc1x7cu/remote.git\n   6f91d2a..a8a010a  main -> main\n",
+        "before_state": {
+          "head": "6f91d2a3af31ecd1de9f8dcdf650deec697f0965",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        },
+        "after_state": {
+          "head": "a8a010ab4ea80f0583abe8e35b67bb07b86d4dfe",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "0.1.0",
+          "latest_commit_message": "Release 0.1.0"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "optional-argument-custom-message",
+      "arguments": [
+        "0.2.0",
+        "-m",
+        "Custom release 0.2.0 message"
+      ],
+      "command": [
+        "git",
+        "release",
+        "0.2.0",
+        "-m",
+        "Custom release 0.2.0 message"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "... releasing 0.2.0",
+        "after_state": {
+          "branch": "<before>",
+          "latest_tag": "0.2.0",
+          "latest_commit_message": "Custom release 0.2.0 message"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "... releasing 0.2.0\n[main b625750] Custom release 0.2.0 message\n... complete\n",
+        "stderr": "To /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T032-optional-argument-custom-message-sgwezp_v/remote.git\n * [new tag]         0.2.0 -> 0.2.0\nTo /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T032-optional-argument-custom-message-sgwezp_v/remote.git\n   6f91d2a..b625750  main -> main\n",
+        "before_state": {
+          "head": "6f91d2a3af31ecd1de9f8dcdf650deec697f0965",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        },
+        "after_state": {
+          "head": "b6257502c2e861beb70ddfdf2abf7c3a71147cea",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "0.2.0",
+          "latest_commit_message": "Custom release 0.2.0 message"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "optional-argument-no-empty-commit",
+      "arguments": [
+        "0.3.0",
+        "--no-empty-commit"
+      ],
+      "command": [
+        "git",
+        "release",
+        "0.3.0",
+        "--no-empty-commit"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "... releasing 0.3.0",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "latest_tag": "0.3.0"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "... releasing 0.3.0\nOn branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n... complete\n",
+        "stderr": "To /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T032-optional-argument-no-empty-commit-170253fm/remote.git\n * [new tag]         0.3.0 -> 0.3.0\nEverything up-to-date\n",
+        "before_state": {
+          "head": "d5e718e406b517d2444098df423dff90e562572a",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        },
+        "after_state": {
+          "head": "d5e718e406b517d2444098df423dff90e562572a",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "0.3.0",
+          "latest_commit_message": "Commit A"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "documented-invalid-combination-s-and-u",
+      "arguments": [
+        "-s",
+        "-u",
+        "mykey",
+        "0.4.0"
+      ],
+      "command": [
+        "git",
+        "release",
+        "-s",
+        "-u",
+        "mykey",
+        "0.4.0"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "Please use '-s' OR '-u'",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "latest_tag": ""
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "Please use '-s' OR '-u'\n",
+        "before_state": {
+          "head": "d5e718e406b517d2444098df423dff90e562572a",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        },
+        "after_state": {
+          "head": "d5e718e406b517d2444098df423dff90e562572a",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-tag-argument-failure",
+      "arguments": [],
+      "command": [
+        "git",
+        "release"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "tag required",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "latest_tag": ""
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "tag required\n",
+        "before_state": {
+          "head": "d5e718e406b517d2444098df423dff90e562572a",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        },
+        "after_state": {
+          "head": "d5e718e406b517d2444098df423dff90e562572a",
+          "branch": "main",
+          "status_short": "",
+          "latest_tag": "",
+          "latest_commit_message": "Commit A"
+        }
+      },
+      "passed": true
+    }
+  ]
+}

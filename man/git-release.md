@@ -3,13 +3,15 @@ git-release(1) -- Commit, tag and push changes to the repository
 
 ## SYNOPSIS
 
-`git release` [&lt;tagname&gt; | --semver &lt;name&gt;] [-r &lt;remote&gt;] [-m &lt;commit info&gt;] [--no-empty-commit] [-c] [-s] [-u &lt;key-id&gt;] [--prefix &lt;tag prefix&gt;] [[--] &lt;hook arguments...&gt;]
+`git release` [&lt;tagname&gt; | --semver &lt;name&gt;] [-r &lt;remote&gt;] [-m &lt;commit info&gt;] [--no-empty-commit] [-c] [-s | -u &lt;key-id&gt;] [--prefix &lt;tag prefix&gt;] [[--] &lt;hook arguments...&gt;]
 
 ## DESCRIPTION
 
   Commits changes with message "Release &lt;tagname&gt;" or custom commit information, tags with the given &lt;tagname&gt; and pushes the branch / tags.
 
   This command always creates a release commit, which could be empty if nothing changed. It works like `git merge --no-ff`. If you don't like the behavior, you could add `--no-empty-commit` to skip it.
+
+  At least `&lt;tagname&gt;` or `--semver &lt;name&gt;` is required. If omitted, the command exits with an error.
 
   Optionally it generates a changelog (see git-changelog) and a remote can be defined. The order of first -c or -r does not matter.
 
@@ -50,11 +52,11 @@ git-release(1) -- Commit, tag and push changes to the repository
 
   -s
 
-  Create a signed and annotated tag.
+  Create a signed and annotated tag. This option cannot be used together with `-u`.
 
   -u &lt;key-id&gt;
 
-  Create a tag, annotated and signed with the given key.
+  Create a tag, annotated and signed with the given key. This option cannot be used together with `-s`.
 
   [--] hook arguments...
 
