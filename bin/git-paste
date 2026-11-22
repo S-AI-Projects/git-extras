@@ -2,6 +2,11 @@
 set -e
 set -o pipefail
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "usage: git paste [<git format-patch options>]"
+    exit 0
+fi
+
 if ! command -v pastebinit &>/dev/null; then
     echo >&2 "To run 'git paste', you need to install pastebinit in your system"
     exit 1

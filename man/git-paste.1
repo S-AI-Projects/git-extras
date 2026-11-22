@@ -4,13 +4,17 @@
 .SH "NAME"
 \fBgit\-paste\fR \- Send patches to pastebin for chat conversations
 .SH "SYNOPSIS"
-\fBgit paste\fR <git format\-patch options>
+\fBgit paste\fR [\-h|\-\-help] [<git format\-patch options>]
 .SH "DESCRIPTION"
 Send patches to pastebin for chat conversations using pastebinit\. The syntax highlighting will be set to \'diff\'\.
 .SH "OPTIONS"
+\-h, \-\-help
+.P
+Display help message\.
+.P
 <git format\-patch options>
 .P
-All options are passed directly to \fBgit format\-patch\fR\. Given no arguments, \fBgit paste\fR passes \fB@{u}\fR to \fBgit format\-patch\fR\.
+All options are passed directly to \fBgit format\-patch\fR\. Given no arguments, \fBgit paste\fR passes \fB@{u}\fR to \fBgit format\-patch\fR\. Positional arguments and options containing spaces or wildcard characters are preserved and passed directly to \fBgit format\-patch\fR without word\-splitting or premature shell expansion\.
 .SH "CONFIGURATION"
 The pastebinit software chooses the most appropriate pastebin site for your operating system and the pastebinit documentation \fI\%https://manpages\.debian\.org/pastebinit\fR contains details of how to configure it to use a different site\.
 .SH "EXAMPLES"
@@ -33,6 +37,13 @@ Pastebin the latest three commits:
 .IP "" 4
 .nf
 $ git paste \-3
+.fi
+.IP "" 0
+.P
+Pastebin changes for files matching a path containing spaces and wildcards:
+.IP "" 4
+.nf
+$ git paste \-1 HEAD \-\- "dir with spaces/*.txt"
 .fi
 .IP "" 0
 .SH "AUTHOR"

@@ -78,7 +78,7 @@
 </p>
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>git paste</code> &lt;git format-patch options&gt;</p>
+<p><code>git paste</code> [-h|--help] [&lt;git format-patch options&gt;]</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
@@ -87,10 +87,15 @@
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
+<p>  -h, --help</p>
+
+<p>  Display help message.</p>
+
 <p>  &lt;git format-patch options&gt;</p>
 
 <p>  All options are passed directly to <code>git format-patch</code>.
-  Given no arguments, <code>git paste</code> passes <code>@{u}</code> to <code>git format-patch</code>.</p>
+  Given no arguments, <code>git paste</code> passes <code>@{u}</code> to <code>git format-patch</code>.
+  Positional arguments and options containing spaces or wildcard characters are preserved and passed directly to <code>git format-patch</code> without word-splitting or premature shell expansion.</p>
 
 <h2 id="CONFIGURATION">CONFIGURATION</h2>
 
@@ -114,6 +119,11 @@ $ git paste @{u}
 <p> Pastebin the latest three commits:</p>
 
 <pre><code>$ git paste -3
+</code></pre>
+
+<p> Pastebin changes for files matching a path containing spaces and wildcards:</p>
+
+<pre><code>$ git paste -1 HEAD -- "dir with spaces/*.txt"
 </code></pre>
 
 <h2 id="AUTHOR">AUTHOR</h2>

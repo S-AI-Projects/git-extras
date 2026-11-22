@@ -1,0 +1,5 @@
+git-paste: preserves quoted path arguments containing spaces
+git-paste: preserves wildcard arguments and does not affect unrelated files
+git-paste: supports -h and --help without requiring pastebinit
+git-paste: fails with documented error when pastebinit is missing
+git-paste: fails on invalid git format-patch argument

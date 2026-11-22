@@ -1,0 +1,278 @@
+{
+  "task_id": "R13-T034",
+  "item": "git-paste",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 10,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_4/tests/git-paste.bats",
+    "exit_status": 0,
+    "test_count": 5,
+    "test_names": [
+      "git-paste: preserves quoted path arguments containing spaces",
+      "git-paste: preserves wildcard arguments and does not affect unrelated files",
+      "git-paste: supports -h and --help without requiring pastebinit",
+      "git-paste: fails with documented error when pastebinit is missing",
+      "git-paste: fails on invalid git format-patch argument"
+    ]
+  },
+  "cases": [
+    {
+      "name": "quoted-path-with-spaces-success",
+      "arguments": [
+        "-1",
+        "HEAD",
+        "--",
+        "dir with spaces/file with spaces 1.txt"
+      ],
+      "command": [
+        "git",
+        "paste",
+        "-1",
+        "HEAD",
+        "--",
+        "dir with spaces/file with spaces 1.txt"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "https://pastebin.example.com/mock-paste",
+        "stdin_contains": "dir with spaces/file with spaces 1.txt",
+        "stdin_refutes": "unrelated_file.txt",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "unrelated_hash": "<before>",
+          "wildcard_target_hash": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "https://pastebin.example.com/mock-paste\n",
+        "stderr": "",
+        "captured_args": "-f\ndiff\n",
+        "captured_stdin_snippet": "From a3891112503191dff2bb3259fafe075c80a72ccc Mon Sep 17 00:00:00 2001\nFrom: Kushal Pandya <kushalpandya037@gmail.com>\nDate: Sun, 22 Nov 2026 12:18:48 +0530\nSubject: [PATCH] Commit B\n\n---\n dir with spaces/file with spaces 1.txt | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\ndiff --git a/dir ",
+        "before_state": {
+          "head": "a3891112503191dff2bb3259fafe075c80a72ccc",
+          "branch": "main",
+          "topic_ref": "cbb05ca30dbca36bd23a857c63c79d187062355a",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        },
+        "after_state": {
+          "head": "a3891112503191dff2bb3259fafe075c80a72ccc",
+          "branch": "main",
+          "topic_ref": "cbb05ca30dbca36bd23a857c63c79d187062355a",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "wildcard-argument-success",
+      "arguments": [
+        "-1",
+        "HEAD",
+        "--",
+        "dir with spaces/*.txt"
+      ],
+      "command": [
+        "git",
+        "paste",
+        "-1",
+        "HEAD",
+        "--",
+        "dir with spaces/*.txt"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "https://pastebin.example.com/mock-paste",
+        "stdin_contains": "dir with spaces/file with spaces 1.txt",
+        "stdin_refutes": "unrelated_file.txt",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "unrelated_hash": "<before>",
+          "wildcard_target_hash": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "https://pastebin.example.com/mock-paste\n",
+        "stderr": "",
+        "captured_args": "-f\ndiff\n",
+        "captured_stdin_snippet": "From 2bbc1388d70512276ac914d049604449952c0d3b Mon Sep 17 00:00:00 2001\nFrom: Kushal Pandya <kushalpandya037@gmail.com>\nDate: Sun, 22 Nov 2026 12:18:49 +0530\nSubject: [PATCH] Commit B\n\n---\n dir with spaces/file with spaces 1.txt | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\ndiff --git a/dir ",
+        "before_state": {
+          "head": "2bbc1388d70512276ac914d049604449952c0d3b",
+          "branch": "main",
+          "topic_ref": "581007c83b8d86804cae2059fb2d5f65c27446ef",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        },
+        "after_state": {
+          "head": "2bbc1388d70512276ac914d049604449952c0d3b",
+          "branch": "main",
+          "topic_ref": "581007c83b8d86804cae2059fb2d5f65c27446ef",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "help-option-success",
+      "arguments": [
+        "-h"
+      ],
+      "command": [
+        "git",
+        "paste",
+        "-h"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "usage: git paste",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "unrelated_hash": "<before>",
+          "wildcard_target_hash": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "usage: git paste [<git format-patch options>]\n",
+        "stderr": "",
+        "captured_args": "",
+        "captured_stdin_snippet": "",
+        "before_state": {
+          "head": "2bbc1388d70512276ac914d049604449952c0d3b",
+          "branch": "main",
+          "topic_ref": "16df83b4df49596791bdeda51d403a7b3ea41f6a",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        },
+        "after_state": {
+          "head": "2bbc1388d70512276ac914d049604449952c0d3b",
+          "branch": "main",
+          "topic_ref": "16df83b4df49596791bdeda51d403a7b3ea41f6a",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-pastebinit-documented-failure",
+      "arguments": [
+        "-1"
+      ],
+      "command": [
+        "git",
+        "paste",
+        "-1"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "To run 'git paste', you need to install pastebinit in your system",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "unrelated_hash": "<before>",
+          "wildcard_target_hash": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "To run 'git paste', you need to install pastebinit in your system\n",
+        "captured_args": "",
+        "captured_stdin_snippet": "",
+        "before_state": {
+          "head": "6afb11c1ac1d9b41bc044a296275b211e775a5f1",
+          "branch": "main",
+          "topic_ref": "a5c4ceeac574348ff2d4e175d48aa2e9446ed43c",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        },
+        "after_state": {
+          "head": "6afb11c1ac1d9b41bc044a296275b211e775a5f1",
+          "branch": "main",
+          "topic_ref": "a5c4ceeac574348ff2d4e175d48aa2e9446ed43c",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "invalid-git-argument-failure",
+      "arguments": [
+        "nonexistent_revision_12345"
+      ],
+      "command": [
+        "git",
+        "paste",
+        "nonexistent_revision_12345"
+      ],
+      "expected": {
+        "exit_status": 128,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "unrelated_hash": "<before>",
+          "wildcard_target_hash": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 128,
+        "stdout": "https://pastebin.example.com/mock-paste\n",
+        "stderr": "fatal: ambiguous argument 'nonexistent_revision_12345': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n",
+        "captured_args": "-f\ndiff\n",
+        "captured_stdin_snippet": "",
+        "before_state": {
+          "head": "6afb11c1ac1d9b41bc044a296275b211e775a5f1",
+          "branch": "main",
+          "topic_ref": "a5c4ceeac574348ff2d4e175d48aa2e9446ed43c",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        },
+        "after_state": {
+          "head": "6afb11c1ac1d9b41bc044a296275b211e775a5f1",
+          "branch": "main",
+          "topic_ref": "a5c4ceeac574348ff2d4e175d48aa2e9446ed43c",
+          "status_short": "",
+          "unrelated_hash": "0fe817611c19ad1911ad97c2090972f712dc95ac",
+          "wildcard_target_hash": "618ce7f446a904e7c4add36ef814aef250d32d43"
+        }
+      },
+      "passed": true
+    }
+  ]
+}
