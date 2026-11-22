@@ -1,37 +1,121 @@
 {
-  "task_id": "R13-T028",
-  "timestamp": 1794827594.352561,
-  "tests": [
+  "task": "R13-T028",
+  "target": "bin/git-standup",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bats": "Bats 1.14.0",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python3": "Python 3.9.6"
+  },
+  "total_cases": 4,
+  "total_assertions": 13,
+  "cases": [
     {
       "name": "invalid_invocation_fails_with_diagnostic",
-      "passed": true,
-      "exit_code": 1,
-      "stderr": "Specify days less than one is invalid: -d requires a positive integer (e.g. -d 1 or -d 7)"
+      "type": "failure_edge_state",
+      "command": "git standup -d 0",
+      "actual_args": [
+        "-d",
+        "0"
+      ],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "expected_output_contains": "Specify days less than one is invalid: -d requires a positive integer",
+      "actual_stderr": "Specify days less than one is invalid: -d requires a positive integer (e.g. -d 1 or -d 7)",
+      "actual_stdout": "",
+      "state_before": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "state_after": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "passed": true
     },
     {
       "name": "corrected_invocation_succeeds",
-      "passed": true,
-      "exit_code": 0,
-      "stdout": "12d9f64 - Sample commit for standup (24 hours ago) <Test Author>"
+      "type": "ordinary_success",
+      "command": "git standup -d 2",
+      "actual_args": [
+        "-d",
+        "2"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "expected_output_contains": "Sample commit for standup",
+      "actual_stderr": "",
+      "actual_stdout": "127f028 - Sample commit for standup (24 hours ago) <Test Author>",
+      "state_before": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "state_after": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "passed": true
     },
     {
       "name": "standup_all_authors_succeeds",
-      "passed": true,
-      "exit_code": 0
+      "type": "ordinary_success",
+      "command": "git standup -a all -d 2",
+      "actual_args": [
+        "-a",
+        "all",
+        "-d",
+        "2"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "expected_output_contains": "Sample commit for standup",
+      "actual_stderr": "",
+      "actual_stdout": "127f028 - Sample commit for standup (24 hours ago) <Test Author>",
+      "state_before": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "state_after": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "passed": true
     },
     {
       "name": "standup_help_succeeds",
-      "passed": true,
-      "exit_code": 0
-    },
-    {
-      "name": "bats_suite",
-      "passed": true,
-      "exit_code": 0,
-      "output": "1..4\nok 1 git-standup with invalid -d 0 fails with diagnostic message\nok 2 git-standup with corrected -d 2 invocation succeeds\nok 3 git-standup with -a all succeeds\nok 4 git-standup with -h displays usage screen"
+      "type": "ordinary_success",
+      "command": "git standup -h",
+      "actual_args": [
+        "-h"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "expected_output_contains": "Usage:",
+      "actual_stderr": "",
+      "actual_stdout": "Usage:\n    git standup [-a <author name>] [-w <weekstart-weekend>|-d <days-ago>] [-m <max-dir-depth>] [-D date-format] [-L] [-h] [-f] [-B] [-n <number-of-commits] [-F <gpg|authordate>]\n\n    -a      - Specify author to restrict search to, default to current git user.\n              Use \"-a all\" if you don't want the restriction.\n    -w      - Specify weekday range to limit search to\n    -m      - Specify the depth of recursive directory search\n    -L      - Toggle inclusion of symbolic links in recursive directory search\n    -d      - Specify the number of days back to include\n    -D      - Specify the date format for \"git log\" (default: relative)\n    -h      - Display this help screen\n    -f      - Fetch the latest commits beforehand\n    -B      - Display the commits in branch groups\n    -n      - Limit the number of commits displayed per group\n    -F gpg  - Show if commit is GPG signed (G) or not (N)\n    -F authordate - Print author date instead of commit date\n\n    Examples:\n    git standup -a \"John Doe\" -w \"MON-FRI\" -m 3",
+      "state_before": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "state_after": {
+        "head_commit": "127f028ce3ab7ec8899f401df08682b042df97bb",
+        "branches": "* main",
+        "working_tree_clean": true
+      },
+      "passed": true
     }
   ],
-  "passed": 5,
-  "failed": 0,
-  "status": "passed"
+  "bats_suite": {
+    "file": "tests/git-standup.bats",
+    "exit_code": 0,
+    "stdout": "1..4\nok 1 git-standup with invalid -d 0 fails with diagnostic message\nok 2 git-standup with corrected -d 2 invocation succeeds\nok 3 git-standup with -a all succeeds\nok 4 git-standup with -h displays usage screen"
+  },
+  "all_passed": true
 }
