@@ -82,7 +82,7 @@
     <tr>
       <td>
 <code>git release</code> [&lt;tagname&gt;</td>
-      <td>--semver &lt;name&gt;] [-r &lt;remote&gt;] [-m &lt;commit info&gt;] [--no-empty-commit] [-c] [-s] [-u &lt;key-id&gt;] [--prefix &lt;tag prefix&gt;] [[--] &lt;hook arguments...&gt;]</td>
+      <td>--semver &lt;name&gt;] [-r &lt;remote&gt;] [-m &lt;commit info&gt;] [--no-empty-commit] [-c] [-s | -u &lt;key-id&gt;] [--prefix &lt;tag prefix&gt;] [[--] &lt;hook arguments...&gt;]</td>
     </tr>
   </tbody>
 </table>
@@ -92,6 +92,8 @@
 <p>Commits changes with message "Release &lt;tagname&gt;" or custom commit information, tags with the given &lt;tagname&gt; and pushes the branch / tags.</p>
 
 <p>This command always creates a release commit, which could be empty if nothing changed. It works like <code>git merge --no-ff</code>. If you don't like the behavior, you could add <code>--no-empty-commit</code> to skip it.</p>
+
+<p>At least &lt;tagname&gt; or --semver &lt;name&gt; is required. If omitted, the command exits with an error.</p>
 
 <p>Optionally it generates a changelog (see git-changelog) and a remote can be defined. The order of first -c or -r does not matter.</p>
 
@@ -132,11 +134,11 @@
 
 <p>-s</p>
 
-<p>Create a signed and annotated tag.</p>
+<p>Create a signed and annotated tag. This option cannot be used together with <code>-u</code>.</p>
 
 <p>-u &lt;key-id&gt;</p>
 
-<p>Create a tag, annotated and signed with the given key.</p>
+<p>Create a tag, annotated and signed with the given key. This option cannot be used together with <code>-s</code>.</p>
 
 <p>[--] hook arguments...</p>
 
@@ -145,38 +147,33 @@
 <h2 id="EXAMPLES">EXAMPLES</h2>
 
 <ul>
-  <li>
-    <p>Release commit with the given &lt;tagname&gt;.</p>
+<li><p>Release commit with the given &lt;tagname&gt;.</p>
 
-    <p>$ git release 0.1.0</p>
-  </li>
-  <li>
-    <p>Release commit with the given &lt;tagname&gt; and custom commit message.</p>
+<pre><code>$ git release 0.1.0
+</code></pre></li>
+<li><p>Release commit with the given &lt;tagname&gt; and custom commit message.</p>
 
-    <p>$ git release 0.1.0 -m "+ powerful feature added."</p>
-  </li>
-  <li>
-    <p>Release commit with the given &lt;tagname&gt; and push to specific remote.</p>
+<pre><code>$ git release 0.1.0 -m "+ powerful feature added."
+</code></pre></li>
+<li><p>Release commit with the given &lt;tagname&gt; and push to specific remote.</p>
 
-    <p>$ git release 0.1.0 -r github</p>
-  </li>
-  <li>
-    <p>Release commit with the given &lt;tagname&gt; and populate changelog.</p>
+<pre><code>$ git release 0.1.0 -r github
+</code></pre></li>
+<li><p>Release commit with the given &lt;tagname&gt; and populate changelog.</p>
 
-    <p>$ git release 0.1.0 -c</p>
-  </li>
-  <li>
-    <p>Release commit with the given &lt;tagname&gt;, populate changelog, and push to specific remote.</p>
+<pre><code>$ git release 0.1.0 -c
+</code></pre></li>
+<li><p>Release commit with the given &lt;tagname&gt;, populate changelog, and push to specific remote.</p>
 
-    <p>$ git release 0.1.0 -r github -c</p>
-  </li>
-  <li>
-    <p>Release commit with the given &lt;tagname&gt;, pass &lt;tagname&gt; and extra argument to release hook,
+<pre><code>$ git release 0.1.0 -r github -c
+</code></pre></li>
+<li><p>Release commit with the given &lt;tagname&gt;, pass &lt;tagname&gt; and extra argument to release hook,
 populate changelog, and push to specific remote.</p>
 
-    <p>$ git release 0.1.0 -r github -c -- --signature-required</p>
-  </li>
+<pre><code>$ git release 0.1.0 -r github -c -- --signature-required
+</code></pre></li>
 </ul>
+
 
 <h2 id="AUTHOR">AUTHOR</h2>
 

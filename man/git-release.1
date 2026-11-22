@@ -6,12 +6,14 @@
 .SH "SYNOPSIS"
 .TS
 allbox;
-\fBgit release\fR [<tagname>	\-\-semver <name>] [\-r <remote>] [\-m <commit info>] [\-\-no\-empty\-commit] [\-c] [\-s] [\-u <key\-id>] [\-\-prefix <tag prefix>] [[\-\-] <hook arguments\|\.\|\.\|\.>]
+\fBgit release\fR [<tagname>	\-\-semver <name>] [\-r <remote>] [\-m <commit info>] [\-\-no\-empty\-commit] [\-c] [\-s | \-u <key\-id>] [\-\-prefix <tag prefix>] [[\-\-] <hook arguments\|\.\|\.\|\.>]
 .TE
 .SH "DESCRIPTION"
 Commits changes with message "Release <tagname>" or custom commit information, tags with the given <tagname> and pushes the branch / tags\.
 .P
 This command always creates a release commit, which could be empty if nothing changed\. It works like \fBgit merge \-\-no\-ff\fR\. If you don't like the behavior, you could add \fB\-\-no\-empty\-commit\fR to skip it\.
+.P
+At least <tagname> or \-\-semver <name> is required\. If omitted, the command exits with an error\.
 .P
 Optionally it generates a changelog (see git\-changelog) and a remote can be defined\. The order of first \-c or \-r does not matter\.
 .P
@@ -47,11 +49,11 @@ Generates or populates the changelog with all commit message since the last tag\
 .P
 \-s
 .P
-Create a signed and annotated tag\.
+Create a signed and annotated tag\. This option cannot be used together with \-u\.
 .P
 \-u <key\-id>
 .P
-Create a tag, annotated and signed with the given key\.
+Create a tag, annotated and signed with the given key\. This option cannot be used together with \-s\.
 .P
 [\-\-] hook arguments\|\.\|\.\|\.
 .P
@@ -59,31 +61,43 @@ The arguments listed after "\-\-" separator will be passed to pre/post\-release 
 .SH "EXAMPLES"
 .IP "\(bu" 4
 Release commit with the given <tagname>\.
-.IP
+.IP "" 0
+.nf
 $ git release 0\.1\.0
+.fi
 .IP "\(bu" 4
 Release commit with the given <tagname> and custom commit message\.
-.IP
+.IP "" 0
+.nf
 $ git release 0\.1\.0 \-m "+ powerful feature added\."
+.fi
 .IP "\(bu" 4
 Release commit with the given <tagname> and push to specific remote\.
-.IP
+.IP "" 0
+.nf
 $ git release 0\.1\.0 \-r github
+.fi
 .IP "\(bu" 4
 Release commit with the given <tagname> and populate changelog\.
-.IP
+.IP "" 0
+.nf
 $ git release 0\.1\.0 \-c
+.fi
 .IP "\(bu" 4
 Release commit with the given <tagname>, populate changelog, and push to specific remote\.
-.IP
+.IP "" 0
+.nf
 $ git release 0\.1\.0 \-r github \-c
+.fi
 .IP "\(bu" 4
 Release commit with the given <tagname>, pass <tagname> and extra argument to release hook, populate changelog, and push to specific remote\.
-.IP
-$ git release 0\.1\.0 \-r github \-c \-\- \-\-signature\-required
 .IP "" 0
+.nf
+$ git release 0\.1\.0 \-r github \-c \-\- \-\-signature\-required
+.fi
 .SH "AUTHOR"
-Written by Tj Holowaychuk <\fItj@vision\-media\.ca\fR> Extended by David Hartmann <\fIdh@tsl\.io\fR>
+Written by Tj Holowaychuk <\fItj@vision\-media\.ca\fR>
+Extended by David Hartmann <\fIdh@tsl\.io\fR>
 .SH "REPORTING BUGS"
 <\fIhttps://github\.com/tj/git\-extras/issues\fR>
 .SH "SEE ALSO"

@@ -1,0 +1,5 @@
+git-release: minimum accepted argument list releases with tagname
+git-release: optional argument -m sets custom commit message
+git-release: optional argument --no-empty-commit skips empty commit
+git-release: documented invalid combination -s and -u is rejected
+git-release: missing tag argument is rejected

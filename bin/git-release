@@ -66,6 +66,10 @@ if test $# -gt 0; then
 
   done
 
+  if [ -z "$version" ] && [ -z "$semver" ]; then
+    exit_with_msg "tag required"
+  fi
+
   if [ -n "$semver" ]; then
     if [ -z "$(git tag)" ]; then
       echo "there is no tag in the git repo" 1>&2
