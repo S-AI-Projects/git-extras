@@ -1,0 +1,110 @@
+{
+  "task_id": "R13-T039",
+  "item": "git-local-commits",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python": "Python 3.15.0",
+    "bats": "Bats 1.14.0"
+  },
+  "total_checks": 12,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_9/tests/git-local-commits.bats",
+    "exit_status": 0,
+    "test_count": 4,
+    "test_names": [
+      "lists unpushed local commits and rejects mutant without upstream range",
+      "forwards positional arguments and flags to git log",
+      "displays usage when invoked with -h or --help",
+      "fails cleanly when branch has no configured upstream"
+    ]
+  },
+  "cases": [
+    {
+      "name": "local-commits-only-success",
+      "args": [],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "commit 16c6808d8391df87e09588dd6dd85641db4ae0a5\nAuthor: Test User <test@example.com>\nDate:   Sun Nov 22 13:06:52 2026 +0530\n\n    Commit C (local 2)\n\ncommit 45d15d7614d45a5ba29056888bb14d1552dd8e0f\nAuthor: Test User <test@example.com>\nDate:   Sun Nov 22 13:06:52 2026 +0530\n\n    Commit B (local 1)\n",
+      "stderr": "",
+      "errors": []
+    },
+    {
+      "name": "pos-args-oneline-success",
+      "args": [
+        "--oneline"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "16c6808 Commit C (local 2)\n45d15d7 Commit B (local 1)\n",
+      "stderr": "",
+      "errors": []
+    },
+    {
+      "name": "pos-args-pathspec-success",
+      "args": [
+        "--oneline",
+        "--",
+        "file_b.txt"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "eb522e6 Commit B (local 1)\n",
+      "stderr": "",
+      "errors": []
+    },
+    {
+      "name": "help-flag-short-success",
+      "args": [
+        "-h"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "Usage: git local-commits [<git log options>]\n",
+      "stderr": "",
+      "errors": []
+    },
+    {
+      "name": "help-flag-long-success",
+      "args": [
+        "--help"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "Usage: git local-commits [<git log options>]\n",
+      "stderr": "",
+      "errors": []
+    },
+    {
+      "name": "zero-local-commits-topic-success",
+      "args": [],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "",
+      "stderr": "",
+      "errors": []
+    },
+    {
+      "name": "missing-upstream-failure",
+      "args": [],
+      "exit_status": 128,
+      "passed": true,
+      "stdout": "",
+      "stderr": "fatal: no upstream configured for branch 'untracked'\n",
+      "errors": []
+    },
+    {
+      "name": "mutant-rejection-demonstration",
+      "args": [
+        "--oneline"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "61071e7 Commit C (local 2)\n948126f Commit B (local 1)\n",
+      "stderr": "",
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+lists unpushed local commits and rejects mutant without upstream range
+forwards positional arguments and flags to git log
+displays usage when invoked with -h or --help
+fails cleanly when branch has no configured upstream
