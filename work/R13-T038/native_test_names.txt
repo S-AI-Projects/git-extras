@@ -1,0 +1,7 @@
+git-ignore-io: displays usage with -h and --help
+git-ignore-io: --replace creates or overwrites .gitignore with template
+git-ignore-io: --append appends template to existing .gitignore
+git-ignore-io: --list-alphabetically prints types in alphabetical order
+git-ignore-io: --list-in-table prints types in columns
+git-ignore-io: fails with documented error when template is not found
+git-ignore-io: fails when --replace or --append is called with no types

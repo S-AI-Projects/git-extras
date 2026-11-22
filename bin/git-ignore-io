@@ -157,61 +157,64 @@ check_list_exist() {
     gi_list=$(tr "," "\n" < "$default_path" 2>/dev/null)
 }
 
-check_list_exist || exit $?
-if [[ $# -eq 0 ]]; then
+if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
     show_usage
-else
-    case $1 in
-        -a|--append|-r|--replace)
-            opt=$1
-            shift
-            if [[ $# -eq 0 ]]; then
-                echo "There should be at least one type"
-                echo
-                show_usage
-                exit
-            fi
-
-            gi_to_curl=$(echo "$@" | tr " " ",")
-            case $opt in
-            -a|--append)
-                gi_append "$gi_to_curl"
-                ;;
-            -r|--replace)
-                gi_replace "$gi_to_curl"
-                ;;
-            esac
-
-            exit
-            ;;
-        -t|--show-update-time)
-            print_last_modified_time
-            ;;
-        -u|--update-list)
-            update_gi_list
-            ;;
-        -s|--search)
-            opt=$1
-            shift
-            if [[ $# -eq 0 ]]; then
-                show_usage
-                exit
-            fi
-            search "$1"
-            ;;
-        -L|--list-alphabetically)
-            print_in_alphabetical_order
-            ;;
-        -l|--list-in-table)
-            print_in_table_format
-            ;;
-        -*)
-            echo No Such option
-            show_usage
-            ;;
-        *)
-            gi_to_curl=$(echo "$@" | tr " " ",")
-            gi "$gi_to_curl"
-            ;;
-    esac
+    exit 0
 fi
+
+check_list_exist || exit $?
+
+case $1 in
+    -a|--append|-r|--replace)
+        opt=$1
+        shift
+        if [[ $# -eq 0 ]]; then
+            echo "There should be at least one type"
+            echo
+            show_usage
+            exit 1
+        fi
+
+        gi_to_curl=$(echo "$@" | tr " " ",")
+        case $opt in
+        -a|--append)
+            gi_append "$gi_to_curl"
+            ;;
+        -r|--replace)
+            gi_replace "$gi_to_curl"
+            ;;
+        esac
+
+        exit $?
+        ;;
+    -t|--show-update-time)
+        print_last_modified_time
+        ;;
+    -u|--update-list)
+        update_gi_list
+        ;;
+    -s|--search)
+        opt=$1
+        shift
+        if [[ $# -eq 0 ]]; then
+            show_usage
+            exit 1
+        fi
+        search "$1"
+        ;;
+    -L|--list-alphabetically)
+        print_in_alphabetical_order
+        ;;
+    -l|--list-in-table)
+        print_in_table_format
+        ;;
+    -*)
+        echo No Such option
+        show_usage
+        exit 1
+        ;;
+    *)
+        gi_to_curl=$(echo "$@" | tr " " ",")
+        gi "$gi_to_curl"
+        ;;
+esac

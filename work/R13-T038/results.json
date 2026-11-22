@@ -1,0 +1,325 @@
+{
+  "task_id": "R13-T038",
+  "item": "git-ignore-io",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 14,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_8/tests/git-ignore-io.bats",
+    "exit_status": 0,
+    "test_count": 7,
+    "test_names": [
+      "git-ignore-io: displays usage with -h and --help",
+      "git-ignore-io: --replace creates or overwrites .gitignore with template",
+      "git-ignore-io: --append appends template to existing .gitignore",
+      "git-ignore-io: --list-alphabetically prints types in alphabetical order",
+      "git-ignore-io: --list-in-table prints types in columns",
+      "git-ignore-io: fails with documented error when template is not found",
+      "git-ignore-io: fails when --replace or --append is called with no types"
+    ]
+  },
+  "cases": [
+    {
+      "name": "help-flag-success",
+      "arguments": [
+        "-h"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "-h"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "Usage:"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "gitignore": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "Usage:\n  git ignore-io <types>...                    Show gitignore template\n                [-a|--append] <types>...      Append new .gitignore content to .gitignore under the current directory\n                [-r|--replace] <types>...      Export new .gitignore to the current directory (The old one will be replaced)\n                [-l|--list-in-table]          Print available types in table format\n                [-L|--list-alphabetically]    Print available types in alphabetical order    \n                [-s|--search] <word>          Search word in available types\n                [-t|--show-update-time]       Show the last modified time of /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T038-help-flag-success-lj_gysfk/cache/git-extras/gi_list (where the list of available types is stored)\n                [-u|--update-list]            Update /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T038-help-flag-success-lj_gysfk/cache/git-extras/gi_list\n",
+        "stderr": "",
+        "before_state": {
+          "head": "8c5dc1a83ad4cd0f91e6590c4c0fd6dfa3526bbd",
+          "branch": "main",
+          "topic_ref": "eb7badc803221909bce8036523aa4c36212850d0",
+          "status_short": "",
+          "gitignore": ""
+        },
+        "after_state": {
+          "head": "8c5dc1a83ad4cd0f91e6590c4c0fd6dfa3526bbd",
+          "branch": "main",
+          "topic_ref": "eb7badc803221909bce8036523aa4c36212850d0",
+          "status_short": "",
+          "gitignore": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "replace-template-success",
+      "arguments": [
+        "--replace",
+        "Python"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "--replace",
+        "Python"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "gitignore": "*.py[cod]"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "",
+        "before_state": {
+          "head": "8bbc05fa5128a91ea94a318154c74842a82a4d03",
+          "branch": "main",
+          "topic_ref": "fbcb72a52c30aac8df97c56d1de603bffb264c34",
+          "status_short": "",
+          "gitignore": ""
+        },
+        "after_state": {
+          "head": "8bbc05fa5128a91ea94a318154c74842a82a4d03",
+          "branch": "main",
+          "topic_ref": "fbcb72a52c30aac8df97c56d1de603bffb264c34",
+          "status_short": "?? .gitignore",
+          "gitignore": "# Python\n*.py[cod]\n__pycache__/\n\n"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "append-template-success",
+      "arguments": [
+        "--append",
+        "Vim"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "--append",
+        "Vim"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "gitignore": "[._]*.s[a-w][a-z]"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "",
+        "before_state": {
+          "head": "08c9b0cec7a04da59624625943073dc2be8030bc",
+          "branch": "main",
+          "topic_ref": "bd65c88ca4ff8544a1602bb5d387bb8b0b33d19e",
+          "status_short": "?? .gitignore",
+          "gitignore": "# Initial\n*.log\n"
+        },
+        "after_state": {
+          "head": "08c9b0cec7a04da59624625943073dc2be8030bc",
+          "branch": "main",
+          "topic_ref": "bd65c88ca4ff8544a1602bb5d387bb8b0b33d19e",
+          "status_short": "?? .gitignore",
+          "gitignore": "# Initial\n*.log\n# Vim\n[._]*.s[a-w][a-z]\n*.un~\n\n"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "list-alphabetically-success",
+      "arguments": [
+        "--list-alphabetically"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "--list-alphabetically"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "Python",
+          "Global/Vim"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "C\nGlobal/Vim\nNode\nPython\nRust\n",
+        "stderr": "",
+        "before_state": {
+          "head": "08c9b0cec7a04da59624625943073dc2be8030bc",
+          "branch": "main",
+          "topic_ref": "bd65c88ca4ff8544a1602bb5d387bb8b0b33d19e",
+          "status_short": "",
+          "gitignore": ""
+        },
+        "after_state": {
+          "head": "08c9b0cec7a04da59624625943073dc2be8030bc",
+          "branch": "main",
+          "topic_ref": "bd65c88ca4ff8544a1602bb5d387bb8b0b33d19e",
+          "status_short": "",
+          "gitignore": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "list-in-table-success",
+      "arguments": [
+        "--list-in-table"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "--list-in-table"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "Python"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "C\t\tGlobal/Vim\tNode\t\tPython\t\tRust\n",
+        "stderr": "",
+        "before_state": {
+          "head": "08c9b0cec7a04da59624625943073dc2be8030bc",
+          "branch": "main",
+          "topic_ref": "bd65c88ca4ff8544a1602bb5d387bb8b0b33d19e",
+          "status_short": "",
+          "gitignore": ""
+        },
+        "after_state": {
+          "head": "08c9b0cec7a04da59624625943073dc2be8030bc",
+          "branch": "main",
+          "topic_ref": "bd65c88ca4ff8544a1602bb5d387bb8b0b33d19e",
+          "status_short": "",
+          "gitignore": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "unknown-template-failure",
+      "arguments": [
+        "NonexistentTemplate"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "NonexistentTemplate"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "Template not found: NonexistentTemplate",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "Template not found: NonexistentTemplate\n",
+        "before_state": {
+          "head": "2b2db046201bc443e54a091f2f349ff6d9348ca7",
+          "branch": "main",
+          "topic_ref": "c824522b44d985f163690acdc4814d633e3c063c",
+          "status_short": "",
+          "gitignore": ""
+        },
+        "after_state": {
+          "head": "2b2db046201bc443e54a091f2f349ff6d9348ca7",
+          "branch": "main",
+          "topic_ref": "c824522b44d985f163690acdc4814d633e3c063c",
+          "status_short": "",
+          "gitignore": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-types-replace-failure",
+      "arguments": [
+        "--replace"
+      ],
+      "command": [
+        "git",
+        "ignore-io",
+        "--replace"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stdout_contains": [
+          "There should be at least one type"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "There should be at least one type\n\nUsage:\n  git ignore-io <types>...                    Show gitignore template\n                [-a|--append] <types>...      Append new .gitignore content to .gitignore under the current directory\n                [-r|--replace] <types>...      Export new .gitignore to the current directory (The old one will be replaced)\n                [-l|--list-in-table]          Print available types in table format\n                [-L|--list-alphabetically]    Print available types in alphabetical order    \n                [-s|--search] <word>          Search word in available types\n                [-t|--show-update-time]       Show the last modified time of /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T038-missing-types-replace-failure-rhdjch2l/cache/git-extras/gi_list (where the list of available types is stored)\n                [-u|--update-list]            Update /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T038-missing-types-replace-failure-rhdjch2l/cache/git-extras/gi_list\n",
+        "stderr": "",
+        "before_state": {
+          "head": "2b2db046201bc443e54a091f2f349ff6d9348ca7",
+          "branch": "main",
+          "topic_ref": "c824522b44d985f163690acdc4814d633e3c063c",
+          "status_short": "",
+          "gitignore": ""
+        },
+        "after_state": {
+          "head": "2b2db046201bc443e54a091f2f349ff6d9348ca7",
+          "branch": "main",
+          "topic_ref": "c824522b44d985f163690acdc4814d633e3c063c",
+          "status_short": "",
+          "gitignore": ""
+        }
+      },
+      "passed": true
+    }
+  ]
+}
