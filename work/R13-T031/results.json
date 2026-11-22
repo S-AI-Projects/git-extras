@@ -1,0 +1,222 @@
+{
+  "task_id": "R13-T031",
+  "item": "git-unlock",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 10,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_1/tests/git-unlock.bats",
+    "exit_status": 0,
+    "test_count": 5,
+    "test_names": [
+      "git-unlock: successfully unlocks a locked file",
+      "git-unlock: unlocking an already unlocked file succeeds without changing state",
+      "git-unlock: fails when filename argument is omitted",
+      "git-unlock: fails when filename argument is empty",
+      "git-unlock: fails when file is untracked or does not exist"
+    ]
+  },
+  "cases": [
+    {
+      "name": "ordinary-success-unlock-locked-file",
+      "arguments": [
+        "commit_a.txt"
+      ],
+      "command": [
+        "git",
+        "unlock",
+        "commit_a.txt"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_empty": true,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "status_short": "",
+          "ls_files_v": "H commit_a.txt"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "",
+        "before_state": {
+          "head": "9f093c690f8f090d52223689f195b2f2dbeb736f",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        },
+        "after_state": {
+          "head": "9f093c690f8f090d52223689f195b2f2dbeb736f",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "H commit_a.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-argument-failure",
+      "arguments": [],
+      "command": [
+        "git",
+        "unlock"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "filename required.",
+        "stdout_empty": true,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "status_short": "<before>",
+          "ls_files_v": "S commit_a.txt"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "filename required.\n",
+        "before_state": {
+          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        },
+        "after_state": {
+          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "empty-argument-failure",
+      "arguments": [
+        ""
+      ],
+      "command": [
+        "git",
+        "unlock",
+        ""
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "filename required.",
+        "stdout_empty": true,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "status_short": "<before>",
+          "ls_files_v": "S commit_a.txt"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "filename required.\n",
+        "before_state": {
+          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        },
+        "after_state": {
+          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "untracked-missing-file-failure",
+      "arguments": [
+        "nonexistent_file.txt"
+      ],
+      "command": [
+        "git",
+        "unlock",
+        "nonexistent_file.txt"
+      ],
+      "expected": {
+        "exit_status": 128,
+        "stderr_contains": "fatal: Unable to mark file nonexistent_file.txt",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "status_short": "<before>",
+          "ls_files_v": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 128,
+        "stdout": "",
+        "stderr": "fatal: Unable to mark file nonexistent_file.txt\n",
+        "before_state": {
+          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        },
+        "after_state": {
+          "head": "94144856da24ef152643a086ddcfb6b0748490a5",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "S commit_a.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "already-unlocked-file-success",
+      "arguments": [
+        "commit_a.txt"
+      ],
+      "command": [
+        "git",
+        "unlock",
+        "commit_a.txt"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_empty": true,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "status_short": "",
+          "ls_files_v": "H commit_a.txt"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "",
+        "before_state": {
+          "head": "198bf771e5208a9ef28248cb1bc81d80fa7f352e",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "H commit_a.txt"
+        },
+        "after_state": {
+          "head": "198bf771e5208a9ef28248cb1bc81d80fa7f352e",
+          "branch": "main",
+          "status_short": "",
+          "ls_files_v": "H commit_a.txt"
+        }
+      },
+      "passed": true
+    }
+  ]
+}

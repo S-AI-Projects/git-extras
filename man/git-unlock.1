@@ -6,11 +6,11 @@
 .SH "SYNOPSIS"
 \fBgit unlock\fR <filename>
 .SH "DESCRIPTION"
-Unlock local files from version control\.
+Unmark a tracked local file with \fB\-\-no\-skip\-worktree\fR in the Git index so local modifications are tracked again by version control\. Requires a non\-empty <filename> argument referring to a tracked file\. If <filename> is omitted or empty, the command prints an error to stderr and exits with status 1\.
 .SH "OPTIONS"
 <filename>
 .P
-The name of the filename\.
+The name of the tracked file to unlock\.
 .SH "EXAMPLES"
 .nf
 $ git unlock config/database\.yml

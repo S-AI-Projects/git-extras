@@ -1,0 +1,5 @@
+git-unlock: successfully unlocks a locked file
+git-unlock: unlocking an already unlocked file succeeds without changing state
+git-unlock: fails when filename argument is omitted
+git-unlock: fails when filename argument is empty
+git-unlock: fails when file is untracked or does not exist
