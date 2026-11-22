@@ -3,7 +3,7 @@ git-ignore-io(1) -- Get sample gitignore file
 
 ## SYNOPSIS
 
-`git ignore-io` [&lt;OPTIONS&gt;]
+`git ignore-io` [-h|--help] [&lt;OPTIONS&gt;]
 
 ## DESCRIPTION
 
@@ -11,7 +11,8 @@ Get sample gitignore file from [GitHub's gitignore repository](https://github.co
 
 ## OPTIONS
 
-  &lt;OPTIONS&gt;
+  -h, --help  
+  Show help and usage information  
 
   -a, --append &lt;types&gt;...  
   Append new .gitignore content to .gitignore under the current directory  
