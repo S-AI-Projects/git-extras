@@ -1,0 +1,5 @@
+fails when invoked without arguments and provides diagnostic hint
+fails when tag does not exist and provides troubleshooting hint
+succeeds with corrected invocation deleting single tag locally and remotely
+succeeds deleting multiple tags locally and remotely
+displays usage when invoked with -h or --help

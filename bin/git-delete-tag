@@ -1,28 +1,45 @@
 #!/usr/bin/env bash
 
+# Display help message
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo "Usage: git delete-tag <tagname>..."
+  exit 0
+fi
+
 # Assert there is at least one tag provided
-test -z "$1" && echo "tag required." 1>&2 && exit 1
+if [ -z "$1" ]; then
+  echo "Error: Tag name required. Specify one or more tags to delete." 1>&2
+  echo "Hint: Use 'git tag -l' to list existing tags, then run 'git delete-tag <tagname>'." 1>&2
+  exit 1
+fi
 
 # Detect the default remote exists or not
 default_remote=$(git config git-extras.default-remote)
 
-if [[ -n "$default_remote" ]]; then
-    origin="$default_remote"
+if [ -n "$default_remote" ]; then
+  origin="$default_remote"
 else
-    origin=origin
+  origin=origin
 fi
 
 # Concatenate all the tag references
 local_tags=""
 origin_refs=""
-for tagname in "$@"
-do
-  local_tags=$local_tags" $tagname"
-  origin_refs=$origin_refs" :refs/tags/$tagname"
+for tagname in "$@"; do
+  local_tags="$local_tags $tagname"
+  origin_refs="$origin_refs :refs/tags/$tagname"
 done
 
-# Delete all the tags
+# Delete all the tags locally
 # shellcheck disable=SC2086
-git tag -d $local_tags
+if ! git tag -d $local_tags; then
+  echo "Hint: Tag deletion failed. Run 'git tag -l' to view existing tags." 1>&2
+  exit 1
+fi
+
+# Delete all the tags on remote
 # shellcheck disable=SC2086
-git push "$origin" $origin_refs
+if ! git push "$origin" $origin_refs; then
+  echo "Hint: Remote tag deletion failed on '$origin'. Verify remote connectivity and permissions." 1>&2
+  exit 1
+fi

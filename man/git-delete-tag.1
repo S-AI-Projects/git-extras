@@ -7,16 +7,25 @@
 \fBgit\-delete\-tag\fR \- Delete tags
 .
 .SH "SYNOPSIS"
-\fBgit delete\-tag\fR <tagname>
+\fBgit delete\-tag\fR [\-h|\-\-help] <tagname>...
 .
 .SH "DESCRIPTION"
 Deletes local and remote tag named <tagname>\.
 .
 .SH "OPTIONS"
+\-h, \-\-help
+.P
+Show help message and exit\.
+.P
 <tagname>
 .
 .P
 The name of the tag to delete\. If multiple tags are provided, then they will all be deleted\.
+.
+.SH "DIAGNOSTICS"
+If no tag name is supplied, \fBgit delete\-tag\fR exits with status 1 and explains that a tag name is required\.
+If local tag deletion fails, it exits with status 1 and suggests inspecting tags using \fBgit tag \-l\fR\.
+If remote tag deletion fails, it reports a troubleshooting hint to verify remote connectivity and permissions\.
 .
 .SH "EXAMPLES"
 .

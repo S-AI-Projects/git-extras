@@ -76,7 +76,7 @@
 
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>git delete-tag</code> &lt;tagname&gt;</p>
+<p><code>git delete-tag</code> [-h|--help] &lt;tagname&gt;...</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
@@ -84,10 +84,20 @@
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
+<p>-h, --help</p>
+
+<p>Show help message and exit.</p>
+
 <p>  &lt;tagname&gt;</p>
 
 <p>  The name of the tag to delete.
   If multiple tags are provided, then they will all be deleted.</p>
+
+<h2 id="DIAGNOSTICS">DIAGNOSTICS</h2>
+
+<p>If no tag name is supplied, <code>git delete-tag</code> exits with status 1 and explains that a tag name is required.
+If local tag deletion fails, it exits with status 1 and suggests inspecting tags using <code>git tag -l</code>.
+If remote tag deletion fails, it reports a troubleshooting hint to verify remote connectivity and permissions.</p>
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
 

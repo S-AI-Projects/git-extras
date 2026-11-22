@@ -1,0 +1,198 @@
+{
+  "task_id": "R13-T040",
+  "item": "git-delete-tag",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "python": "Python 3.15.0",
+    "bats": "Bats 1.14.0"
+  },
+  "total_checks": 11,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_10/tests/git-delete-tag.bats",
+    "exit_status": 0,
+    "test_count": 5,
+    "test_names": [
+      "fails when invoked without arguments and provides diagnostic hint",
+      "fails when tag does not exist and provides troubleshooting hint",
+      "succeeds with corrected invocation deleting single tag locally and remotely",
+      "succeeds deleting multiple tags locally and remotely",
+      "displays usage when invoked with -h or --help"
+    ]
+  },
+  "cases": [
+    {
+      "name": "missing-tag-arg-failure",
+      "args": [],
+      "exit_status": 1,
+      "passed": true,
+      "stdout": "",
+      "stderr": "Error: Tag name required. Specify one or more tags to delete.\nHint: Use 'git tag -l' to list existing tags, then run 'git delete-tag <tagname>'.\n",
+      "before_state": {
+        "head": "c21f9738e2b5b7e1850779f8ccb8c8c9244b0f81",
+        "branch": "main",
+        "topic_ref": "65f82a4f0c6c462ddf0f4eb144b26883859948b0",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "after_state": {
+        "head": "c21f9738e2b5b7e1850779f8ccb8c8c9244b0f81",
+        "branch": "main",
+        "topic_ref": "65f82a4f0c6c462ddf0f4eb144b26883859948b0",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "errors": []
+    },
+    {
+      "name": "nonexistent-tag-failure",
+      "args": [
+        "nonexistent-v0"
+      ],
+      "exit_status": 1,
+      "passed": true,
+      "stdout": "",
+      "stderr": "error: tag 'nonexistent-v0' not found.\nHint: Tag deletion failed. Run 'git tag -l' to view existing tags.\n",
+      "before_state": {
+        "head": "b363bfd09130924f7d81448cd6f14085dc416cee",
+        "branch": "main",
+        "topic_ref": "1489ea52435598888617645eaa6d8dbef4c35f55",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "after_state": {
+        "head": "b363bfd09130924f7d81448cd6f14085dc416cee",
+        "branch": "main",
+        "topic_ref": "1489ea52435598888617645eaa6d8dbef4c35f55",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "errors": []
+    },
+    {
+      "name": "corrected-single-tag-success",
+      "args": [
+        "v1.0.0"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "Deleted tag 'v1.0.0' (was b363bfd)\n",
+      "stderr": "To /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/tmpzmotg19x/remote.git\n - [deleted]         v1.0.0\n",
+      "before_state": {
+        "head": "b363bfd09130924f7d81448cd6f14085dc416cee",
+        "branch": "main",
+        "topic_ref": "1489ea52435598888617645eaa6d8dbef4c35f55",
+        "status_short": "",
+        "local_tags": [
+          "v1.0.0"
+        ],
+        "remote_tags": [
+          "v1.0.0"
+        ]
+      },
+      "after_state": {
+        "head": "b363bfd09130924f7d81448cd6f14085dc416cee",
+        "branch": "main",
+        "topic_ref": "1489ea52435598888617645eaa6d8dbef4c35f55",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "errors": []
+    },
+    {
+      "name": "multiple-tags-success",
+      "args": [
+        "v2.0.1",
+        "v2.0.2"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "Deleted tag 'v2.0.1' (was 1265755)\nDeleted tag 'v2.0.2' (was 1265755)\n",
+      "stderr": "To /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/tmpwcxtub58/remote.git\n - [deleted]         v2.0.1\n - [deleted]         v2.0.2\n",
+      "before_state": {
+        "head": "12657555c09884b5657fbb2a2f0ca45e216a694c",
+        "branch": "main",
+        "topic_ref": "9d3ad19845222a0aa93f5fc11b5de3b0c5654324",
+        "status_short": "",
+        "local_tags": [
+          "v2.0.1",
+          "v2.0.2"
+        ],
+        "remote_tags": [
+          "v2.0.1",
+          "v2.0.2"
+        ]
+      },
+      "after_state": {
+        "head": "12657555c09884b5657fbb2a2f0ca45e216a694c",
+        "branch": "main",
+        "topic_ref": "9d3ad19845222a0aa93f5fc11b5de3b0c5654324",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "errors": []
+    },
+    {
+      "name": "help-flag-short-success",
+      "args": [
+        "-h"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "Usage: git delete-tag <tagname>...\n",
+      "stderr": "",
+      "before_state": {
+        "head": "12657555c09884b5657fbb2a2f0ca45e216a694c",
+        "branch": "main",
+        "topic_ref": "9d3ad19845222a0aa93f5fc11b5de3b0c5654324",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "after_state": {
+        "head": "12657555c09884b5657fbb2a2f0ca45e216a694c",
+        "branch": "main",
+        "topic_ref": "9d3ad19845222a0aa93f5fc11b5de3b0c5654324",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "errors": []
+    },
+    {
+      "name": "help-flag-long-success",
+      "args": [
+        "--help"
+      ],
+      "exit_status": 0,
+      "passed": true,
+      "stdout": "Usage: git delete-tag <tagname>...\n",
+      "stderr": "",
+      "before_state": {
+        "head": "27f044e968182badc949a138efa8f4fc5a836bfc",
+        "branch": "main",
+        "topic_ref": "9d3ad19845222a0aa93f5fc11b5de3b0c5654324",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "after_state": {
+        "head": "27f044e968182badc949a138efa8f4fc5a836bfc",
+        "branch": "main",
+        "topic_ref": "9d3ad19845222a0aa93f5fc11b5de3b0c5654324",
+        "status_short": "",
+        "local_tags": [],
+        "remote_tags": []
+      },
+      "errors": []
+    }
+  ]
+}
