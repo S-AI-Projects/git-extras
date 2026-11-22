@@ -1,0 +1,5 @@
+dry-run previews the sync without changing anything
+interactive mode aborts without syncing when declined
+documented usage example: copy unstaged changes with verbose output and state verification
+git-scp: fails when remote does not exist in git config
+git-scp: sanitization config get-all executes without error

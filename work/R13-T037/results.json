@@ -1,0 +1,248 @@
+{
+  "task_id": "R13-T037",
+  "item": "git-scp",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81",
+    "rsync": "rsync  version 3.5.2  protocol version 33"
+  },
+  "total_checks": 10,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_7/tests/git-scp.bats",
+    "exit_status": 0,
+    "test_count": 5,
+    "test_names": [
+      "dry-run previews the sync without changing anything",
+      "interactive mode aborts without syncing when declined",
+      "documented usage example: copy unstaged changes with verbose output and state verification",
+      "git-scp: fails when remote does not exist in git config",
+      "git-scp: sanitization config get-all executes without error"
+    ]
+  },
+  "cases": [
+    {
+      "name": "complete-usage-example-success",
+      "arguments": [
+        "--verbose",
+        "staging"
+      ],
+      "command": [
+        "git",
+        "scp",
+        "--verbose",
+        "staging"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "diff --git a/tracked.txt b/tracked.txt",
+          "+world",
+          "Pushing to staging",
+          "tracked.txt"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "M  tracked.txt"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "diff --git a/tracked.txt b/tracked.txt\nindex ce01362..94954ab 100644\n--- a/tracked.txt\n+++ b/tracked.txt\n@@ -1 +1,2 @@\n hello\n+world\nPushing to staging (/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T037-complete-usage-example-success-xj8j5rsa/staging)\nsending incremental file list\ncreated directory /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T037-complete-usage-example-success-xj8j5rsa/staging\ntracked.txt\n\nsent 107 bytes  received 163 bytes  540.00 bytes/sec\ntotal size is 12  speedup is 0.04\n",
+        "stderr": "",
+        "before_state": {
+          "head": "2293b1c4f4b23450c71f1f3214c492600f1ff9b9",
+          "branch": "main",
+          "topic_ref": "58c7bbfc970694a2f97ea23bb00f52127940bd09",
+          "status_short": "M tracked.txt"
+        },
+        "after_state": {
+          "head": "2293b1c4f4b23450c71f1f3214c492600f1ff9b9",
+          "branch": "main",
+          "topic_ref": "58c7bbfc970694a2f97ea23bb00f52127940bd09",
+          "status_short": "M  tracked.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "dry-run-preview-success",
+      "arguments": [
+        "-n",
+        "fake"
+      ],
+      "command": [
+        "git",
+        "scp",
+        "-n",
+        "fake"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "tracked.txt",
+          "DRY RUN"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "diff --git a/tracked.txt b/tracked.txt\nindex ce01362..94954ab 100644\n--- a/tracked.txt\n+++ b/tracked.txt\n@@ -1 +1,2 @@\n hello\n+world\nPushing to fake (/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T037-dry-run-preview-success-a21i_8ex/never-created)\nsending incremental file list\ncreated directory /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T037-dry-run-preview-success-a21i_8ex/never-created\ntracked.txt\n\nsent 52 bytes  received 146 bytes  396.00 bytes/sec\ntotal size is 12  speedup is 0.06 (DRY RUN)\n",
+        "stderr": "",
+        "before_state": {
+          "head": "2293b1c4f4b23450c71f1f3214c492600f1ff9b9",
+          "branch": "main",
+          "topic_ref": "58c7bbfc970694a2f97ea23bb00f52127940bd09",
+          "status_short": "M tracked.txt"
+        },
+        "after_state": {
+          "head": "2293b1c4f4b23450c71f1f3214c492600f1ff9b9",
+          "branch": "main",
+          "topic_ref": "58c7bbfc970694a2f97ea23bb00f52127940bd09",
+          "status_short": "M tracked.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "nonexistent-remote-failure",
+      "arguments": [
+        "missing_remote"
+      ],
+      "command": [
+        "git",
+        "scp",
+        "missing_remote"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stdout_contains": [
+          "Remote missing_remote does not exist in your git config"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "Remote missing_remote does not exist in your git config\n",
+        "stderr": "",
+        "before_state": {
+          "head": "42c54c4b0b3ff3769eb900d2ad6856f633e38f8f",
+          "branch": "main",
+          "topic_ref": "dfd788791b9a769be6c1265ff7e9177f8077ef36",
+          "status_short": "M tracked.txt"
+        },
+        "after_state": {
+          "head": "42c54c4b0b3ff3769eb900d2ad6856f633e38f8f",
+          "branch": "main",
+          "topic_ref": "dfd788791b9a769be6c1265ff7e9177f8077ef36",
+          "status_short": "M tracked.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "interactive-abort-success",
+      "arguments": [
+        "-i",
+        "fake"
+      ],
+      "command": [
+        "git",
+        "scp",
+        "-i",
+        "fake"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "Aborted, nothing synced."
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "diff --git a/tracked.txt b/tracked.txt\nindex ce01362..94954ab 100644\n--- a/tracked.txt\n+++ b/tracked.txt\n@@ -1 +1,2 @@\n hello\n+world\nAborted, nothing synced.\n",
+        "stderr": "",
+        "before_state": {
+          "head": "42c54c4b0b3ff3769eb900d2ad6856f633e38f8f",
+          "branch": "main",
+          "topic_ref": "dfd788791b9a769be6c1265ff7e9177f8077ef36",
+          "status_short": "M tracked.txt"
+        },
+        "after_state": {
+          "head": "42c54c4b0b3ff3769eb900d2ad6856f633e38f8f",
+          "branch": "main",
+          "topic_ref": "dfd788791b9a769be6c1265ff7e9177f8077ef36",
+          "status_short": "M tracked.txt"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "sanitize-config-success",
+      "arguments": [
+        "--verbose",
+        "-n",
+        "fake"
+      ],
+      "command": [
+        "git",
+        "scp",
+        "--verbose",
+        "-n",
+        "fake"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": [
+          "DRY RUN"
+        ],
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "diff --git a/tracked.txt b/tracked.txt\nindex ce01362..94954ab 100644\n--- a/tracked.txt\n+++ b/tracked.txt\n@@ -1 +1,2 @@\n hello\n+world\nPushing to fake (/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T037-sanitize-config-success-5nnxab0y/never-created)\nsending incremental file list\ncreated directory /var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T037-sanitize-config-success-5nnxab0y/never-created\ntracked.txt\n\nsent 51 bytes  received 146 bytes  394.00 bytes/sec\ntotal size is 12  speedup is 0.06 (DRY RUN)\n",
+        "stderr": "",
+        "before_state": {
+          "head": "42c54c4b0b3ff3769eb900d2ad6856f633e38f8f",
+          "branch": "main",
+          "topic_ref": "dfd788791b9a769be6c1265ff7e9177f8077ef36",
+          "status_short": "M tracked.txt"
+        },
+        "after_state": {
+          "head": "42c54c4b0b3ff3769eb900d2ad6856f633e38f8f",
+          "branch": "main",
+          "topic_ref": "dfd788791b9a769be6c1265ff7e9177f8077ef36",
+          "status_short": "M tracked.txt"
+        }
+      },
+      "passed": true
+    }
+  ]
+}

@@ -53,7 +53,22 @@ Internally this script uses `rsync` and not `scp` as the name suggests.
 
 ## EXAMPLES
 
- Make sure you have `git-remote`(1) setup
+ Copy unstaged changes to remote with verbose preview:
+
+    $ git remote add staging /var/www/staging
+    $ echo "world" >> tracked.txt
+    $ git scp --verbose staging
+    diff --git a/tracked.txt b/tracked.txt
+    --- a/tracked.txt
+    +++ b/tracked.txt
+    @@ -1 +1,2 @@
+     hello
+    +world
+    Pushing to staging (/var/www/staging)
+    sending incremental file list
+    tracked.txt
+
+  Make sure you have `git-remote`(1) setup
 
     $ git remote add staging myStagingServer:/var/www/html
 
