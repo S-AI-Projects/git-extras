@@ -1,0 +1,261 @@
+{
+  "task_id": "R13-T036",
+  "item": "git-get",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 12,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_6/tests/git-get.bats",
+    "exit_status": 0,
+    "test_count": 6,
+    "test_names": [
+      "git-get: displays usage when invoked with no arguments",
+      "git-get: displays usage with -h and --help",
+      "git-get: fails when git-extras.get.clone-path is not set",
+      "git-get: clones repository into configured clone-path",
+      "git-get: strips trailing slash and .git extension",
+      "git-get: forwards additional options to git clone"
+    ]
+  },
+  "cases": [
+    {
+      "name": "usage-no-args-success",
+      "arguments": [],
+      "command": [
+        "git",
+        "get"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "usage: git-get <url>",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "usage: git-get <url>\nusage: git-get --help\n\nClone a repository in a particular directory.\n",
+        "stderr": "",
+        "before_state": {
+          "head": "c7e984314655c22fc52e7497e6e90298ad172722",
+          "branch": "main",
+          "topic_ref": "d08f0ed807bca0aa73276c6bc9d1a1934821941d",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "c7e984314655c22fc52e7497e6e90298ad172722",
+          "branch": "main",
+          "topic_ref": "d08f0ed807bca0aa73276c6bc9d1a1934821941d",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "usage-help-flag-success",
+      "arguments": [
+        "-h"
+      ],
+      "command": [
+        "git",
+        "get",
+        "-h"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "stdout_contains": "usage: git-get <url>",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "usage: git-get <url>\nusage: git-get --help\n\nClone a repository in a particular directory.\n",
+        "stderr": "",
+        "before_state": {
+          "head": "c954977bdb2457636aaa2d4d0847169aa7a60f8d",
+          "branch": "main",
+          "topic_ref": "517d1422f389c68a0127d5591bef538c8e81fb7e",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "c954977bdb2457636aaa2d4d0847169aa7a60f8d",
+          "branch": "main",
+          "topic_ref": "517d1422f389c68a0127d5591bef538c8e81fb7e",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-clone-path-config-failure",
+      "arguments": [
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-missing-clone-path-config-failure-0sntv0p5/remote.git"
+      ],
+      "command": [
+        "git",
+        "get",
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-missing-clone-path-config-failure-0sntv0p5/remote.git"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "Git configuration key 'git-extras.get.clone-path' must be set to a directory to clone under",
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "",
+        "stderr": "ERROR: Git configuration key 'git-extras.get.clone-path' must be set to a directory to clone under\n",
+        "before_state": {
+          "head": "c954977bdb2457636aaa2d4d0847169aa7a60f8d",
+          "branch": "main",
+          "topic_ref": "517d1422f389c68a0127d5591bef538c8e81fb7e",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "c954977bdb2457636aaa2d4d0847169aa7a60f8d",
+          "branch": "main",
+          "topic_ref": "517d1422f389c68a0127d5591bef538c8e81fb7e",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "clone-success",
+      "arguments": [
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-clone-success-6l_ytv1h/remote.git"
+      ],
+      "command": [
+        "git",
+        "get",
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-clone-success-6l_ytv1h/remote.git"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "Cloning into '/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-clone-success-6l_ytv1h/clones/remote'...\ndone.\n",
+        "before_state": {
+          "head": "47b174589dbadc2b55a943e7e1afb2641aac795a",
+          "branch": "main",
+          "topic_ref": "b9d32c9f873dba9cecefb12662394a289ea28ebb",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "47b174589dbadc2b55a943e7e1afb2641aac795a",
+          "branch": "main",
+          "topic_ref": "b9d32c9f873dba9cecefb12662394a289ea28ebb",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "clone-branch-option-success",
+      "arguments": [
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-clone-branch-option-success-sm4d5kv8/remote.git",
+        "--branch",
+        "topic"
+      ],
+      "command": [
+        "git",
+        "get",
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-clone-branch-option-success-sm4d5kv8/remote.git",
+        "--branch",
+        "topic"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "Cloning into '/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-clone-branch-option-success-sm4d5kv8/clones/remote'...\ndone.\n",
+        "before_state": {
+          "head": "47b174589dbadc2b55a943e7e1afb2641aac795a",
+          "branch": "main",
+          "topic_ref": "b9d32c9f873dba9cecefb12662394a289ea28ebb",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "47b174589dbadc2b55a943e7e1afb2641aac795a",
+          "branch": "main",
+          "topic_ref": "b9d32c9f873dba9cecefb12662394a289ea28ebb",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "trailing-slash-stripping-success",
+      "arguments": [
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-trailing-slash-stripping-success-lnsp67uu/remote.git/"
+      ],
+      "command": [
+        "git",
+        "get",
+        "/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-trailing-slash-stripping-success-lnsp67uu/remote.git/"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<before>",
+          "branch": "<before>",
+          "topic_ref": "<before>",
+          "status_short": ""
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "",
+        "stderr": "Cloning into '/var/folders/8m/70msvl6n2jgc1t8l7m_t3pf40000gn/T/R13-T036-trailing-slash-stripping-success-lnsp67uu/clones/remote'...\ndone.\n",
+        "before_state": {
+          "head": "f8416a83c79d7e71a056a8aede4309a5b33c931f",
+          "branch": "main",
+          "topic_ref": "99b535fb97bf6a0bfbdb2ce0b2d63c5ec61c876c",
+          "status_short": ""
+        },
+        "after_state": {
+          "head": "f8416a83c79d7e71a056a8aede4309a5b33c931f",
+          "branch": "main",
+          "topic_ref": "99b535fb97bf6a0bfbdb2ce0b2d63c5ec61c876c",
+          "status_short": ""
+        }
+      },
+      "passed": true
+    }
+  ]
+}

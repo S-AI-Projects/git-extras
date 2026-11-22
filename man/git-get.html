@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='content-type' content='text/html;charset=utf-8'>
+  <meta http-equiv='content-type' content='text/html;charset=utf8'>
   <meta name='generator' content='Ronn-NG/v0.10.1 (http://github.com/apjanke/ronn-ng/tree/0.10.1)'>
   <title>git-get(1) - Clone a Git repository under a configured directory</title>
   <style type='text/css' media='all'>
@@ -42,13 +42,6 @@
   ol.man-decor li.tr {text-align:right;float:right}
   </style>
 </head>
-<!--
-  The following styles are deprecated and will be removed at some point:
-  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
-
-  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
-  .man-navigation should be used instead.
--->
 <body id='manpage'>
   <div class='mp' id='man'>
 
@@ -56,6 +49,7 @@
     <a href="#NAME">NAME</a>
     <a href="#SYNOPSIS">SYNOPSIS</a>
     <a href="#DESCRIPTION">DESCRIPTION</a>
+    <a href="#OPTIONS">OPTIONS</a>
     <a href="#EXAMPLES">EXAMPLES</a>
     <a href="#AUTHOR">AUTHOR</a>
     <a href="#REPORTING-BUGS">REPORTING BUGS</a>
@@ -76,11 +70,25 @@
 </p>
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>git get</code> &lt;url&gt;</p>
+<p><code>git get</code> [-h|--help] &lt;url&gt; [&lt;git clone options&gt;]</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
-<p>Clones a Git repository under the directory specified by the Git configuration <code>git-extras.get.clone-path</code></p>
+<p>Clones a Git repository under the directory specified by the Git configuration <code>git-extras.get.clone-path</code>. Additional arguments are forwarded directly to <code>git clone</code>.</p>
+
+<h2 id="OPTIONS">OPTIONS</h2>
+
+<p>-h, --help</p>
+
+<p>Show usage help.</p>
+
+<p>&lt;url&gt;</p>
+
+<p>Repository URL or path to clone.</p>
+
+<p>&lt;git clone options&gt;</p>
+
+<p>Additional options passed directly to <code>git clone</code>.</p>
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
 

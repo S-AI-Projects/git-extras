@@ -4,9 +4,21 @@
 .SH "NAME"
 \fBgit\-get\fR \- Clone a Git repository under a configured directory
 .SH "SYNOPSIS"
-\fBgit get\fR <url>
+\fBgit get\fR [\-h|\-\-help] <url> [<git clone options>]
 .SH "DESCRIPTION"
-Clones a Git repository under the directory specified by the Git configuration \fBgit\-extras\.get\.clone\-path\fR
+Clones a Git repository under the directory specified by the Git configuration \fBgit\-extras\.get\.clone\-path\fR\. Additional arguments are forwarded directly to \fBgit clone\fR\.
+.SH "OPTIONS"
+\-h, \-\-help
+.P
+Show usage help\.
+.P
+<url>
+.P
+Repository URL or path to clone\.
+.P
+<git clone options>
+.P
+Additional options passed directly to \fBgit clone\fR\.
 .SH "EXAMPLES"
 .nf
 $ git config \-\-add git\-extras\.get\.clone\-path "$HOME/some\-dir"
