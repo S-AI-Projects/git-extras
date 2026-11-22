@@ -7,13 +7,13 @@ git-unlock(1) -- Unlock a file excluded from version control
 
 ## DESCRIPTION
 
-  Unlock local files from version control.
+  Unmark a tracked local file with `--no-skip-worktree` in the Git index so local modifications are tracked again by version control. Requires a non-empty &lt;filename&gt; argument referring to a tracked file. If &lt;filename&gt; is omitted or empty, the command prints an error to stderr and exits with status 1.
 
 ## OPTIONS
 
   &lt;filename&gt;
 
-  The name of the filename.
+  The name of the tracked file to unlock.
 
 ## EXAMPLES
 
