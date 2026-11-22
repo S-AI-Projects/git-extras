@@ -1,0 +1,5 @@
+git-extras: -v and --version display version number
+git-extras: -h and --help display usage information
+git-extras: respects local config with --add git-extras.default-branch
+git-extras: update succeeds with stubbed curl dependency
+git-extras: update fails with documented error when curl is missing
