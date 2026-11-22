@@ -4,11 +4,11 @@
 .SH "NAME"
 \fBgit\-stamp\fR \- Stamp the last commit message
 .SH "SYNOPSIS"
-\fBgit stamp [<options>] <id> [<messages>]\fR
+\fBgit stamp\fR [\-r, \-\-replace] <id> [<messages>]
 .SH "DESCRIPTION"
 Lets you amend the last commit with a stamp message\.
 .P
-The command appends a message with its identifier to the last commit message\.
+The command appends a message with its identifier to the last commit message without modifying tree contents or working directory state\.
 .br
 By default all stamps are appended as a new paragraph to the commit message\.
 .br
@@ -16,8 +16,16 @@ You can change this behavior by using the \-\-replace flag\.
 .br
 With this flag, all the related stamps with the same identifier will be removed first before the new one gets appended\.
 .P
+A non\-empty <id> identifier is required\. If omitted, the command prints an error to stderr and exits with status 1\.
+.P
 \fBWARNING!\fR If a commit message without stamp have a line starting with the same identifier, it will be interpreted as a stamp
 .SH "OPTIONS"
+\-h, \-\-help
+.IP "" 4
+.nf
+Display help message\.
+.fi
+.IP "" 0
 \-r, \-\-replace
 .IP "" 4
 .nf
@@ -38,20 +46,25 @@ Reference the issues numbers from your bug tracker
 .nf
 $ git stamp Issue FOO\-123
 $ git stamp Issue FOO\-456 \e#close
-
+.fi
+.IP "" 0
+.P
+.nf
 | Fix timezone bug
 |
 | Issue FOO\-123
 |
 | Issue FOO\-456 #close
 .fi
-.IP "" 0
 .P
 Link to its review page
 .IP "" 4
 .nf
 $ git stamp Review https://reviews\.foo\.org/r/4567/
-
+.fi
+.IP "" 0
+.P
+.nf
 | Fix timezone bug
 |
 | Issue FOO\-123
@@ -60,7 +73,6 @@ $ git stamp Review https://reviews\.foo\.org/r/4567/
 |
 | Review https://reviews\.foo\.org/r/4567/
 .fi
-.IP "" 0
 .P
 Replace previous issues with a new one
 .br
@@ -68,14 +80,16 @@ Replace previous issues with a new one
 .IP "" 4
 .nf
 $ git stamp \-\-replace issue BAR\-123
-
+.fi
+.IP "" 0
+.P
+.nf
 | Fix timezone bug
 |
 | Review https://reviews\.foo\.org/r/4567/
 |
 | issue BAR\-123
 .fi
-.IP "" 0
 .SH "AUTHOR"
 Written by Damien Tardy\-Panis <\fIdamien@tardypad\.me\fR>
 .SH "REPORTING BUGS"

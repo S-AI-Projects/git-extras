@@ -1,0 +1,4 @@
+git-stamp: appends stamp to commit message while preserving tree and working directory
+git-stamp: --replace removes previous stamp with same id while preserving other stamps
+git-stamp: fails when identifier is missing without altering repository state
+git-stamp: fails with --replace when identifier is missing

@@ -1,0 +1,204 @@
+{
+  "task_id": "R13-T033",
+  "item": "git-stamp",
+  "tool_versions": {
+    "git": "git version 2.54.0 (Apple Git-157)",
+    "bash": "GNU bash, version 5.3.20(1)-release (aarch64-apple-darwin27.0.0)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0",
+    "make": "GNU Make 3.81"
+  },
+  "total_checks": 8,
+  "passed": true,
+  "failures": [],
+  "native_bats": {
+    "test_file": "/Users/kushalpandya/S&AI Assignment/task_3/tests/git-stamp.bats",
+    "exit_status": 0,
+    "test_count": 4,
+    "test_names": [
+      "git-stamp: appends stamp to commit message while preserving tree and working directory",
+      "git-stamp: --replace removes previous stamp with same id while preserving other stamps",
+      "git-stamp: fails when identifier is missing without altering repository state",
+      "git-stamp: fails with --replace when identifier is missing"
+    ]
+  },
+  "cases": [
+    {
+      "name": "ordinary-stamp-append-success",
+      "arguments": [
+        "Issue",
+        "FOO-123"
+      ],
+      "command": [
+        "git",
+        "stamp",
+        "Issue",
+        "FOO-123"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<changed>",
+          "head_tree": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "commit_message": "Issue FOO-123"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "commit e32bd77ce11edc92b3826590b5bb15acf916325a\nAuthor: Kushal Pandya <kushalpandya037@gmail.com>\nCommit: Kushal Pandya <kushalpandya037@gmail.com>\n\n    Commit B\n    \n    Issue FOO-123\n",
+        "stderr": "",
+        "before_state": {
+          "head": "ff3730f3d322d1c38284a18bfb486cc64cff7d33",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "d511ce9efbcaacdf8af4d7830f431d2811e6f15a",
+          "status_short": "",
+          "commit_message": "Commit B"
+        },
+        "after_state": {
+          "head": "e32bd77ce11edc92b3826590b5bb15acf916325a",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "d511ce9efbcaacdf8af4d7830f431d2811e6f15a",
+          "status_short": "",
+          "commit_message": "Commit B\n\nIssue FOO-123"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "replace-stamp-success",
+      "arguments": [
+        "--replace",
+        "issue",
+        "BAR-456"
+      ],
+      "command": [
+        "git",
+        "stamp",
+        "--replace",
+        "issue",
+        "BAR-456"
+      ],
+      "expected": {
+        "exit_status": 0,
+        "after_state": {
+          "head": "<changed>",
+          "head_tree": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "",
+          "commit_message": "issue BAR-456"
+        }
+      },
+      "actual": {
+        "exit_status": 0,
+        "stdout": "commit b66851f15edab46a040731807c52d49cda05a6b5\nAuthor: Kushal Pandya <kushalpandya037@gmail.com>\nCommit: Kushal Pandya <kushalpandya037@gmail.com>\n\n    Commit B\n    \n    Review https://example.com/r/1\n    \n    issue BAR-456\n",
+        "stderr": "",
+        "before_state": {
+          "head": "e41bde02a99d6b2a02e44103d65fd4699de9ea8b",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "e6b456d3d6008e0448ea66812118cd67dd6b1173",
+          "status_short": "",
+          "commit_message": "Commit B\n\nIssue FOO-123\n\nReview https://example.com/r/1"
+        },
+        "after_state": {
+          "head": "b66851f15edab46a040731807c52d49cda05a6b5",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "e6b456d3d6008e0448ea66812118cd67dd6b1173",
+          "status_short": "",
+          "commit_message": "Commit B\n\nReview https://example.com/r/1\n\nissue BAR-456"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-identifier-failure",
+      "arguments": [],
+      "command": [
+        "git",
+        "stamp"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "error: missing stamp identifier",
+        "after_state": {
+          "head": "<before>",
+          "head_tree": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "<before>",
+          "commit_message": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "usage: git stamp [<options>] <id> [<messages>]\n\nOptions:\n    -h, --help       display this help message\n    -r, --replace    replace all previous stamps with same id\n",
+        "stderr": "error: missing stamp identifier\n",
+        "before_state": {
+          "head": "16f52b0e29126c3177cfb0eb4df7e1b08ccec31c",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "e6b456d3d6008e0448ea66812118cd67dd6b1173",
+          "status_short": "",
+          "commit_message": "Commit B"
+        },
+        "after_state": {
+          "head": "16f52b0e29126c3177cfb0eb4df7e1b08ccec31c",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "e6b456d3d6008e0448ea66812118cd67dd6b1173",
+          "status_short": "",
+          "commit_message": "Commit B"
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "missing-identifier-with-replace-failure",
+      "arguments": [
+        "--replace"
+      ],
+      "command": [
+        "git",
+        "stamp",
+        "--replace"
+      ],
+      "expected": {
+        "exit_status": 1,
+        "stderr_contains": "error: missing stamp identifier",
+        "after_state": {
+          "head": "<before>",
+          "head_tree": "<before>",
+          "topic_ref": "<before>",
+          "status_short": "<before>",
+          "commit_message": "<before>"
+        }
+      },
+      "actual": {
+        "exit_status": 1,
+        "stdout": "usage: git stamp [<options>] <id> [<messages>]\n\nOptions:\n    -h, --help       display this help message\n    -r, --replace    replace all previous stamps with same id\n",
+        "stderr": "error: missing stamp identifier\n",
+        "before_state": {
+          "head": "3e156f837a5a30d425bb7d799044101ca58fd4f5",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "d363fc33cc41eaffb594e985331ab45677912b63",
+          "status_short": "",
+          "commit_message": "Commit B"
+        },
+        "after_state": {
+          "head": "3e156f837a5a30d425bb7d799044101ca58fd4f5",
+          "head_tree": "8c0c2c07ce91004543c0434f30983701d0f838c0",
+          "branch": "main",
+          "topic_ref": "d363fc33cc41eaffb594e985331ab45677912b63",
+          "status_short": "",
+          "commit_message": "Commit B"
+        }
+      },
+      "passed": true
+    }
+  ]
+}
