@@ -2,15 +2,22 @@
 
 set -eu
 
-if [  -z "${1-}" ] ; then
+if [ -z "${1-}" ] ; then
     echo "mr number or URL required. See --help for usage." 1>&2
     exit 1
+fi
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "Usage: git mr <number> [<remote>]"
+    echo "   or: git mr <url>"
+    echo "   or: git mr clean"
+    exit 0
 fi
 
 remote_ref_kind=merge-requests
 
 if test "$1" = "clean"; then
-  git for-each-ref refs/heads/mr/* --format='%(refname)' | while read -r ref; do
+  git for-each-ref 'refs/heads/mr/*' --format='%(refname)' | while read -r ref; do
     git branch -D "${ref#refs/heads/}"
   done
   exit 0

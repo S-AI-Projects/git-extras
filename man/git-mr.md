@@ -5,11 +5,12 @@ git-mr(1) -- Checks out a merge request locally
 
 `git mr` &lt;number&gt; [&lt;remote&gt;]<br>
 `git mr` &lt;url&gt;<br>
+`git mr` [-h|--help]<br>
 `git mr clean`
 
 ## DESCRIPTION
 
-  Fetches merge request head by its number or URl and check it out in a branch
+  Fetches merge request head by its number or URL and check it out in a branch
   named with merge request number.
 
 ## OPTIONS
@@ -25,6 +26,9 @@ git-mr(1) -- Checks out a merge request locally
   Forgejo/Codeberg pull request URL in the format
   `https://codeberg.tld/owner/repository/pulls/453`.
 
+  -h | --help
+
+  Show help synopsis and usage options.
 
 ## EXAMPLES
 
@@ -42,14 +46,29 @@ This checks out pull request `#51` from a Forgejo/Codeberg URL to branch `mr/51`
      * [new ref]         refs/pull/51/head -> mr/51
     Switched to branch 'mr/51'
 
+To clean up old branches:
+
+    $ git mr clean
+
+    Deleted branch mr/51 (was b96a8c2).
+
+## DIAGNOSTICS & ERRORS
+
+* Missing merge request argument (`mr number or URL required. See --help for usage.`):
+  Occurs when `git mr` is run without arguments. Exit status is 1.
+
+* Remote reference or branch not found:
+  Occurs when the specified merge request ID does not exist on the remote repository.
+  `git fetch` fails and the command exits with non-zero exit status.
+
 ## AUTHOR
 
 Written by Étienne BERSAC <bersace03@gmail.com> from git-pr(1).
 
 ## REPORTING BUGS
 
-&lt;<https://github.com/tj/git-extras/issues>&gt;
+<https://github.com/tj/git-extras/issues>
 
 ## SEE ALSO
 
-&lt;<https://github.com/tj/git-extras>&gt;
+<https://github.com/tj/git-extras>
