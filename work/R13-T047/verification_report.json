@@ -1,0 +1,119 @@
+{
+  "task_id": "R13-T047",
+  "tool_versions": {
+    "git": "git version 2.55.0",
+    "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin26)",
+    "bats": "Bats 1.14.0",
+    "python3": "Python 3.15.0"
+  },
+  "total_checks": 6,
+  "passed": true,
+  "failures": [],
+  "results": [
+    {
+      "name": "native_bats_git_obliterate",
+      "command": [
+        "bats",
+        "--tap",
+        "/Users/muskan/git-extras/tests/git-obliterate.bats"
+      ],
+      "returncode": 0,
+      "stdout": "1..5\nok 1 executes documented usage example with setup, command, output and state verification\nok 2 fails with error when filename is missing\nok 3 fails with error when only option separator is passed\nok 4 displays usage information with -h or --help\nok 5 removes file restricted to a rev-list range using separator token",
+      "stderr": "",
+      "executed_cases": 5,
+      "passed": true
+    },
+    {
+      "name": "cli_documented_example_success",
+      "arguments": [
+        "secret.txt"
+      ],
+      "expected": {
+        "returncode": 0,
+        "before_file_exists": true,
+        "after_file_exists": false,
+        "after_log_empty": true,
+        "secret_in_ls_files": false,
+        "safe_file_intact": true
+      },
+      "actual": {
+        "returncode": 0,
+        "before_log_commits": 2,
+        "after_log": "",
+        "before_file_exists": true,
+        "after_file_exists": false,
+        "ls_files_after": [
+          "safe.txt"
+        ],
+        "safe_file_intact": true
+      },
+      "passed": true
+    },
+    {
+      "name": "cli_missing_filename_failure",
+      "arguments": [],
+      "expected": {
+        "returncode": 1,
+        "stderr": "file required."
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "file required."
+      },
+      "passed": true
+    },
+    {
+      "name": "cli_separator_only_failure",
+      "arguments": [
+        "--"
+      ],
+      "expected": {
+        "returncode": 1,
+        "stderr": "file required."
+      },
+      "actual": {
+        "returncode": 1,
+        "stderr": "file required."
+      },
+      "passed": true
+    },
+    {
+      "name": "cli_help_option_tokens",
+      "arguments": [
+        "-h",
+        "--help"
+      ],
+      "expected": {
+        "returncode": 0,
+        "stdout_contains": "Usage: git obliterate <files...> [-- <rev-list options...>]"
+      },
+      "actual": {
+        "short_returncode": 0,
+        "short_stdout": "Usage: git obliterate <files...> [-- <rev-list options...>]",
+        "long_returncode": 0,
+        "long_stdout": "Usage: git obliterate <files...> [-- <rev-list options...>]"
+      },
+      "passed": true
+    },
+    {
+      "name": "cli_range_separator_token_success",
+      "arguments": [
+        "topic_secret.txt",
+        "--",
+        "topic",
+        "^main"
+      ],
+      "expected": {
+        "returncode": 0,
+        "topic_file_exists": false,
+        "topic_log_empty": true
+      },
+      "actual": {
+        "returncode": 0,
+        "topic_file_exists": false,
+        "topic_log_after": ""
+      },
+      "passed": true
+    }
+  ]
+}
