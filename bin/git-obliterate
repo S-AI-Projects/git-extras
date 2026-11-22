@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
+case "$1" in
+  -h|--help)
+    echo "Usage: git obliterate <files...> [-- <rev-list options...>]"
+    exit 0
+    ;;
+esac
+
 file=""
 range=""
 for i in "$@"
 do
     # use '--' to separate file list and rev-list arguments
-    test "$i" == '--' && shift && break
+    test "$i" = '--' && shift && break
     file="$file"' '"$i"
     shift
 done
@@ -21,3 +28,4 @@ else
     git filter-branch -f --index-filter "git rm -r --cached ""$file"" --ignore-unmatch" \
         --prune-empty --tag-name-filter cat -- "${range[@]}"
 fi
+
