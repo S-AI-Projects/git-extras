@@ -3,20 +3,26 @@ git-stamp(1) -- Stamp the last commit message
 
 ## SYNOPSIS
 
-`git stamp [<options>] <id> [<messages>]`
+`git stamp` [-r, --replace] &lt;id&gt; [&lt;messages&gt;]
 
 ## DESCRIPTION
 
 Lets you amend the last commit with a stamp message.
 
-The command appends a message with its identifier to the last commit message.  
+The command appends a message with its identifier to the last commit message without modifying tree contents or working directory state.
 By default all stamps are appended as a new paragraph to the commit message.  
 You can change this behavior by using the --replace flag.  
 With this flag, all the related stamps with the same identifier will be removed first before the new one gets appended.
 
+A non-empty `&lt;id&gt;` identifier is required. If omitted, the command prints an error to stderr and exits with status 1.
+
 `WARNING!` If a commit message without stamp have a line starting with the same identifier, it will be interpreted as a stamp
 
 ## OPTIONS
+
+  -h, --help
+
+    Display help message.
 
   -r, --replace
 

@@ -77,20 +77,27 @@
 </p>
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>git stamp [&lt;options&gt;] &lt;id&gt; [&lt;messages&gt;]</code></p>
+<p><code>git stamp</code> [-r, --replace] &lt;id&gt; [&lt;messages&gt;]</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
 <p>Lets you amend the last commit with a stamp message.</p>
 
-<p>The command appends a message with its identifier to the last commit message.<br>
+<p>The command appends a message with its identifier to the last commit message without modifying tree contents or working directory state.<br>
 By default all stamps are appended as a new paragraph to the commit message.<br>
 You can change this behavior by using the --replace flag.<br>
 With this flag, all the related stamps with the same identifier will be removed first before the new one gets appended.</p>
 
+<p>A non-empty <code>&lt;id&gt;</code> identifier is required. If omitted, the command prints an error to stderr and exits with status 1.</p>
+
 <p><code>WARNING!</code> If a commit message without stamp have a line starting with the same identifier, it will be interpreted as a stamp</p>
 
 <h2 id="OPTIONS">OPTIONS</h2>
+
+<p>-h, --help</p>
+
+<pre><code>Display help message.
+</code></pre>
 
 <p>-r, --replace</p>
 

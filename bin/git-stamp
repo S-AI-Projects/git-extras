@@ -15,6 +15,7 @@ usage() {
 usage: git ${COMMAND} [<options>] <id> [<messages>]
 
 Options:
+    -h, --help       display this help message
     -r, --replace    replace all previous stamps with same id
 EOF
 }
@@ -57,13 +58,17 @@ stamp() {
 parse_options() {
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-      -h)
+      -h|--help)
         usage
         exit 0
         ;;
       --replace|-r)
         REPLACE=true
         shift
+        ;;
+      --)
+        shift
+        break
         ;;
       *)
         break
