@@ -3,11 +3,25 @@ git-get(1) -- Clone a Git repository under a configured directory
 
 ## SYNOPSIS
 
-`git get` &lt;url&gt;
+`git get` [-h|--help] &lt;url&gt; [&lt;git clone options&gt;]
 
 ## DESCRIPTION
 
-  Clones a Git repository under the directory specified by the Git configuration `git-extras.get.clone-path`
+  Clones a Git repository under the directory specified by the Git configuration `git-extras.get.clone-path`. Additional arguments are forwarded directly to `git clone`.
+
+## OPTIONS
+
+  -h, --help
+
+  Show usage help.
+
+  &lt;url&gt;
+
+  Repository URL or path to clone.
+
+  &lt;git clone options&gt;
+
+  Additional options passed directly to `git clone`.
 
 ## EXAMPLES
 

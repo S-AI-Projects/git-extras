@@ -1,0 +1,6 @@
+git-get: displays usage when invoked with no arguments
+git-get: displays usage with -h and --help
+git-get: fails when git-extras.get.clone-path is not set
+git-get: clones repository into configured clone-path
+git-get: strips trailing slash and .git extension
+git-get: forwards additional options to git clone
