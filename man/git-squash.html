@@ -117,6 +117,27 @@ $ git squash HEAD~3 "Commit message"
 
 # squash and commit and concatenate all messages
 $ git squash --squash-msg @~3
+
+# complete example: squash the last two commits into one and check the result
+$ git init -q -b main demo &amp;&amp; cd demo
+$ for c in A B C; do echo $c &gt; file-$c.txt; git add .; git commit -q -m $c; done
+$ git log --format=%s
+C
+B
+A
+$ git squash HEAD~2 "B and C together"
+[main 2f1c9a7] B and C together
+ 2 files changed, 2 insertions(+)
+ create mode 100644 file-B.txt
+ create mode 100644 file-C.txt
+$ git log --format=%s
+B and C together
+A
+$ git ls-files
+file-A.txt
+file-B.txt
+file-C.txt
+$ git status --short
 </code></pre>
 
 <h2 id="AUTHOR">AUTHOR</h2>
