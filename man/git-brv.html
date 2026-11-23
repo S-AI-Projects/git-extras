@@ -58,6 +58,7 @@
     <a href="#DESCRIPTION">DESCRIPTION</a>
     <a href="#OPTIONS">OPTIONS</a>
     <a href="#EXAMPLES">EXAMPLES</a>
+    <a href="#TROUBLESHOOTING">TROUBLESHOOTING</a>
     <a href="#AUTHOR">AUTHOR</a>
     <a href="#REPORTING-BUGS">REPORTING BUGS</a>
     <a href="#SEE-ALSO">SEE ALSO</a>
@@ -103,6 +104,23 @@
 2020-01-08 master       origin/master     265b03e Merge pull request #816 from spacewander/git-sed-pathspec
 2020-01-14 adds-git-brv fork/adds-git-brv 1ca0d76 Fixes #700: Adds git-brv
 </code></pre>
+
+<h2 id="TROUBLESHOOTING">TROUBLESHOOTING</h2>
+
+<p>  <code>Not a git repo!</code> (exit status 128)</p>
+
+<p>  <code>git brv</code> was run outside a Git repository, so there are no branches to list. Change into a repository first, or point Git at one with <code>git -C</code>:</p>
+
+<pre><code>$ git brv
+Not a git repo!
+$ git -C my-project brv
+2020-01-14 topic origin/topic 1ca0d76 topic work
+2020-01-08 main  origin/main  265b03e C
+</code></pre>
+
+<p>  <code>This script requires bash 4.2 or newer</code> (exit status 1)</p>
+
+<p>  The <code>bash</code> found first in your <code>PATH</code> is older than 4.2 (macOS ships bash 3.2). Install a newer bash, for example with <code>brew install bash</code>, and make sure it comes first in <code>PATH</code>.</p>
 
 <h2 id="AUTHOR">AUTHOR</h2>
 

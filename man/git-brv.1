@@ -48,6 +48,32 @@ $ git brv \-\-reverse
 .
 .IP "" 0
 .
+.SH "TROUBLESHOOTING"
+\fBNot a git repo!\fR (exit status 128)
+.
+.P
+\fBgit brv\fR was run outside a Git repository, so there are no branches to list\. Change into a repository first, or point Git at one with \fBgit \-C\fR:
+.
+.IP "" 4
+.
+.nf
+
+$ git brv
+Not a git repo!
+$ git \-C my\-project brv
+2020\-01\-14 topic origin/topic 1ca0d76 topic work
+2020\-01\-08 main  origin/main  265b03e C
+.
+.fi
+.
+.IP "" 0
+.
+.P
+\fBThis script requires bash 4\.2 or newer\fR (exit status 1)
+.
+.P
+The \fBbash\fR found first in your \fBPATH\fR is older than 4\.2 (macOS ships bash 3\.2)\. Install a newer bash, for example with \fBbrew install bash\fR, and make sure it comes first in \fBPATH\fR\.
+.
 .SH "AUTHOR"
 Written by Øsse <\fIhttps://github\.com/Osse\fR>
 .
